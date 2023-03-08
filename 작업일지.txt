@@ -1,0 +1,56 @@
+# 23/03/08
+
+- git setting
+	- 각자 작업물을 올리는 branch는 study_개인 식별자로 결정
+	- main에 관련된 권한 설정
+	- branch naming 변경
+		- git branch는 /를 파일 경로로 인식하여 문제가 생긴다.
+		- 이름을 살짝 변경하여 문제를 우회하기로 결정
+			- 브랜치 처음 생성땐 풀네임, 하위 브랜치는 축약어를 사용한다
+				-  ex) backend => be/develop => be/dev/feature => ...
+
+- nft Sub PJT
+	- 과제 1 : ERC721 구현
+		- openzeppelin의 코드를 직접 쳐보며 문법 및 작동 방식을 익혔다.
+	- 과제 2: NFT Creaor 구현
+		- 참고) https://www.youtube.com/watch?v=TYezN5r228U
+			- nft 생성 과정
+			1) 이미지를 ipfs에 올린다.
+			2) metadata JSON 파일을 ipfs에 올린다.
+			3) ERC721민터 코드를 블록체인에 올린다.
+			4) NFT를 민트한다
+			5) 지갑에서 확인한다.
+			
+			- erc721이란?
+				- nft의 표준, ERC20에 토큰 ID, metadata JSON 추가된 것
+				- 토큰 ID? NFT에 붙는 개별 식별 번호 => nft를 고유한 것으로 만든다.
+				- 메타데이터 json => nft에 넣을 정보를 담는 그릇
+
+			- ipfs란?
+				- 위변조 불가능한 저장소
+				- 블록체인을 활용한 p2p 분산형 웹 저장소이다.
+				- 블록체인 자체에 image와 metedata를 넣기엔 비싸기 때문에 ipfs를 사용한다.
+	- 과제 3: 테스트 코드 작성
+		- Mocha
+			- truffle은 내부적으로 테스트를 위하여 mocha 프레임워크를 사용한다.
+			- 컨트랙트를 배포한 후, truffle test ./test/<FILENAME>으로 테스트를 실행하면 test 폴더 하위의 js 파일들이 모두 실행된다.
+			- 코드
+			```
+			// SsafyNFT contract artifact를 import한다.(Truffle로 컴파일 할 때 생성됨)
+			const SsafyNFT = artifacts.require("SsafyNFT"); 
+
+			//"SsafyNFT"라는 이름의 단위 테스트 묶음를 정의한다. accounts는 이더리움 주소값의 배열이다.
+			contract("SsafyNFT", (accounts) => {
+				//SsafyNFT contract instance 생성
+				let nft = await SsafyNFT.new("name", "symbol");
+			
+		
+			//Mocha에서는 it 함수를 정의하여 테스트케이스를 작동한다. 앞에는 테스트 코드 메시지를 적어준다. 
+ 			 it("testing SsafyNFT", async () => {
+			    //  "myTokenUri"라는 URI를 가진 토큰을 생성하여 accounts[0]의 주소에 민팅한다.
+			    const tx = await nft.create(accounts[0], "myTokenUri");
+
+				});
+			});
+			```
+			- 

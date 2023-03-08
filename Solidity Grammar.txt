@@ -132,6 +132,23 @@
 - solidity 문법 학습 3
 	- 상속과 인터페이스
 		- is 키워드로 컨트랙트를 상속 받을 수 있으며 ,(쉼포)로 다중 상속도 가능하다
+		- super 키워드로 부모 호출이 가능하다.
+		- 부모의 constructor를 사용하기 위해선 함수 body 전에 부모의 constructor를 호출해야 한다.
+		```
+		contract Parent {
+		    uint public value;
+
+		    constructor(uint _value) {
+		        value = _value;
+		    }
+		}
+
+		contract Child is Parent {
+		    constructor(uint _value) Parent(_value * 2) {
+	        // Child constructor logic here
+		    }
+		}
+		```
 		- 인터페이스 특징
 			- 함수는 선언만 하며 기능을 정의하지 않는다.
 			- contract가 interface를 상속 가능하다.
@@ -243,3 +260,8 @@
           - 함수 내부에서만 사용할 예정이라면, storage보다는 memory를 활용하자.
         - external view(pure) 활용
           - 외부에서 호출되는 view와 pure는 무료로 실행이 가능하다.
+
+- solidity 문법학습 4
+	- Counters.Counter
+		- 비순차적인 고유값을 관리하는 라이브러리로 id등을 사용해야할 때 유용하다.
+			- uint _id를 선언하고 id++을 이용할 경우, 동시에 여러 컨트렉트가 값을 증가시키려 할 때 문제가 발생할 수 있다.
