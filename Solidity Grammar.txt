@@ -178,7 +178,8 @@
 			}
 
 			contract MyContract {
-			    function incrementCounter(address _counter) external {
+			    function incrementCounter(address _
+			) external {
 			        ICounter(_counter).increment();
 			    }
 
@@ -265,3 +266,4 @@
 	- Counters.Counter
 		- 비순차적인 고유값을 관리하는 라이브러리로 id등을 사용해야할 때 유용하다.
 			- uint _id를 선언하고 id++을 이용할 경우, 동시에 여러 컨트렉트가 값을 증가시키려 할 때 문제가 발생할 수 있다.
+			- Counters라이브러리는 storage로 counter를 선언하여 thread-safe하게 동작함.

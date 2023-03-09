@@ -12,7 +12,7 @@
 - nft Sub PJT
 	- 과제 1 : ERC721 구현
 		- openzeppelin의 코드를 직접 쳐보며 문법 및 작동 방식을 익혔다.
-	- 과제 2: NFT Creaor 구현
+	- 과제 2: NFT Creator 구현
 		- 참고) https://www.youtube.com/watch?v=TYezN5r228U
 			- nft 생성 과정
 			1) 이미지를 ipfs에 올린다.
@@ -30,27 +30,45 @@
 				- 위변조 불가능한 저장소
 				- 블록체인을 활용한 p2p 분산형 웹 저장소이다.
 				- 블록체인 자체에 image와 metedata를 넣기엔 비싸기 때문에 ipfs를 사용한다.
-	- 과제 3: 테스트 코드 작성
+	- 과제 3: 테스트 코드 작성 중
 		- Mocha
 			- truffle은 내부적으로 테스트를 위하여 mocha 프레임워크를 사용한다.
 			- 컨트랙트를 배포한 후, truffle test ./test/<FILENAME>으로 테스트를 실행하면 test 폴더 하위의 js 파일들이 모두 실행된다.
-			- 코드
-			```
-			// SsafyNFT contract artifact를 import한다.(Truffle로 컴파일 할 때 생성됨)
-			const SsafyNFT = artifacts.require("SsafyNFT"); 
 
-			//"SsafyNFT"라는 이름의 단위 테스트 묶음를 정의한다. accounts는 이더리움 주소값의 배열이다.
-			contract("SsafyNFT", (accounts) => {
-				//SsafyNFT contract instance 생성
-				let nft = await SsafyNFT.new("name", "symbol");
-			
-		
-			//Mocha에서는 it 함수를 정의하여 테스트케이스를 작동한다. 앞에는 테스트 코드 메시지를 적어준다. 
- 			 it("testing SsafyNFT", async () => {
-			    //  "myTokenUri"라는 URI를 가진 토큰을 생성하여 accounts[0]의 주소에 민팅한다.
-			    const tx = await nft.create(accounts[0], "myTokenUri");
+----------------------------------------------------------------------------------------------------------------------------------
 
-				});
-			});
-			```
-			- 
+# 23/03/09
+
+- nft Sub PJT
+	- 과제 2 수정
+		- Counters.Counter 사용
+			- OpenZeppelin이 제공하는 library.
+			- counter는 storage를 사용하여 thread-safe하게 동작한다. 
+	- 과제 3 test code 작성
+		- web3의 통신 방식
+			- 함수.call()로 함수를 호출할 경우 read only, 즉 local로 작동된다
+			- 함수를 호출할 때, transaction이 발생하는 함수라면, return값은 transaction hash가 된다. 값은 logs[0].args[2]에 들어있다.
+			- transaction이 발생하지 않는 함수라면, return 값은 주어진 대로 온다.
+			- uint 값의 경우 BN(big number)라는 객체의 형식으로 오는데, 숫자처럼 사용이 가능하다.
+	- 과제 4 배포
+		- truffle migrate나 truffle test를 사용하기 위해서는 ganache가 설치되어 있어야 한다.
+		- npm install -g ganache-cli로 설치 가능
+		- 터미널을 하나 더 실행시킨 뒤 ganache-cli로 실행시킨다.
+
+- infra 설계
+	- S3 저장 구조 토의
+		/users
+		  └  /[이용자id]
+			  └  /profile.jpg
+		/books
+		  └  /[챌린지id]
+			  └  /[동화id]
+				  └  /page0.jpg
+				  └  /page1.jpg
+				  └  ...
+
+
+
+
+
+		        
