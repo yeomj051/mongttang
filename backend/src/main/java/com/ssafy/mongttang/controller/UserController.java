@@ -42,4 +42,24 @@ public class UserController {
         }
         return new ResponseEntity<Map<String, Object>>(resultMap, status);
     }
+
+    @ApiOperation(value = "닉네임 수정", notes = "회원의 닉네임을 수정한다.", response = Map.class)
+    @PatchMapping("/{userId}")
+    public ResponseEntity<Map<String,Object>> nicknameModify(@ApiParam(value = "수정할 회원정보(아이디)", required = true, example = "1") @PathVariable int userId,
+                                                             @ApiParam(value = "수정할 회원정보(변경할 닉네임)", required = true, example  = "홍동길") @RequestParam String userNickname){
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        User user = userService.nicknameModify(userId, userNickname);
+
+        if(user == null){
+            resultMap.put(MESSAGE, FAIL);
+            status = HttpStatus.BAD_REQUEST;
+        } else {
+            resultMap.put(MESSAGE, SUCCESS);
+            resultMap.put("userNickname", user.getUserNickname());
+            status = HttpStatus.ACCEPTED;
+        }
+        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    }
 }

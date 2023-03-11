@@ -30,7 +30,7 @@ public class User {
     @Column(length = 6)
     private String userGender;
 
-    @CreatedDate  //@CreationTimeStamp -> @CreatedDate로 변경
+    @CreatedDate
     private LocalDateTime userCreateDate;
 
     @Enumerated(EnumType.STRING)
@@ -40,4 +40,7 @@ public class User {
     @Column
     private String userInfo;
 
+    public void changeNickname(String nickname) {
+        this.userNickname = nickname;
+    }
 }
