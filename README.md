@@ -52,3 +52,12 @@ Figma를 통한 목업 작업을 이어서 하는 중이다. 주요 화면 구�
 
 ![ahrdjq](/uploads/a4ada04a3df61867c66bb2b9da566205/ahrdjq.PNG)
 ![미니프로필](/uploads/65c9e608553d5525ae0f0437d1c05a21/미니프로필.PNG)
+
+# 2023-03-13 정리
+
+목업 작업을 오늘 중에 마무리하려 했으나, 완벽하게 끝내지는 못했다(세부적인 디자인만 남은 상태). 공지사항 및 추후에 쓸 수도 있는 크라우드 펀딩 페이지에 대한 목업을 작성했고, 일부 화면을 수정했다.
+
+백엔드팀과 함께 API 명세서를 검토하고 수정했으며, 이후 API 주소를 연결하기 위한 config.js 파일을 작성 중이다.
+
+![API](/uploads/8bca25ba044216415181ab11c7ebe36d/API.PNG)
+![FIGMA1](/uploads/bfae90fcfa616e22911ec0cdc3d3bafa/FIGMA1.PNG)
