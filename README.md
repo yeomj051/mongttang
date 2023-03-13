@@ -46,4 +46,6 @@ API 명세작성 완료
 ### API 수정
 동화 상세 페이지 요청/응답 데이터 수정
 
+### 몽땅연필 화면 목업 작업
+![Book_Detail](/uploads/9b0e852a5cd2277b1da17142c87de3d0/Book_Detail.png)
 
