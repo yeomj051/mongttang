@@ -213,3 +213,5 @@ const requests = {
     return `/api/notice/${noticeId}`;
   },
 };
+
+export default requests;
