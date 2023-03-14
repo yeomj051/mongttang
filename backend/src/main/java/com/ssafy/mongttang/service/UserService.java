@@ -26,4 +26,13 @@ public class UserService {
     public User getUser(int userId) {
         return userRepository.findByUserId(userId);
     }
+
+    public User userDelete(int userId) {
+        User user = userRepository.findByUserId(userId);
+        if(user == null) return null;
+        else {
+            user.changeProviderId();
+            return userRepository.save(user);
+        }
+    }
 }

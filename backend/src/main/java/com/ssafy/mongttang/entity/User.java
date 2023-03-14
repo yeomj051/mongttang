@@ -61,4 +61,9 @@ public class User extends BaseEntity {
     public void changeNickname(String nickname) {
         this.userNickname = nickname;
     }
+
+    public void changeProviderId() {
+        changeNickname("(알 수 없음)");
+        this.userProviderId = "del";
+    }
 }

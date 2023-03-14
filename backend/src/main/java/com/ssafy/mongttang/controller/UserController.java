@@ -73,12 +73,43 @@ public class UserController {
         }
         return new ResponseEntity<Map<String, Object>>(resultMap, status);
     }
-    @GetMapping("/logout")
-    public ResponseEntity<Map<String,Object>> logout(Principal principal, HttpServletRequest request) {
+
+    @ApiOperation(value = "회원 탈퇴", notes = "회원을 탈퇴시킨다.", response = Map.class)
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Map<String,Object>> userDelete(@ApiParam(value = "탈퇴시킬 회원 아이디", required = true, example = "1") @PathVariable int userId, Principal principal){
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = null;
 
-        // 3. Redis 에서 해당 User email 로 저장된 Refresh Token 이 있는지 여부를 확인 후 있을 경우 삭제합니다.
+        if(userId != Integer.parseInt(principal.getName())){
+            resultMap.put(MESSAGE, FAIL);
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<Map<String, Object>>(resultMap, status);
+        }
+
+        User user = userService.userDelete(userId);
+
+        if(user == null){
+            resultMap.put(MESSAGE, FAIL);
+            status = HttpStatus.BAD_REQUEST;
+        } else {
+            resultMap.put(MESSAGE, SUCCESS);
+            status = HttpStatus.OK;
+        }
+        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    }
+
+    @ApiOperation(value = "로그아웃", notes = "로그아웃 시킨다.", response = Map.class)
+    @GetMapping("/logout/{userId}")
+    public ResponseEntity<Map<String,Object>> logout(@ApiParam(value = "로그아웃 시킬 회원 아이디", required = true, example = "1") @PathVariable int userId, Principal principal, HttpServletRequest request) {
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        if(userId != Integer.parseInt(principal.getName())){
+            resultMap.put(MESSAGE, FAIL);
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<Map<String, Object>>(resultMap, status);
+        }
+
         if (redisTemplate.opsForValue().get("RT:" + principal.getName()) != null) {
             // Refresh Token 삭제
             redisTemplate.delete("RT:" + principal.getName());
@@ -86,7 +117,6 @@ public class UserController {
 
         String accessToken = TokenUtils.getJwtFromRequest(request);
 
-        // 4. 해당 Access Token 유효시간 가지고 와서 BlackList 로 저장하기
         Long expiration = tokenProviderService.getExpiration(accessToken);
         redisTemplate.opsForValue()
                 .set(accessToken, "logout", expiration, TimeUnit.MILLISECONDS);
