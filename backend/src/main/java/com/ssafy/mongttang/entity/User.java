@@ -28,34 +28,34 @@ public class User extends BaseEntity {
     @NotNull
     private String userEmail;
 
-    @Column(length = 10)
+    @Column(length = 11)
     private String userRole;
 
     @Column(length = 50)
     private String userNickname;
-
-    @Column(length = 6)
-    private String userGender;
-
-    @CreatedDate
-    private LocalDateTime userCreateDate;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 6)
     private AuthProvider userProvider;
 
     @Column
+    private String userProviderId;
+
+    @Column
     private String userInfo;
 
+    @Column
+    private String userProfileImg;
+
     @Builder
-    public User(int userId, LocalDateTime userCreateDate, String userEmail, String userNickname,String userGender, AuthProvider userProvider ){
+    public User(int userId, String userEmail, String userNickname, AuthProvider userProvider, String userProviderId ){
         this.userId = userId;
-        this.userCreateDate = userCreateDate;
         this.userEmail = userEmail;
         this.userNickname = userNickname;
-        this.userGender = userGender;
-        this.userRole = "ROLE_USER";
+        this.userRole = "ROLE_READER";
         this.userProvider = userProvider;
+        this.userProviderId = userProviderId;
+        this.userProfileImg = "defaultImg";
     }
 
     public void changeNickname(String nickname) {

@@ -34,11 +34,11 @@ public class UserController {
         User user = userService.nicknameDpcn(userNickname);
 
         if(user == null){
-            resultMap.put(MESSAGE, SUCCESS);
-            status = HttpStatus.ACCEPTED;
+            resultMap.put(MESSAGE , SUCCESS);
+            status = HttpStatus.OK;
         } else {
             resultMap.put(MESSAGE, FAIL);
-            status = HttpStatus.ACCEPTED;
+            status = HttpStatus.BAD_REQUEST;
         }
         return new ResponseEntity<Map<String, Object>>(resultMap, status);
     }
@@ -58,7 +58,7 @@ public class UserController {
         } else {
             resultMap.put(MESSAGE, SUCCESS);
             resultMap.put("userNickname", user.getUserNickname());
-            status = HttpStatus.ACCEPTED;
+            status = HttpStatus.OK;
         }
         return new ResponseEntity<Map<String, Object>>(resultMap, status);
     }
