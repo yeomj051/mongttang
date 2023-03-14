@@ -1,4 +1,6 @@
-/* axios instance 정의 */
+/* axios instance 정의 
+   defaultApi.get(API, body);
+*/
 import axios from 'axios';
 import requests from './config';
 
