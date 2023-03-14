@@ -125,12 +125,12 @@ const requests = {
 
   //관심 목록 추가
   POST_INTEREST(userId, bookId) {
-    return `/api/profile/follow/${userId}?bookId=${bookId}`; //follow?interest?
+    return `/api/profile/interest/${userId}?bookId=${bookId}`; //follow?interest?
   },
 
   //관심 목록 삭제
   DELETE_INTEREST(userId, bookId) {
-    return `/api/profile/follow/${userId}?bookId=${bookId}`;
+    return `/api/profile/interest/${userId}?bookId=${bookId}`;
   },
 
   //작가 팔로우
