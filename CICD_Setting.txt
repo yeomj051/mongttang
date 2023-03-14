@@ -83,6 +83,56 @@ disown -h으로 소유권을 포기하여 ssh연결이 끊겨도 계속 유지�
 
 --------------------------------------------------------------------------------------------------------------------
 
+- mariadb 설치하기
+	- 먼저 timezone을 확인하고 변경한다.
+		- 확인 : date
+		- 변경 : sudo timedatectl set-timezone 'Asia/Seoul'
+	
+	- 설치하기
+		- 패키지 목록 최신화 : sudo apt update
+		- 서버 설치 : sudo apt install mariadb-server
+		- 마리아 db가 확실히 실행되는지 다시 체크 : sudo systemctl start mariadb.service  ==(동일)  sudo service mariadb start
+	
+	- 보안 설정
+		- sudo mysql_secure_installation
+		- root 사용자의 password는 설정하지 않기 때문에
+			enter current password for root : 에서는 enter
+			set root password? 에서 n을 입력해준다.
+		- 익명 유저, test 데이터베이스를 없애고, root 원격 로그인을 막기 위해 Y를 입력해준다.
+
+	- 새 유저 설정
+		# 중요
+		- MariaDB 10.3부터는 루트유저는 unix_socket을 사용하기 때문에 비밀번호를 사용하지 않는다. 문제가 생기는 것을 막기 위해 건드리지 말도록 하자.
+		- sudo mysql로 root유저 접속이 가능하다.
+		- 유저 생성 및 권한 주기
+			```
+			USE mysql;
+			//새로 유저를 만든다. 내부 접속용이면 localhost를, 외부에서 접근을 모두 허용해주려면 %를 입력해준다.
+			CREATE USER '유저이름'@'접속ip' IDENTIFIED BY '비밀번호';
+			//유저에게 권한을 부여해준다.
+			GRANT ALL PRIVILEGES ON 데이터베이스이름.* TO '유저이름'@'접속ip';
+			//설정을 저장한다.
+			FLUSH PRIVILEGES;
+			```
+		- unix_socket 사용을 원하지 않는다면 plugin을 공란으로 써주면 된다.
+			```
+			USE mysql;
+			UPDATE user SET plugin='' where user='root';
+			SET password = password('비밀번호');
+			FLUSH PRIVILEGES;
+			```
+		- 유저 정보 변경은 update문을 이용하면 된다. flush privileges만 잊지말자
+			ex) update user set password = password('새비밀번호') where user = '아이디' and host = '호스트 ip';
+			flush privileges;
+
+	- 외부에서 접근을 원한다면
+		- sudo vi /etc/mysql/mariadb.conf.d/50-server.cnf 
+		- sudo vim /etc/mysql/mariadb.conf.d/50-server.cnf (vim 설치시)
+		- 주석처리되어있는 port = 3306을 주석 해제해준다.
+		- bind-address를 0.0.0.0으로 변경해준다.
+
+----------------------------------------------------------------------------------------------------------------------------------
+
 nginx설치 및 개념
 
  nginx 
@@ -182,7 +232,7 @@ proxy_intercept_errors on;
 
 		sudo vi /etc/nginx/sites-available/{domain}.conf
 
-			```
+```
 server { # server 블록
 	listen 80;
 	server_name {domain} www.{domain};
@@ -270,6 +320,56 @@ Jenkins 관리 => 플러그인 관리 => 설치가능 ssh 검색, Publish Over S
 
 ```
 
+----------------------------------------------------------------------------------------------------------------------------
+# nginx + certbot https 인증서 발급
+
+sudo snap install certbot --classic
+
+certbot certonly --nginx
+
+이메일 입력 
+Terms of Service -> yes
+email 수신 여부 -> no
+발급 받을 도메인 결정
+
+/etc/nginx/sites-available/{도메인}.conf 변경
+
+	```
+	server {
+    listen 80;    
+    
+    server_name i8a404.p.ssafy.io;
+    
+	location / {
+        return 301 https://i8a404.p.ssafy.io$request_uri;
+    }
+}
+
+	server {
+        listen 443 ssl;    #추가
+
+        server_name i8a404.p.ssafy.io www.i8a404.p.ssafy.io;
+
+        access_log /var/log/nginx/proxy/access.log;
+        error_log /var/log/nginx/proxy/error.log;
+
+        ssl_certificate     /etc/letsencrypt/live/{도메인 이름}/fullchain.pem;   #추가
+        ssl_certificate_key /etc/letsencrypt/live/{도메인 이름}/privkey.pem;   #추가
+
+        location / {
+                include /etc/nginx/proxy_params;
+                proxy_pass http://localhost:3000/;
+           	}
+
+        location /api/ {
+                include /etc/nginx/proxy_params;
+                proxy_pass http://localhost:8080/;
+	}
+        }
+
+	```
+
+-------------------------------------------------------------------------------------------------------------------------------
 
 
 
