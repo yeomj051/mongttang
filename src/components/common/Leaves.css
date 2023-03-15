@@ -61,19 +61,19 @@ section .set div:nth-child(8) {
 }
 
 .set2 {
-  transform: scale(0.6) rotateY(180deg);
-  filter: blur(2px);
+  transform: scale(0.9) rotateY(180deg);
+  /* filter: blur(2px); */
 }
 .set3 {
   transform: scale(0.8) rotateX(180deg);
-  filter: blur(4px);
+  /* filter: blur(4px); */
 }
 
 @keyframes animate {
   0% {
     opacity: 0;
     top: -10%;
-    transform: translateX(100%) rotate(0deg);
+    transform: translateX(50%) rotate(0deg);
   }
   10% {
     opacity: 1;
@@ -88,19 +88,19 @@ section .set div:nth-child(8) {
     transform: translateX(0%) rotate(90deg);
   }
   50% {
-    transform: translateX(100%) rotate(120deg);
+    transform: translateX(50%) rotate(120deg);
   }
   60% {
     transform: translateX(0%) rotate(150deg);
   }
   80% {
-    transform: translateX(100%) rotate(180deg);
+    transform: translateX(50%) rotate(180deg);
   }
   90% {
     transform: translateX(0%) rotate(210deg);
   }
   100% {
     top: 110%;
-    transform: translateX(-100%) rotate(240deg);
+    transform: translateX(-50%) rotate(240deg);
   }
 }
