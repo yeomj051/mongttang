@@ -3,7 +3,7 @@
 
 const requests = {
   //기본 URL 주소
-  base_url: '',
+  base_url: 'http://localhost:3000',
 
   //카카오 소셜로그인 URL(최신화 필요)
   KAKAO_LOGIN:
