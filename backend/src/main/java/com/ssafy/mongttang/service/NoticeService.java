@@ -21,7 +21,16 @@ import java.util.Optional;
 public class NoticeService {
     private final NoticeRepository noticeRepository;
 
-    
+
+
+    @Transactional
+    public Notice updateNotice(int noticeId, NoticeUpdateFormDto noticeUpdateFormDto) {
+        Optional<Notice> notice = noticeRepository.findById(noticeId);
+        if(!notice.isPresent()) return null;
+
+        notice.get().update(noticeUpdateFormDto);
+        return noticeRepository.save(notice.get());
+    }
 
     @Transactional
     public int deleteNotice(int noticeId) {
