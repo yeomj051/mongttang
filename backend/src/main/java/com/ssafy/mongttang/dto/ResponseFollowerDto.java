@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResponseFollowingDto {
+public class ResponseFollowerDto {
     private int userId;
     private String userNickname;
     private String profileImgURL;
 
-    public ResponseFollowingDto(User user){
+    public ResponseFollowerDto(User user){
         this.userId = user.getUserId();
         this.userNickname = user.getUserNickname();
         this.profileImgURL = user.getUserProfileImg();

@@ -1,5 +1,6 @@
 package com.ssafy.mongttang.controller;
 
+import com.ssafy.mongttang.dto.ResponseFollowerDto;
 import com.ssafy.mongttang.dto.ResponseFollowingDto;
 import com.ssafy.mongttang.entity.Follow;
 import com.ssafy.mongttang.entity.User;
@@ -47,5 +48,26 @@ public class ProfileController{
 
         return new ResponseEntity<Map<String, Object>>(resultMap, status);
     }
+
+    @ApiOperation(value = "팔로워 목록 조회", notes = "자신을 팔로우한 사용자의 목록을 조회한다.", response = Map.class)
+    @GetMapping("/follower/{userId}")
+    public ResponseEntity<Map<String,Object>> getFollower(@ApiParam(value = "회원 아이디", required = true, example = "0") @PathVariable int userId){
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        List<ResponseFollowerDto> followers = profileService.getFollower(userId);
+
+        if(followers == null){
+            resultMap.put(MESSAGE, FAIL);
+            status = HttpStatus.BAD_REQUEST;
+        }else{
+            resultMap.put(MESSAGE,SUCCESS);
+            resultMap.put("followings",followers);
+            status = HttpStatus.OK;
+        }
+
+        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    }
+
 
 }

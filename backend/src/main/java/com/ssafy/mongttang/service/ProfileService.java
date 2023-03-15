@@ -1,5 +1,6 @@
 package com.ssafy.mongttang.service;
 
+import com.ssafy.mongttang.dto.ResponseFollowerDto;
 import com.ssafy.mongttang.dto.ResponseFollowingDto;
 import com.ssafy.mongttang.dto.UserInterface;
 import com.ssafy.mongttang.entity.Follow;
@@ -30,6 +31,20 @@ public class ProfileService {
                 followings.add(responseFollowingDto);
             }
             return followings;
+        }
+    }
+
+    public List<ResponseFollowerDto> getFollower(int userId) {
+        User user = userRepository.findByUserId(userId);
+        if(user == null) return null;
+        else {
+            List<Follow> followList = followRepository.findByFollowTo(user);
+            List<ResponseFollowerDto> followers = new ArrayList<>();
+            for (Follow follow : followList) {
+                ResponseFollowerDto responseFollowerDto = new ResponseFollowerDto(follow.getFollowTo());
+                followers.add(responseFollowerDto);
+            }
+            return followers;
         }
     }
 }
