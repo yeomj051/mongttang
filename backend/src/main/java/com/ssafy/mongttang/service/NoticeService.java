@@ -23,6 +23,16 @@ public class NoticeService {
 
 
 
+    public NoticeInfoDto getNotice(int noticeId) {
+        Optional<Notice> notice = noticeRepository.findById(noticeId);
+        if(notice.isPresent()) {
+            return new NoticeInfoDto(notice.get());
+        } else {
+            return null;
+        }
+    }
+
+
     @Transactional
     public Notice updateNotice(int noticeId, NoticeUpdateFormDto noticeUpdateFormDto) {
         Optional<Notice> notice = noticeRepository.findById(noticeId);

@@ -32,6 +32,22 @@ public class NoticeController {
 
 
 
+    //공지사항 조회
+    @ApiOperation(value = "공지사항 상세 조회", notes = "공지사항 번호에 해당하는 공지사항 정보 반환")
+    @GetMapping("/{noticeId}")
+    public ResponseEntity<Map<String, Object>> getNotice(@PathVariable @ApiParam(value = "조회할 공지사항 번호", example = "0") int noticeId) {
+        Map<String, Object> map = new HashMap<>();
+        NoticeInfoDto notice = noticeService.getNotice(noticeId);
+        if(notice != null) {
+            map.put(MESSAGE, SUCCESS);
+            map.put("notice", notice);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } else {
+            map.put(MESSAGE, FAIL);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.BAD_REQUEST);
+        }
+    }
+
     //공지사항 수정
     @ApiOperation(value = "공지사항 글 수정", notes = "수정할 공지사항 정보 입력")
     @PatchMapping("/{noticeId}")
