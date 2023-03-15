@@ -21,7 +21,10 @@ import java.util.Optional;
 public class NoticeService {
     private final NoticeRepository noticeRepository;
 
-
+    @Transactional
+    public Notice createNotice(NoticeCreateFormDto noticeCreateFormDto) {
+        return noticeRepository.save(noticeCreateFormDto.toEntity());
+    }
 
     public NoticeInfoDto getNotice(int noticeId) {
         Optional<Notice> notice = noticeRepository.findById(noticeId);
@@ -31,6 +34,7 @@ public class NoticeService {
             return null;
         }
     }
+
 
 
     @Transactional

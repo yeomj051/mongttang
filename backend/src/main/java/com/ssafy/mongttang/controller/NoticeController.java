@@ -30,7 +30,23 @@ public class NoticeController {
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
 
+    
 
+    //공지사항 등록
+    @ApiOperation(value = "공지사항 등록", notes = "새로운 공지사항 등록, DB입력 성공여부에 따라 'success' 또는 'fail' 반환")
+    @PostMapping()
+    public ResponseEntity<Map<String, Object>> writeNotice(@Valid @RequestBody @ApiParam (value = "새 공지사항 정보 담은 dto") NoticeCreateFormDto noticeCreateFormDto) {
+        Map<String, Object> map = new HashMap<>();
+        Notice notice = noticeService.createNotice(noticeCreateFormDto);
+        if( notice != null) {
+            map.put(MESSAGE, SUCCESS);
+            map.put("noticeId", notice.getNoticeId());
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } else {
+            map.put(MESSAGE, FAIL);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.BAD_REQUEST);
+        }
+    }
 
     //공지사항 조회
     @ApiOperation(value = "공지사항 상세 조회", notes = "공지사항 번호에 해당하는 공지사항 정보 반환")
