@@ -35,7 +35,11 @@ public class NoticeService {
         }
     }
 
-
+    public Page<NoticeInfoDto> getNoticeList(int page, int limit) {
+        Pageable paging = PageRequest.of(page, limit, Sort.Direction.DESC, "createdTime");
+        Page<NoticeInfoDto> noticeList = noticeRepository.findAll(paging).map(notice-> new NoticeInfoDto(notice));
+        return noticeList;
+    }
 
     @Transactional
     public Notice updateNotice(int noticeId, NoticeUpdateFormDto noticeUpdateFormDto) {

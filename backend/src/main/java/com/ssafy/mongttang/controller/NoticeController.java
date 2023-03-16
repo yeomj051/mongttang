@@ -30,7 +30,23 @@ public class NoticeController {
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
 
-    
+    //공지사항 목록
+    @ApiOperation(value = "공지사항 목록 조회(페이징)", notes = "공지사항 목록 페이징", response = Page.class)
+    @GetMapping("/page")
+    public ResponseEntity<Map<String, Object>> getNoticeList(@RequestParam(value = "page", defaultValue = "0") int page,
+                                                      @RequestParam(value = "limit", defaultValue = "10") int limit) {
+        Map<String, Object> map = new HashMap<>();
+
+        Page<NoticeInfoDto> noticeList = noticeService.getNoticeList(page, limit);
+        if(noticeList != null){
+            map.put(MESSAGE, SUCCESS);
+            map.put("notices", noticeList);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } else {
+            map.put(MESSAGE, FAIL);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.BAD_REQUEST);
+        }
+    }
 
     //공지사항 등록
     @ApiOperation(value = "공지사항 등록", notes = "새로운 공지사항 등록, DB입력 성공여부에 따라 'success' 또는 'fail' 반환")
