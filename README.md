@@ -106,17 +106,17 @@ pre, pre-line, pre-wrap 3가지 바리에이션이 있는데 기존과의 차이
 
 **기존(normal)**
 
-![normal.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/80c36588-a53d-4f73-b1bf-054e8960b718/normal.png)
+![normal](/uploads/c916faf2739359d88470e44e2b008548/normal.PNG)
 
 **pre-line**
 
-![pre-line.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/90646896-b13f-43d7-8518-82966dcdbccd/pre-line.png)
+![pre-line](/uploads/33c55743106eef892f11c196e25770b5/pre-line.PNG)
 
 **pre-wrap**
 
-![pre-wrap.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d5f59375-7f43-483d-9bd8-6ce4d6bb7e3b/pre-wrap.png)
+![pre-wrap](/uploads/3ac32236e267272459d6f56415a2521a/pre-wrap.PNG)
 
-`noticeContent.replace(/\r\n/gi, '<br>')` 와 같이 정규식을 활용해 개행문자가 있으면 <br>태그로 실제 화면에서도 개행이 되도록 처리했다.
+`noticeContent.replace(/\r\n/gi, '<br>')` 와 같이 정규식을 활용해 개행문자가 있으면 br 태그로 실제 화면에서도 개행이 되도록 처리했다.
 
 그 외에 css 작업을 styled component를 활용해서 진행했고, em, rem등 반응형 웹페이지를 위한 단위를 써서 화면이 작아져도 같은 비율을 유지하도록 작업했다.
 
