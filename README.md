@@ -121,3 +121,59 @@ pre, pre-line, pre-wrap 3가지 바리에이션이 있는데 기존과의 차이
 그 외에 css 작업을 styled component를 활용해서 진행했고, em, rem등 반응형 웹페이지를 위한 단위를 써서 화면이 작아져도 같은 비율을 유지하도록 작업했다.
 
 공지사항 내용의 경우 더미데이터를 넣어서 테스트해본 결과 API 구현 자체에는 문제가 없음을 확인했다. 나중에 백엔드와 연결하는 작업만 처리하면 될듯 하다.
+
+### 모달창
+
+모달 컴포넌트를 만들었다.
+
+모달 외부를 클릭하면 모달창이 꺼지는 기능과, 외부 스크롤을 방지하는 기능까지 구현했다
+
+```
+function Modal({ onClose, children }) {
+  const modalRef = useRef(null);
+  const handleClose = () => {
+    onClose?.();
+  };
+
+  //모달 외부 클릭시 모달창 꺼짐
+  useOutsideClick(modalRef, handleClose);
+
+  //외부 스크롤 방지
+  useEffect(() => {
+    const $body = document.querySelector('body');
+    const overflow = $body.style.overflow;
+    $body.style.overflow = 'hidden';
+    return () => {
+      $body.style.overflow = overflow;
+    };
+  }, []);
+
+  return (
+    <ModalOverlay>
+      <ModalWrapper ref={modalRef}>
+        <ContentWrapper>{children}</ContentWrapper>
+      </ModalWrapper>
+    </ModalOverlay>
+  );
+}
+```
+
+외부스크롤 방지를 위한 커스텀훅 useOutsideClick은 다음과 같다
+
+```
+function useOutsideClick(ref, callback) {
+  useEffect(() => {
+    const handleClick = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        callback?.();
+      }
+    };
+
+    window.addEventListener("mousedown", handleClick);
+
+    return () => window.removeEventListener("mousedown", handleClick);
+  }, [ref, callback]);
+}
+```
+
+모달창 컴포넌트를 활용해 로그아웃 모달창을 구현하였고, API 연결까지 완료하였다.
