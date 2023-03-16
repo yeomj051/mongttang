@@ -1,9 +1,9 @@
 package com.ssafy.mongttang.controller;
 
 
-import com.ssafy.mongttang.dto.NoticeCreateFormDto;
+import com.ssafy.mongttang.dto.ReqNoticeCreateFormDto;
 import com.ssafy.mongttang.dto.ResponseNoticeDetailDto;
-import com.ssafy.mongttang.dto.NoticeUpdateFormDto;
+import com.ssafy.mongttang.dto.ReqNoticeUpdateFormDto;
 import com.ssafy.mongttang.dto.ResponseNoticeInfoDto;
 import com.ssafy.mongttang.entity.Notice;
 import com.ssafy.mongttang.service.NoticeService;
@@ -69,9 +69,9 @@ public class NoticeController {
     //공지사항 등록
     @ApiOperation(value = "공지사항 등록", notes = "새로운 공지사항 등록, DB입력 성공여부에 따라 'success' 또는 'fail' 반환")
     @PostMapping()
-    public ResponseEntity<Map<String, Object>> writeNotice(@Valid @RequestBody @ApiParam (value = "새 공지사항 정보 담은 dto") NoticeCreateFormDto noticeCreateFormDto) {
+    public ResponseEntity<Map<String, Object>> writeNotice(@Valid @RequestBody @ApiParam (value = "새 공지사항 정보 담은 dto") ReqNoticeCreateFormDto reqNoticeCreateFormDto) {
         Map<String, Object> map = new HashMap<>();
-        Notice notice = noticeService.createNotice(noticeCreateFormDto);
+        Notice notice = noticeService.createNotice(reqNoticeCreateFormDto);
         if( notice != null) {
             map.put(MESSAGE, SUCCESS);
             map.put("noticeId", notice.getNoticeId());
@@ -102,10 +102,10 @@ public class NoticeController {
     @ApiOperation(value = "공지사항 글 수정", notes = "수정할 공지사항 정보 입력")
     @PatchMapping("/{noticeId}")
     public ResponseEntity<Map<String, Object>> updateNotice(@PathVariable int noticeId,
-                                                            @Valid @RequestBody @ApiParam(value = "수정 글 정보 담은 dto") NoticeUpdateFormDto noticeUpdateFormDto) {
+                                                            @Valid @RequestBody @ApiParam(value = "수정 글 정보 담은 dto") ReqNoticeUpdateFormDto reqNoticeUpdateFormDto) {
         Map<String, Object> map = new HashMap<>();
 
-        Notice updatedNotice = noticeService.updateNotice(noticeId, noticeUpdateFormDto);
+        Notice updatedNotice = noticeService.updateNotice(noticeId, reqNoticeUpdateFormDto);
         if(updatedNotice != null) {
             map.put(MESSAGE, SUCCESS);
             map.put("notice", updatedNotice);

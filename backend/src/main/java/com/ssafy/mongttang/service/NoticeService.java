@@ -1,9 +1,9 @@
 package com.ssafy.mongttang.service;
 
 
-import com.ssafy.mongttang.dto.NoticeCreateFormDto;
+import com.ssafy.mongttang.dto.ReqNoticeCreateFormDto;
 import com.ssafy.mongttang.dto.ResponseNoticeDetailDto;
-import com.ssafy.mongttang.dto.NoticeUpdateFormDto;
+import com.ssafy.mongttang.dto.ReqNoticeUpdateFormDto;
 import com.ssafy.mongttang.dto.ResponseNoticeInfoDto;
 import com.ssafy.mongttang.entity.Notice;
 import com.ssafy.mongttang.repository.NoticeRepository;
@@ -25,8 +25,8 @@ public class NoticeService {
     private final NoticeRepository noticeRepository;
 
     @Transactional
-    public Notice createNotice(NoticeCreateFormDto noticeCreateFormDto) {
-        return noticeRepository.save(noticeCreateFormDto.toEntity());
+    public Notice createNotice(ReqNoticeCreateFormDto reqNoticeCreateFormDto) {
+        return noticeRepository.save(reqNoticeCreateFormDto.toEntity());
     }
 
     public ResponseNoticeDetailDto getNotice(int noticeId) {
@@ -45,11 +45,11 @@ public class NoticeService {
     }
 
     @Transactional
-    public Notice updateNotice(int noticeId, NoticeUpdateFormDto noticeUpdateFormDto) {
+    public Notice updateNotice(int noticeId, ReqNoticeUpdateFormDto reqNoticeUpdateFormDto) {
         Optional<Notice> notice = noticeRepository.findById(noticeId);
         if(!notice.isPresent()) return null;
 
-        notice.get().update(noticeUpdateFormDto);
+        notice.get().update(reqNoticeUpdateFormDto);
         return noticeRepository.save(notice.get());
     }
 

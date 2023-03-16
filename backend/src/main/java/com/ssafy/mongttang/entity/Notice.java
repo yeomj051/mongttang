@@ -1,6 +1,6 @@
 package com.ssafy.mongttang.entity;
 
-import com.ssafy.mongttang.dto.NoticeUpdateFormDto;
+import com.ssafy.mongttang.dto.ReqNoticeUpdateFormDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,8 +29,8 @@ public class Notice extends BaseEntity {
         this.noticeContent = noticeContent;
     }
 
-    public void update(NoticeUpdateFormDto noticeUpdateFormDto){
-        this.noticeTitle = noticeUpdateFormDto.getNoticeTitle();
-        this.noticeContent = noticeUpdateFormDto.getNoticeContent();
+    public void update(ReqNoticeUpdateFormDto reqNoticeUpdateFormDto){
+        this.noticeTitle = reqNoticeUpdateFormDto.getNoticeTitle();
+        this.noticeContent = reqNoticeUpdateFormDto.getNoticeContent();
     }
 }

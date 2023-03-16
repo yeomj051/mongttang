@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class NoticeCreateFormDto {
+public class ReqNoticeCreateFormDto {
     @NotBlank(message = "제목은 필수 입력 값입니다.")
     private String noticeTitle;
     @NotNull(message = "내용은 필수 입력 값입니다.")
