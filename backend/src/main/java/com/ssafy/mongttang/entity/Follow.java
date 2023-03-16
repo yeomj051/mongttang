@@ -19,9 +19,6 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Table(name = "follow")
 public class Follow {
-//    `follow_id`	int	NOT NULL,
-//            `follow_follower`	int	NOT NULL,
-//            `follow_following`	int	NOT NULL
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "memory_id",columnDefinition = "INT UNSIGNED")
@@ -36,4 +33,9 @@ public class Follow {
     @ManyToOne
     @JoinColumn(name = "follow_to")
     private User followTo;           //팔로우 당한 사람
+
+    public Follow(User user, User artist) {
+        this.followFrom = user;
+        this.followTo = artist;
+    }
 }
