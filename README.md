@@ -85,3 +85,39 @@ Figma를 통한 목업 작업을 이어서 하는 중이다. 주요 화면 구�
 
 - 공지사항 목록 조회 API와 연결해서 리스트 받아오는 기능 구현
 - 아직 띄워진 화면은 없음
+
+# 2023-03-16 정리
+
+### 팀 회의
+
+아침에 또다시 회의를 했다. 바뀐 기획에 맞춰 명세서를 수정하기 위함. 오래된 명세를 수정하면서 블록체인 관련해서 서로 달랐던 개념을 맞추는데 많은 시간을 할애했다.
+
+### 공지사항 페이지 완료
+
+팀원이 작업하고 있는 헤더부분 컴포넌트가 완료되면 씌우기만 하면 된다
+
+**작업하면서 배운 부분**
+
+React에서는 String 내부에서 텍스트 개행문자인 \n이 자동적으로 적용이 안된다.
+
+적용을 위해서는 css에서 white-space: pre 속성을 적용해줘야 한다.
+
+pre, pre-line, pre-wrap 3가지 바리에이션이 있는데 기존과의 차이점은 아래 이미지와 같다.
+
+**기존(normal)**
+
+![normal.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/80c36588-a53d-4f73-b1bf-054e8960b718/normal.png)
+
+**pre-line**
+
+![pre-line.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/90646896-b13f-43d7-8518-82966dcdbccd/pre-line.png)
+
+**pre-wrap**
+
+![pre-wrap.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d5f59375-7f43-483d-9bd8-6ce4d6bb7e3b/pre-wrap.png)
+
+`noticeContent.replace(/\r\n/gi, '<br>')` 와 같이 정규식을 활용해 개행문자가 있으면 <br>태그로 실제 화면에서도 개행이 되도록 처리했다.
+
+그 외에 css 작업을 styled component를 활용해서 진행했고, em, rem등 반응형 웹페이지를 위한 단위를 써서 화면이 작아져도 같은 비율을 유지하도록 작업했다.
+
+공지사항 내용의 경우 더미데이터를 넣어서 테스트해본 결과 API 구현 자체에는 문제가 없음을 확인했다. 나중에 백엔드와 연결하는 작업만 처리하면 될듯 하다.
