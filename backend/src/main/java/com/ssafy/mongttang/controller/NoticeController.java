@@ -2,8 +2,9 @@ package com.ssafy.mongttang.controller;
 
 
 import com.ssafy.mongttang.dto.NoticeCreateFormDto;
-import com.ssafy.mongttang.dto.NoticeInfoDto;
+import com.ssafy.mongttang.dto.ResponseNoticeDetailDto;
 import com.ssafy.mongttang.dto.NoticeUpdateFormDto;
+import com.ssafy.mongttang.dto.ResponseNoticeInfoDto;
 import com.ssafy.mongttang.entity.Notice;
 import com.ssafy.mongttang.service.NoticeService;
 import io.swagger.annotations.ApiOperation;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -37,8 +39,24 @@ public class NoticeController {
                                                       @RequestParam(value = "limit", defaultValue = "10") int limit) {
         Map<String, Object> map = new HashMap<>();
 
-        Page<NoticeInfoDto> noticeList = noticeService.getNoticeList(page, limit);
+        Page<ResponseNoticeInfoDto> noticeList = noticeService.getNoticeList(page, limit);
         if(noticeList != null){
+            map.put(MESSAGE, SUCCESS);
+            map.put("notices", noticeList);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } else {
+            map.put(MESSAGE, FAIL);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @ApiOperation(value = "공지사항 목록 조회", notes = "공지사항 목록", response = Page.class)
+    @GetMapping()
+    public ResponseEntity<Map<String, Object>> getNotices() {
+        Map<String, Object> map = new HashMap<>();
+
+        List<ResponseNoticeInfoDto> noticeList = noticeService.getNotices();
+        if (noticeList != null) {
             map.put(MESSAGE, SUCCESS);
             map.put("notices", noticeList);
             return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
@@ -69,7 +87,7 @@ public class NoticeController {
     @GetMapping("/{noticeId}")
     public ResponseEntity<Map<String, Object>> getNotice(@PathVariable @ApiParam(value = "조회할 공지사항 번호", example = "0") int noticeId) {
         Map<String, Object> map = new HashMap<>();
-        NoticeInfoDto notice = noticeService.getNotice(noticeId);
+        ResponseNoticeDetailDto notice = noticeService.getNotice(noticeId);
         if(notice != null) {
             map.put(MESSAGE, SUCCESS);
             map.put("notice", notice);

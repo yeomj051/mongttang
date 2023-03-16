@@ -8,12 +8,12 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
-public class NoticeInfoDto {
+public class ResponseNoticeDetailDto {
     private int noticeId;
     private String noticeTitle;
     private String noticeContent;
     private LocalDateTime createdTime;
-    public NoticeInfoDto(Notice notice) {
+    public ResponseNoticeDetailDto(Notice notice) {
         this.noticeId = notice.getNoticeId();
         this.noticeTitle = notice.getNoticeTitle();
         this.noticeContent = notice.getNoticeContent();
