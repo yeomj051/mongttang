@@ -14,7 +14,7 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <CookiesProvider>
-      <QueryClientProvider lient={queryClient} contextSharing={true}>
+      <QueryClientProvider client={queryClient}>
         <BrowserRouter className="App">
           <div>
             <Routes>
