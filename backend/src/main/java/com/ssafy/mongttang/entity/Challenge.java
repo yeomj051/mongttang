@@ -1,6 +1,7 @@
 package com.ssafy.mongttang.entity;
 
 
+import com.ssafy.mongttang.dto.ReqChallengeCreateFormDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -43,5 +44,13 @@ public class Challenge extends BaseEntity{
         this.challengeSummary = challengeSummary;
         this.challengeStartDate = challengeStartDate;
         this.challengeEndDate = challengeEndDate;
+    }
+
+    public void update(ReqChallengeCreateFormDto reqChallengeCreateFormDto){
+        this.challengeTitle = reqChallengeCreateFormDto.getChallengeTitle();
+        this.challengeContent = reqChallengeCreateFormDto.getChallengeContent();
+        this.challengeSummary = reqChallengeCreateFormDto.getChallengeSummary();
+        this.challengeStartDate = reqChallengeCreateFormDto.getChallengeStartDate();
+        this.challengeEndDate = reqChallengeCreateFormDto.getChallengeEndDate();
     }
 }

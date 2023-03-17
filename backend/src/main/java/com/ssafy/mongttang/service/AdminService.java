@@ -2,10 +2,14 @@ package com.ssafy.mongttang.service;
 
 import com.ssafy.mongttang.dto.ReqChallengeCreateFormDto;
 import com.ssafy.mongttang.dto.ResponseChallengeInfoDto;
+import com.ssafy.mongttang.dto.ResponseChallengeUpdateDto;
+import com.ssafy.mongttang.entity.Challenge;
 import com.ssafy.mongttang.repository.AdminRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,5 +19,13 @@ public class AdminService {
     @Transactional
     public ResponseChallengeInfoDto addNewChallenge(ReqChallengeCreateFormDto reqChallengeCreateFormDto) {
         return new ResponseChallengeInfoDto(adminRepository.save(reqChallengeCreateFormDto.toEntity()));
+    }
+
+    @Transactional
+    public ResponseChallengeUpdateDto updateChallenge(int challengeId, ReqChallengeCreateFormDto reqChallengeCreateFormDto) {
+        Optional<Challenge> challenge = adminRepository.findById(challengeId);
+        if(!challenge.isPresent()) return null;
+        challenge.get().update(reqChallengeCreateFormDto);
+        return new ResponseChallengeUpdateDto(adminRepository.save(challenge.get()));
     }
 }
