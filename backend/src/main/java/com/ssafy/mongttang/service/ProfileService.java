@@ -27,13 +27,31 @@ public class ProfileService {
         System.out.println(artist.getUserRole());
         if(user == null || artist == null || !artist.getUserRole().equals("ROLE_ARTIST")) return null;
         else{
-            Follow follow = followRepository.findByFollowToAndFollowFrom(user,artist);
+            Follow follow = followRepository.findByFollowFromAndFollowTo(user,artist);
             if(follow == null){
                 return followRepository.save(new Follow(user,artist));
             }
-            return follow;
+            return null;
         }
     }
+
+    public int followCancleArtist(int userId, int artistId) {
+        User user = userRepository.findByUserId(userId);
+        User artist = userRepository.findByUserId(artistId);
+        System.out.println(artist.getUserRole());
+        if(user == null || artist == null || !artist.getUserRole().equals("ROLE_ARTIST")) return 0;
+        else{
+            Follow follow = followRepository.findByFollowFromAndFollowTo(user,artist);
+//            System.out.println(followRepository.findByFollowToAndFollowFrom(userId,artistId).toString());
+            if(follow == null){
+                return 0;
+            }else{
+                followRepository.delete(follow);
+                return 1;
+            }
+        }
+    }
+
     public List<ResponseFollowingDto> getFollowing(int userId) {
         User user = userRepository.findByUserId(userId);
         if(user == null) return null;
@@ -55,10 +73,12 @@ public class ProfileService {
             List<Follow> followList = followRepository.findByFollowTo(user);
             List<ResponseFollowerDto> followers = new ArrayList<>();
             for (Follow follow : followList) {
-                ResponseFollowerDto responseFollowerDto = new ResponseFollowerDto(follow.getFollowTo());
+                ResponseFollowerDto responseFollowerDto = new ResponseFollowerDto(follow.getFollowFrom());
                 followers.add(responseFollowerDto);
             }
             return followers;
         }
     }
+
+
 }

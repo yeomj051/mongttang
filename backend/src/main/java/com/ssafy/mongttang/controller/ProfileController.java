@@ -47,6 +47,27 @@ public class ProfileController{
         return new ResponseEntity<Map<String, Object>>(resultMap, status);
     }
 
+    @ApiOperation(value = "작가 팔로우 취소", notes = "작가를 팔로우를 취소 한다.", response = Map.class)
+    @DeleteMapping("/follow/{userId}")
+    public ResponseEntity<Map<String,Object>> followCancleArtist(@ApiParam(value = "회원 아이디", required = true, example = "0") @PathVariable int userId, @ApiParam(value = "작가 아이디", required = true, example = "0") @RequestParam int artistId){
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        int isDeleted= profileService.followCancleArtist(userId,artistId);
+
+        if(isDeleted > 0){
+            resultMap.put(MESSAGE,SUCCESS);
+            resultMap.put("isfollow",false);
+            status = HttpStatus.OK;
+        }else{
+            resultMap.put(MESSAGE, FAIL);
+            resultMap.put("isfollow",true);
+            status = HttpStatus.BAD_REQUEST;
+        }
+
+        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    }
+
     @ApiOperation(value = "팔로잉 목록 조회", notes = "자신이 팔로우한 사용자의 목록을 조회한다.", response = Map.class)
     @GetMapping("/following/{userId}")
     public ResponseEntity<Map<String,Object>> getFollowing(@ApiParam(value = "회원 아이디", required = true, example = "0") @PathVariable int userId){
