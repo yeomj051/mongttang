@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5b81e098-3307-43a2-ac89-8aa31be15c18" name="Changes" comment="[S08P22A308-133] BC / Study" />
+    <list default="true" id="5b81e098-3307-43a2-ac89-8aa31be15c18" name="Changes" comment="[S08P22A308-133] BC / Study">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blockchain.md" beforeDir="false" afterPath="$PROJECT_DIR$/blockchain.md" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -60,6 +63,8 @@
       <workItem from="1678340789747" duration="103000" />
       <workItem from="1678759562882" duration="672000" />
       <workItem from="1678784633560" duration="165000" />
+      <workItem from="1678863099634" duration="316000" />
+      <workItem from="1679042338585" duration="223000" />
     </task>
     <task id="LOCAL-00001" summary="[S08P22A308-133] BC / Study">
       <created>1678784760199</created>
@@ -68,11 +73,29 @@
       <option name="project" value="LOCAL" />
       <updated>1678784760199</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="[S08P22A308-133] BC / Study">
+      <created>1678863356047</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1678863356047</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="[S08P22A308-133] BC / Study" />

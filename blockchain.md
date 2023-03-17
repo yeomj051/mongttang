@@ -54,4 +54,27 @@ NFT에 등록된 이미지 정보 등임
 
 tokenURI에 생성하려는 NFT주소 넣고 transact누르면
 
-하실거냐고 물어보는데, 한다고 하면됨.m
+하실거냐고 물어보는데, 한다고 하면됨.
+
+Solidity의 modifier 와 payable
+
+pragma solidity 0.4.11;
+import "TokenFactory.sol"
+contract CrowdSaleSample {
+TokenFactory public token;
+mapping   (address => uint256)  balances;
+address public owner;
+modifier onlyOwner {
+require(msg.sender == owner);
+_;
+}
+function FLToken(){
+owner = msg.sender;
+}
+function() payable {
+if (now > endBlock) throw;
+token.distribute(msg.sender);
+}
+function distribute(address depositor) onlyOwner {
+balances[depositor] +=  100;
+}
