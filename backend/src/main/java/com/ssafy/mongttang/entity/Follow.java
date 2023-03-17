@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
 public class Follow {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "memory_id",columnDefinition = "INT UNSIGNED")
+    @Column(columnDefinition = "INT UNSIGNED")
     private int followId;
 
     @NotNull

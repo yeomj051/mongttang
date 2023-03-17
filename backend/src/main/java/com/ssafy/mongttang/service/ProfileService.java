@@ -24,12 +24,15 @@ public class ProfileService {
     public Follow followArtist(int userId, int artistId) {
         User user = userRepository.findByUserId(userId);
         User artist = userRepository.findByUserId(artistId);
-        if(user == null || artist == null || artist.getUserRole() != "ROLE_ARTIST") return null;
+        System.out.println(artist.getUserRole());
+        if(user == null || artist == null || !artist.getUserRole().equals("ROLE_ARTIST")) return null;
         else{
-            Follow follow = new Follow(user,artist);
-            return followRepository.save(follow);
+            Follow follow = followRepository.findByFollowToAndFollowFrom(user,artist);
+            if(follow == null){
+                return followRepository.save(new Follow(user,artist));
+            }
+            return follow;
         }
-
     }
     public List<ResponseFollowingDto> getFollowing(int userId) {
         User user = userRepository.findByUserId(userId);

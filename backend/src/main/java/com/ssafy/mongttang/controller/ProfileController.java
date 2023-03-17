@@ -28,7 +28,7 @@ public class ProfileController{
 
     @ApiOperation(value = "작가 팔로우", notes = "작가를 팔로우 한다.", response = Map.class)
     @PostMapping("/follow/{userId}")
-    public ResponseEntity<Map<String,Object>> followArtist(@ApiParam(value = "회원 아이디", required = true, example = "0") @PathVariable int userId, @RequestParam int artistId){
+    public ResponseEntity<Map<String,Object>> followArtist(@ApiParam(value = "회원 아이디", required = true, example = "0") @PathVariable int userId, @ApiParam(value = "작가 아이디", required = true, example = "0") @RequestParam int artistId){
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = null;
 
