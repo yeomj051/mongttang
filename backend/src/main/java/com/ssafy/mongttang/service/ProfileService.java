@@ -100,21 +100,21 @@ public class ProfileService {
         }
     }
 
-//    public int cancleInterest(int userId, int bookId) {
-//        User user = userRepository.findByUserId(userId);
-//        //동화 있는지 확인
-////        Book book = bookReapository.findByBookId(bookId);
-//
-////        if(user == null || book == null) return 0;
-//        if(user == null) return 0;
-//        else{
-//            InterestBook interestBook = interestBookRepository.findByInterestbookUserIdAndInterestbookBookId(user, bookId);
-////            InterestBook interestBook = interestBookRepository.findByUserIdAndBookId(user, book);
-//            if(interestBook == null) return 0;
-//            else{
-//                interestBookRepository.delete(interestBook);
-//                return 1;
-//            }
-//        }
-//    }
+    public int cancleInterest(int userId, int bookId) {
+        User user = userRepository.findByUserId(userId);
+        //동화 있는지 확인
+//        Book book = bookReapository.findByBookId(bookId);
+
+//        if(user == null || book == null) return 0;
+        if(user == null) return 0;
+        else{
+            InterestBook interestBook = interestBookRepository.findByInterestbookUserIdAndInterestbookBookId(user, bookId);
+//            InterestBook interestBook = interestBookRepository.findByUserIdAndBookId(user, book);
+            if(interestBook == null) return 0;
+            else{
+                interestBookRepository.delete(interestBook);
+                return 1;
+            }
+        }
+    }
 }
