@@ -9,7 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,4 +30,10 @@ public class AdminService {
         challenge.get().update(reqChallengeCreateFormDto);
         return new ResponseChallengeUpdateDto(adminRepository.save(challenge.get()));
     }
+
+    public List<ResponseChallengeUpdateDto> getChallenges() {
+        return adminRepository.findAll().stream()
+                .map(challenge -> new ResponseChallengeUpdateDto(challenge)).collect(Collectors.toList());
+    }
+
 }

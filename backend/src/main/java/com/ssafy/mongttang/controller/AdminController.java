@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -43,10 +44,10 @@ public class AdminController {
         }
     }
 
-    @ApiOperation(value = "관리자가 새로운 챌린지 등록", notes = "관리자가 새로운 챌린지를 등록한다.", response = Page.class)
+    @ApiOperation(value = "챌린지 수정", notes = "관리자가 등록된 챌린지를 수정한다.", response = Page.class)
     @PatchMapping("/challenge/{challengeId}")
     public ResponseEntity<Map<String, Object>> updateChallenge(@PathVariable @ApiParam(value = "수정할 챌린지 아이디 번호") int challengeId,
-                                                               @ApiParam(value = "등록할 새로운 챌린지 정보를 담은 dto") @RequestBody ReqChallengeCreateFormDto reqChallengeCreateFormDto) {
+                                                               @ApiParam(value = "챌린지 수정 정보 dto") @RequestBody ReqChallengeCreateFormDto reqChallengeCreateFormDto) {
         Map<String, Object> map = new HashMap<>();
 
         ResponseChallengeUpdateDto challenge = adminService.updateChallenge(challengeId, reqChallengeCreateFormDto);
@@ -59,4 +60,21 @@ public class AdminController {
             return new ResponseEntity<Map<String, Object>>(map, HttpStatus.BAD_REQUEST);
         }
     }
+
+    @ApiOperation(value = "챌린지 목록 조회", notes = "등록된 챌린지들을 조회한다.", response = Page.class)
+    @GetMapping("/challenge")
+    public ResponseEntity<Map<String, Object>> getChallenges() {
+        Map<String, Object> map = new HashMap<>();
+
+        List<ResponseChallengeUpdateDto> challengeList = adminService.getChallenges();
+        if(challengeList != null){
+            map.put(MESSAGE, SUCCESS);
+            map.put("challenges", challengeList);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } else {
+            map.put(MESSAGE, FAIL);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }
