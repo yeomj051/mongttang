@@ -3,7 +3,7 @@ package com.ssafy.mongttang.controller;
 import com.ssafy.mongttang.dto.ResponseFollowerDto;
 import com.ssafy.mongttang.dto.ResponseFollowingDto;
 import com.ssafy.mongttang.entity.Follow;
-import com.ssafy.mongttang.entity.User;
+import com.ssafy.mongttang.entity.InterestBook;
 import com.ssafy.mongttang.service.ProfileService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -108,5 +108,46 @@ public class ProfileController{
         return new ResponseEntity<Map<String, Object>>(resultMap, status);
     }
 
+    @ApiOperation(value = "관심 목록 추가", notes = "관심있는 동화를 내 관심목록에 추가한다.", response = Map.class)
+    @PostMapping("/interest/{userId}")
+    public ResponseEntity<Map<String,Object>> createInterest(@ApiParam(value = "회원 아이디", required = true, example = "0") @PathVariable int userId, @ApiParam(value = "동화 아이디", required = true, example = "0") @RequestParam int bookId){
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        InterestBook interestBokk = profileService.createInterest(userId, bookId);
+
+        if(interestBokk == null){
+            resultMap.put(MESSAGE, FAIL);
+            resultMap.put("isInterest",false);
+            status = HttpStatus.BAD_REQUEST;
+        }else{
+            resultMap.put(MESSAGE,SUCCESS);
+            resultMap.put("isInterest",true);
+            status = HttpStatus.OK;
+        }
+
+        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    }
+
+//    @ApiOperation(value = "관심 목록 삭제", notes = "관심있는 동화를 내 관심목록에 추가한다.", response = Map.class)
+//    @DeleteMapping("/interest/{userId}")
+//    public ResponseEntity<Map<String,Object>> cancleInterest(@ApiParam(value = "회원 아이디", required = true, example = "0") @PathVariable int userId, @ApiParam(value = "동화 아이디", required = true, example = "0") @RequestParam int bookId){
+//        Map<String, Object> resultMap = new HashMap<>();
+//        HttpStatus status = null;
+//
+//        int isDeleted = profileService.cancleInterest(userId, bookId);
+//
+//        if(isDeleted > 0){
+//            resultMap.put(MESSAGE,SUCCESS);
+//            resultMap.put("isInterest",true);
+//            status = HttpStatus.OK;
+//        }else{
+//            resultMap.put(MESSAGE, FAIL);
+//            resultMap.put("isInterest",false);
+//            status = HttpStatus.BAD_REQUEST;
+//        }
+//
+//        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+//    }
 
 }
