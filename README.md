@@ -188,3 +188,17 @@ function useOutsideClick(ref, callback) {
 있다면 리다이렉트할 주소의 차이 아닐까
 
 ![탈퇴](/uploads/6c70abb81b5c202a7a15f5d7e53b3782/탈퇴.PNG)
+
+# 2023-03-20 정리
+
+### 메인화면 컴포넌트 구현
+
+메인화면을 구성할 동화책, 타이머, 책 선반, 챌린지 상세정보 컴포넌트를 만들었다.
+
+메인화면 구성요소(컴포넌트)는 거의 다 구현했기 때문에 내일 오전 중으로 메인화면 개발을 끝낼 예정이다.
+
+### 이미지 위에 텍스트 덮는 방법
+
+이미지와 텍스트를 감싸는 wrap 요소에 position:relativ를 부여하고, text요소에 position:absolute를 추가해주면 된다. 단, 위치값을 일일히 수정해줘야한다는 단점이 있다.
+
+![todaycommit](/uploads/65bf7bb1eb557c1877ec33a765fc4435/todaycommit.PNG)
