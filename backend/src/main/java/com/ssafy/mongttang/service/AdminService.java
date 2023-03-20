@@ -36,4 +36,10 @@ public class AdminService {
                 .map(challenge -> new ResponseChallengeUpdateDto(challenge)).collect(Collectors.toList());
     }
 
+    public int deleteChallenge(int challengeId) {
+        Optional<Challenge> challenge = adminRepository.findById(challengeId);
+        if(!challenge.isPresent()) return 0;
+        adminRepository.deleteById(challengeId);
+        return 1;
+    }
 }

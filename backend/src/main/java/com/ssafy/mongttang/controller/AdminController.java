@@ -77,4 +77,18 @@ public class AdminController {
         }
     }
 
+    @ApiOperation(value = "챌린지 삭제", notes = "관리자는 챌린지를 삭제한다.", response = Page.class)
+    @DeleteMapping("/challenge/{challengeId}")
+    public ResponseEntity<Map<String, Object>> deleteChallenge(@PathVariable @ApiParam(value = "삭제할 챌린지 아이디 번호") int challengeId) {
+        Map<String, Object> map = new HashMap<>();
+
+        int cnt = adminService.deleteChallenge(challengeId);
+        if(cnt == 1){
+            map.put(MESSAGE, SUCCESS);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } else {
+            map.put(MESSAGE, FAIL);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.BAD_REQUEST);
+        }
+    }
 }
