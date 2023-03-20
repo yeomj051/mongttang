@@ -24,6 +24,7 @@ function ChallengeTimer({ endDate }) {
       <p>남은 시간</p>
       <FlipClockCountdown
         to={date}
+        showLabels={false}
         digitBlockStyle={{
           width: 40,
           height: 60,
