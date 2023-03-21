@@ -4,11 +4,15 @@ import com.ssafy.mongttang.entity.User;
 import com.ssafy.mongttang.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final S3Service s3Service;
 
     public User nicknameDpcn(String userNickname) {
         return userRepository.findByUserNickname(userNickname);
@@ -31,8 +35,19 @@ public class UserService {
         User user = userRepository.findByUserId(userId);
         if(user == null) return null;
         else {
-            user.changeProviderId();
+            user.deleteUser();
             return userRepository.save(user);
         }
+    }
+
+    public String profileImgModify(int userId, MultipartFile userImg) throws IOException {
+        User user = userRepository.findByUserId(userId);
+        if(user != null){
+            String profilePath = s3Service.uploadProfile(userImg, userId);
+            if(profilePath == null) return null;
+            user.changeProfileImg(profilePath);
+            return userRepository.save(user).getUserProfileImg();
+        }
+        return null;
     }
 }

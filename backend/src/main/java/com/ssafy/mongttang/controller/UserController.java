@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
@@ -74,14 +75,39 @@ public class UserController {
         return new ResponseEntity<Map<String, Object>>(resultMap, status);
     }
 
-    @ApiOperation(value = "회원 탈퇴", notes = "회원을 탈퇴시킨다.", response = Map.class)
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<Map<String,Object>> userDelete(@ApiParam(value = "탈퇴시킬 회원 아이디", required = true, example = "1") @PathVariable int userId, Principal principal){
+    @ApiOperation(value = "프로필 사진 수정", notes = "회원의 프로필 사진을 수정한다.", response = Map.class)
+    @PatchMapping("/image/{userId}")
+    public ResponseEntity<Map<String,Object>> profileImgModify(@ApiParam(value = "프로필 사진을 수정할 회원의 아이디", required = true, example = "1") @PathVariable int userId,
+                                                             @ApiParam(value = "변경할 프로필 사진", required = true) @RequestParam MultipartFile userImg){
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = null;
 
-        if(userId != Integer.parseInt(principal.getName())){
+        try {
+            String profileImgURL = userService.profileImgModify(userId, userImg);
+            if(profileImgURL == null){
+                resultMap.put(MESSAGE, FAIL);
+                status = HttpStatus.BAD_REQUEST;
+            } else {
+                resultMap.put(MESSAGE, SUCCESS);
+                resultMap.put("profileImgURL", profileImgURL);
+                status = HttpStatus.OK;
+            }
+        } catch (IOException e) {
             resultMap.put(MESSAGE, FAIL);
+            status = HttpStatus.BAD_REQUEST;
+        }
+
+        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    }
+
+    @ApiOperation(value = "회원 탈퇴", notes = "회원을 탈퇴시킨다.", response = Map.class)
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Map<String,Object>> userDelete(@ApiParam(value = "탈퇴시킬 회원 아이디", required = true, example = "1") @PathVariable int userId
+            , Principal principal, HttpServletRequest request){
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
             status = HttpStatus.BAD_REQUEST;
             return new ResponseEntity<Map<String, Object>>(resultMap, status);
         }
@@ -92,8 +118,7 @@ public class UserController {
             resultMap.put(MESSAGE, FAIL);
             status = HttpStatus.BAD_REQUEST;
         } else {
-            resultMap.put(MESSAGE, SUCCESS);
-            status = HttpStatus.OK;
+            return logout(userId, principal, request);
         }
         return new ResponseEntity<Map<String, Object>>(resultMap, status);
     }
@@ -104,14 +129,12 @@ public class UserController {
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = null;
 
-        if(userId != Integer.parseInt(principal.getName())){
-            resultMap.put(MESSAGE, FAIL);
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
             status = HttpStatus.BAD_REQUEST;
             return new ResponseEntity<Map<String, Object>>(resultMap, status);
         }
 
         if (redisTemplate.opsForValue().get("RT:" + principal.getName()) != null) {
-            // Refresh Token 삭제
             redisTemplate.delete("RT:" + principal.getName());
         }
 
