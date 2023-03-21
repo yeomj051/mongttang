@@ -24,10 +24,3 @@
   </script>
   
   <style></style>
-  
-data() {
-    return {
-      ssf : 123,
-      mtt : 234,
-    }
-  },
