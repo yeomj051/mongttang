@@ -33,6 +33,8 @@ public class ReportService {
         CommentReport commentReport = commentReportRepository.findCommentReportByCommentreportCommentId_CommentIdAndCommentreportReportUserId(comment.getCommentId(), userId);
         if(commentReport != null) return - 1;
 
+        if(comment.getCommentUserId().getUserId() == userId) return 0;
+
         commentReport = commentReportRepository.save(reqReportCommentDto.toEntity(comment, userId));
         if(commentReport == null) return 0;
         else return 1;
