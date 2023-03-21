@@ -29,18 +29,18 @@ public class ProfileController{
     private final ProfileService profileService;
 
     @ApiOperation(value = "작가 팔로우", notes = "작가를 팔로우 한다.", response = Map.class)
-    @PostMapping("/follow/{userId}")
-    public ResponseEntity<Map<String,Object>> followArtist(@ApiParam(value = "회원 아이디", required = true, example = "0") @PathVariable int userId,
-                                                           @ApiParam(value = "작가 아이디", required = true, example = "0") @RequestParam int artistId, Principal principal){
+    @PostMapping("/follow/{followFromId}")
+    public ResponseEntity<Map<String,Object>> followUser(@ApiParam(value = "팔로우 하는 사용자 아이디", required = true, example = "0") @PathVariable int followFromId,
+                                                           @ApiParam(value = "팔로우 당하는 사용자 아이디", required = true, example = "0") @RequestParam int followToId, Principal principal){
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = null;
 
-        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+        if(TokenUtils.compareUserIdAndToken(followFromId, principal,resultMap)) {
             status = HttpStatus.BAD_REQUEST;
             return new ResponseEntity<Map<String, Object>>(resultMap, status);
         }
 
-        Follow follow = profileService.followArtist(userId,artistId);
+        Follow follow = profileService.followArtist(followFromId,followToId);
 
         if(follow != null){
             resultMap.put(MESSAGE,SUCCESS);

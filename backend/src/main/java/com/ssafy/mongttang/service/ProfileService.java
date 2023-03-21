@@ -26,15 +26,16 @@ public class ProfileService {
     private final InterestBookRepository interestBookRepository;
     private final BookRepository bookRepository;
 
-    public Follow followArtist(int userId, int artistId) {
-        User user = userRepository.findByUserId(userId);
-        User artist = userRepository.findByUserId(artistId);
-        System.out.println(artist.getUserRole());
-        if(user == null || artist == null || !artist.getUserRole().equals("ROLE_ARTIST")) return null;
+    followFromId
+            followToId
+    public Follow followArtist(int followFromId, int followToId) {
+        User followFrom = userRepository.findByUserId(followFromId);
+        User followTo = userRepository.findByUserId(followToId);
+        if(followFrom == null || followTo == null) return null;
         else{
-            Follow follow = followRepository.findByFollowFromAndFollowTo(user,artist);
+            Follow follow = followRepository.findByFollowFromAndFollowTo(followFrom,followTo);
             if(follow == null){
-                return followRepository.save(new Follow(user,artist));
+                return followRepository.save(new Follow(followFrom,followTo));
             }
             return null;
         }
