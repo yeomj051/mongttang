@@ -2,6 +2,7 @@ package com.ssafy.mongttang.controller;
 
 import com.ssafy.mongttang.dto.ReqReportBookDto;
 import com.ssafy.mongttang.dto.ReqReportCommentDto;
+import com.ssafy.mongttang.dto.ResponseReportBookInfoDto;
 import com.ssafy.mongttang.dto.ResponseReportCommentInfoDto;
 import com.ssafy.mongttang.service.ReportService;
 import com.ssafy.mongttang.util.TokenUtils;
@@ -72,7 +73,7 @@ public class ReportController {
     }
 
     @ApiOperation(value = "동화신고", notes = "동화를 신고한다.")
-    @GetMapping("/book/{bookId}")
+    @PostMapping("/book/{bookId}")
     public ResponseEntity<Map<String, Object>> reportBook (@PathVariable @ApiParam(value = "신고할 동화아이디", example = "1") int bookId,
                                                            @RequestParam @ApiParam(value = "신고자 아이디", example = "1") int userId,
                                                            @RequestBody @ApiParam(value = "신고내용") ReqReportBookDto reqReportBookDto, Principal principal) {
@@ -97,5 +98,21 @@ public class ReportController {
             resultMap.put("message", "이미 신고한 회원입니다");
             return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @ApiOperation(value = "신고된 동화 조회", notes = "신고된 동화를 조회한다.")
+    @GetMapping("/book")
+    public ResponseEntity<Map<String, Object>> getReportBooks () {
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        List<ResponseReportBookInfoDto> result = reportService.getReportBooks();
+        if(result != null){
+            resultMap.put(MESSAGE, SUCCESS);
+            resultMap.put("bookreports", result);
+            return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+        }
+        resultMap.put(MESSAGE, FAIL);
+        return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.BAD_REQUEST);
     }
 }

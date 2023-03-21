@@ -3,6 +3,7 @@ package com.ssafy.mongttang.service;
 
 import com.ssafy.mongttang.dto.ReqReportBookDto;
 import com.ssafy.mongttang.dto.ReqReportCommentDto;
+import com.ssafy.mongttang.dto.ResponseReportBookInfoDto;
 import com.ssafy.mongttang.dto.ResponseReportCommentInfoDto;
 import com.ssafy.mongttang.entity.Book;
 import com.ssafy.mongttang.entity.BookReport;
@@ -54,5 +55,10 @@ public class ReportService {
         bookReport = bookReportRepository.save(reqReportBookDto.toEntity(book, userId));
         if(bookReport == null) return 0;
         else return 1;
+    }
+
+    public List<ResponseReportBookInfoDto> getReportBooks() {
+        return bookReportRepository.findAll().stream().map(bookReport
+                -> new ResponseReportBookInfoDto(bookReport, userRepository.findByUserId(bookReport.getBookreportReportUserId()))).collect(Collectors.toList());
     }
 }

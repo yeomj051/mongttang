@@ -23,7 +23,8 @@ public class BookReport extends BaseEntity{
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    private User bootreportUserId;
+    @JoinColumn(name = "bookreport_user_id")
+    private User bookreportUserId;
 
     @NotNull
     private String bookreportBookTitle;
@@ -40,7 +41,7 @@ public class BookReport extends BaseEntity{
     @Builder
     public BookReport(Book bookreportBookId, User bootreportUserId, String bookreportBookTitle, String bookreportContent, int bookreportReportUserId, String bookreportCategory) {
         this.bookreportBookId = bookreportBookId;
-        this.bootreportUserId = bootreportUserId;
+        this.bookreportUserId = bootreportUserId;
         this.bookreportBookTitle = bookreportBookTitle;
         this.bookreportContent = bookreportContent;
         this.bookreportReportUserId = bookreportReportUserId;
