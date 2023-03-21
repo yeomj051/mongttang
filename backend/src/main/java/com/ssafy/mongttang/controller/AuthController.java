@@ -38,27 +38,22 @@ public class AuthController {
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = null;
 
-        // 1. Refresh Token 검증
         if (!tokenProviderService.validateToken(reqIssueDto.getRefreshToken())) {
             resultMap.put(MESSAGE, FAIL);
             status = HttpStatus.BAD_REQUEST;
             return new ResponseEntity<Map<String, Object>>(resultMap, status);
         }
 
-        // 2. Access Token 에서 User Id를 가져옵니다.
         User user = userService.getUser(reqIssueDto.getUserId());
 
-        // 3. Redis 에서 User email 을 기반으로 저장된 Refresh Token 값을 가져옵니다.
         String refreshToken = (String) redisTemplate.opsForValue().get("RT:" + reqIssueDto.getUserId());
 
-        // (추가) 로그아웃되어 Redis 에 RefreshToken 이 존재하지 않는 경우 처리
         if(ObjectUtils.isEmpty(refreshToken) || !refreshToken.equals(reqIssueDto.getRefreshToken())) {
             resultMap.put(MESSAGE, FAIL);
             status = HttpStatus.BAD_REQUEST;
             return new ResponseEntity<Map<String, Object>>(resultMap, status);
         }
 
-        // 4. 새로운 토큰 생성
         String token = tokenProviderService.createAccessToken(user.getUserId(), user.getUserRole());
         resultMap.put(MESSAGE, SUCCESS);
         resultMap.put("accessToken", token);
