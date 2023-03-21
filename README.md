@@ -202,3 +202,29 @@ function useOutsideClick(ref, callback) {
 이미지와 텍스트를 감싸는 wrap 요소에 position:relativ를 부여하고, text요소에 position:absolute를 추가해주면 된다. 단, 위치값을 일일히 수정해줘야한다는 단점이 있다.
 
 ![todaycommit](/uploads/65bf7bb1eb557c1877ec33a765fc4435/todaycommit.PNG)
+
+# 2023-03-21 정리
+
+## 챌린지 관련 화면 구현
+
+이전 챌린지, 챌린지 상세 모두 메인 화면과 큰 차이가 없었다. 만들면서 padding 수치 등도 수정했다.
+
+![이전_챌린지](/uploads/0b4dd8efb166ea2b628bf9717312f6bc/이전_챌린지.PNG)
+![챌린지_상세1](/uploads/aae55f3e7cf5aa76ad957b506d539642/챌린지_상세1.PNG)
+![챌린지_상세2](/uploads/cb1a915960db5421323d2dc0f4318191/챌린지_상세2.PNG)
+
+## 프로필 모달 구현
+
+생각보다 필요한 API가 많아서 렌더링할 화면까지는 없고, API 연동해서 기능만 구현한 상태
+
+### LocalStorage vs ContextAPI(or Redux..이하 상태관리툴)
+
+문득 개발하다가 든 생각이었다. user 정보를 담은 user state는 새로고침을하면 사라지는데 그냥 모든 state를 localstorage로 관리하면 안되나? 하는 생각
+
+조사해본 바 localstorage는 느리고, state가 변화되어도 해당 state를 사용하는 컴포넌트들에 state를 공유하지 않는다. 즉 화면이 다시 렌더링이 되지 않는다.
+
+그렇기에 일반적으로 localstorage는 사용자 설정, 테마, 인증 토큰과 같은 세션 기능에 사용된다.(자주 변화하지 않는 정적인 상태)
+
+그리고 애플리케이션 시작 시에 localstorage에서 정보를 읽어와서 관련 state를 업데이트하는 방식이 일반적
+
+결론은 둘다 사용해야한다는것
