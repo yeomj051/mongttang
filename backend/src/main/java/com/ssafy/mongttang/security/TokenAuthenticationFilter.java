@@ -26,21 +26,16 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private TokenProviderService tokenProvider;
 
-    private static final Logger logger = LoggerFactory.getLogger(TokenAuthenticationFilter.class);
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String jwt = TokenUtils.getJwtFromRequest(request);
 
         if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)){
-            UsernamePasswordAuthenticationToken authentication = tokenProvider.getAuthentication(jwt, false);
+            UsernamePasswordAuthenticationToken authentication = tokenProvider.getAuthentication(jwt);
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
-        // 깃에 올릴 때 제거할 것
-        else {
-            logger.error("Could not set user authentication in security context");
-        }
+
         filterChain.doFilter(request, response);
     }
 }

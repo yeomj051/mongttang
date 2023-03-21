@@ -69,14 +69,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         redisTemplate.opsForValue()
                 .set("RT:" + userPrincipalDto.getUser().getUserId(), newRefreshToken, appProperties.getAuth().getRefreshTokenExpiry(), TimeUnit.MILLISECONDS);
-//        // DB 저장
-//        RefreshToken oldRefreshToken = refreshTokenRepository.findByUser_UserId(userPrincipalDto.getUser().getUserId());
-//        if (oldRefreshToken != null) {
-//            oldRefreshToken.setRefreshToken(newRefreshToken);
-//        } else {
-//            oldRefreshToken = new RefreshToken(userPrincipalDto.getUser(), newRefreshToken);
-//        }
-//        refreshTokenRepository.saveAndFlush(oldRefreshToken);
+
         CookieUtils.addCookie(response, "refreshToken", newRefreshToken,180);
 
         try {
@@ -111,7 +104,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         return appProperties.getOauth2().getAuthorizedRedirectUris()
                 .stream()
                 .anyMatch(authorizedRedirectUri -> {
-                    // Only validate host and port. Let the clients use different paths if they want to
                     URI authorizedURI = URI.create(authorizedRedirectUri);
                     if(authorizedURI.getHost().equalsIgnoreCase(clientRedirectUri.getHost())
                             && authorizedURI.getPort() == clientRedirectUri.getPort()) {

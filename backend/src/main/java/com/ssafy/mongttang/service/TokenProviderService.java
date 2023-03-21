@@ -59,13 +59,6 @@ public class TokenProviderService {
                 .compact();
     }
 
-    /**
-     * 일반 로그인 토큰 생성
-     * @author 나유현
-     * @param userId
-     * @param role
-     * @return
-     */
     public String createAccessToken(int userId, String role) {
 
         Date now = new Date();
@@ -115,7 +108,7 @@ public class TokenProviderService {
         return claims.getSubject();
     }
 
-    public UsernamePasswordAuthenticationToken getAuthentication(String authToken, boolean isRT) {
+    public UsernamePasswordAuthenticationToken getAuthentication(String authToken) {
         if(validateToken(authToken)) {
             Claims claims = getTokenClaims(authToken);
             Collection<? extends GrantedAuthority> authorities =
