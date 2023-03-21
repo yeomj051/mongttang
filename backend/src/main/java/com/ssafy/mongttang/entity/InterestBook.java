@@ -23,22 +23,14 @@ public class InterestBook {
     private int interestbookId;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "interestbook_user_id")
     private User interestbookUserId;
 
-//    @NotNull
-//    private int interestbookBookId;
-
-        @NotNull
-    @ManyToOne
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "interestbook_book_id")
     private Book interestbookBookId;
-
-//    public InterestBook(User user, int bookId) {
-//        this.interestbookUserId = user;
-//        this.interestbookBookId = bookId;
-//    }
 
     public InterestBook(User user, Book book) {
         this.interestbookUserId = user;

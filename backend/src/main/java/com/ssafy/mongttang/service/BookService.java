@@ -74,6 +74,16 @@ public class BookService {
             }
     }
 
+    public int deleteBook(int userId, int bookId) {
+        Book book = bookRepository.findByBookId(bookId);
+        if(book != null && book.getBookStatus().equals("temporary") && userId == book.getBookUserId().getUserId()){
+            s3Service.deleteFolder("books/" + book.getBookChallengeId().getChallengeId() + "/" + book.getBookId());
+            bookRepository.delete(book);
+            return 1;
+        }
+        return 0;
+    }
+
     public ArrayList<Illust> savePhoto(Book book, ArrayList<MultipartFile> imgList, ArrayList<String> imgPathList){
 
         ArrayList<Illust> illustList = new ArrayList<>();
@@ -98,6 +108,19 @@ public class BookService {
         }
         return illustList;
     }
+//
+//    public ArrayList<Illust> deletePhoto(Book book, ArrayList<MultipartFile> imgList, ArrayList<String> imgPathList){
+//        illustRepository.deleteByIllustBookId(book);
+//
+//        ArrayList<Illust> illustList = new ArrayList<>();
+//
+//        for (int i = 0; i < imgList.size(); i++) {
+//            String illustOriginalFilename = imgList.get(i).getOriginalFilename();
+//            String illustFilePath = imgPathList.get(i);
+//            illustList.add(illustRepository.save(new Illust(book, illustOriginalFilename, illustFilePath, i)));
+//        }
+//        return illustList;
+//    }
 
 
 }

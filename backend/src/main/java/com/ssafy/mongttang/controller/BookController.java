@@ -67,17 +67,42 @@ public class BookController {
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = null;
 
-        try {
-            int bookId = bookService.updateBook(userId,reqTemporarySaveBookDto,imgList);
-            if(bookId > 0){
-                resultMap.put(MESSAGE,SUCCESS);
-                resultMap.put("bookId",bookId);
-                status = HttpStatus.OK;
-            }else{
+        if(imgList != null){
+            try {
+                int bookId = bookService.updateBook(userId,reqTemporarySaveBookDto,imgList);
+                if(bookId > 0){
+                    resultMap.put(MESSAGE,SUCCESS);
+                    resultMap.put("bookId",bookId);
+                    status = HttpStatus.OK;
+                }else{
+                    resultMap.put(MESSAGE, FAIL);
+                    status = HttpStatus.BAD_REQUEST;
+                }
+            } catch (IOException e) {
                 resultMap.put(MESSAGE, FAIL);
                 status = HttpStatus.BAD_REQUEST;
             }
-        } catch (IOException e) {
+        }else{
+            resultMap.put(MESSAGE, FAIL);
+            status = HttpStatus.BAD_REQUEST;
+        }
+
+        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    }
+
+    @ApiOperation(value = "작가 동화 삭제", notes = "임시저장 한 동화를 삭제한다.", response = Map.class)
+    @DeleteMapping("/draw/{userId}")
+    public ResponseEntity<Map<String,Object>> deleteBook(@ApiParam(value = "작가 아이디", required = true, example = "0") @PathVariable int userId,
+                                                                 @ApiParam(value = "동화 아이디", required = true, example = "0") @RequestParam int bookId){
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        int isDeleted= bookService.deleteBook(userId,bookId);
+
+        if(isDeleted > 0){
+            resultMap.put(MESSAGE,SUCCESS);
+            status = HttpStatus.OK;
+        }else{
             resultMap.put(MESSAGE, FAIL);
             status = HttpStatus.BAD_REQUEST;
         }
