@@ -1,13 +1,14 @@
 package com.ssafy.mongttang.service;
 
 
+import com.ssafy.mongttang.dto.ReqReportBookDto;
 import com.ssafy.mongttang.dto.ReqReportCommentDto;
 import com.ssafy.mongttang.dto.ResponseReportCommentInfoDto;
+import com.ssafy.mongttang.entity.Book;
+import com.ssafy.mongttang.entity.BookReport;
 import com.ssafy.mongttang.entity.Comment;
 import com.ssafy.mongttang.entity.CommentReport;
-import com.ssafy.mongttang.repository.CommentReportRepository;
-import com.ssafy.mongttang.repository.CommentRepository;
-import com.ssafy.mongttang.repository.UserRepository;
+import com.ssafy.mongttang.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,9 @@ import java.util.stream.Collectors;
 public class ReportService {
 
     private final CommentRepository commentRepository;
+    private final BookRepository bookRepository;
     private final CommentReportRepository commentReportRepository;
+    private final BookReportRepository bookReportRepository;
     private final UserRepository userRepository;
 
     public int reportComment(int commentId, int userId, ReqReportCommentDto reqReportCommentDto) {
@@ -37,5 +40,19 @@ public class ReportService {
     public List<ResponseReportCommentInfoDto> getReportComments() {
         return commentReportRepository.findAll().stream().map(commentReport
                 -> new ResponseReportCommentInfoDto(commentReport, userRepository.findByUserId(commentReport.getCommentreportReportUserId()))).collect(Collectors.toList());
+    }
+
+    public int reportBook(int bookId, int userId, ReqReportBookDto reqReportBookDto) {
+        Book book = bookRepository.findByBookId(bookId);
+        if(book == null) return 0;
+
+        BookReport bookReport = bookReportRepository.findBookReportByBookreportBookIdAndAndBookreportReportUserId(book, userId);
+        if(bookReport != null) return - 1;
+
+        if(book.getBookUserId().getUserId() == userId) return 0;
+
+        bookReport = bookReportRepository.save(reqReportBookDto.toEntity(book, userId));
+        if(bookReport == null) return 0;
+        else return 1;
     }
 }
