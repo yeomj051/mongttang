@@ -3,7 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 import tw, { styled, css } from 'twin.macro';
 import ProfileImg2 from 'components/common/ProfileImg2';
 import BookListItem from 'components/common/BookListItem';
-import BookItem from 'components/common/BookItem';
 import LogoL from 'assets/images/LogoL.png';
 import BookInfo from 'components/common/BookInfo';
 import BookList from 'components/common/BookList';
