@@ -1,8 +1,8 @@
 package com.ssafy.mongttang.repository;
 
-import com.ssafy.mongttang.entity.CommentReport;
+import com.ssafy.mongttang.entity.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ReportRepository extends JpaRepository<CommentReport, Integer> {
+public interface CommentReportRepository extends JpaRepository<Comment, Integer> {
 
 }
