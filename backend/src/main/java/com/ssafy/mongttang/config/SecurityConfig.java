@@ -44,6 +44,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().configurationSource(corsConfigurationSource())
 
                 .and()
+                .authorizeRequests()
+
+                .antMatchers("/api/test/test2").hasRole("ARTIST")
+                .and()
                 .oauth2Login()
                 .authorizationEndpoint()
                 .baseUri("/api/oauth2/authorize")
@@ -71,7 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         configuration.addAllowedOrigin("http://localhost:3000");
         configuration.addAllowedOrigin("https://j8a308.p.ssafy.io:3000");
-        configuration.addAllowedOrigin("https://j8a3084.p.ssafy.io");
+        configuration.addAllowedOrigin("https://j8a308.p.ssafy.io");
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
         configuration.setAllowCredentials(true);
