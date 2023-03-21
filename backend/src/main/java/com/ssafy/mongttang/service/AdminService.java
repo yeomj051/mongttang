@@ -5,8 +5,10 @@ import com.ssafy.mongttang.dto.ResponseChallengeInfoDto;
 import com.ssafy.mongttang.dto.ResponseChallengeUpdateDto;
 import com.ssafy.mongttang.entity.Book;
 import com.ssafy.mongttang.entity.Challenge;
+import com.ssafy.mongttang.entity.Comment;
 import com.ssafy.mongttang.repository.BookRepository;
 import com.ssafy.mongttang.repository.ChallengRepository;
+import com.ssafy.mongttang.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 public class AdminService {
     private final ChallengRepository challengRepository;
     private final BookRepository bookRepository;
+    private final CommentRepository commentRepository;
 
     @Transactional
     public ResponseChallengeInfoDto addNewChallenge(ReqChallengeCreateFormDto reqChallengeCreateFormDto) {
@@ -51,5 +54,12 @@ public class AdminService {
         if(book == null) return null;
         book.changeStatus();
         return bookRepository.save(book);
+    }
+
+    public Comment deleteComment(int commentId) {
+        Comment comment = commentRepository.findCommentByCommentId(commentId);
+        if(comment == null) return null;
+        comment.changeStatus();
+        return commentRepository.save(comment);
     }
 }

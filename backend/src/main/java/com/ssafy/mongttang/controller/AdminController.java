@@ -5,6 +5,7 @@ import com.ssafy.mongttang.dto.ReqChallengeCreateFormDto;
 import com.ssafy.mongttang.dto.ResponseChallengeInfoDto;
 import com.ssafy.mongttang.dto.ResponseChallengeUpdateDto;
 import com.ssafy.mongttang.entity.Book;
+import com.ssafy.mongttang.entity.Comment;
 import com.ssafy.mongttang.service.AdminService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -93,13 +94,28 @@ public class AdminController {
         }
     }
 
-    @ApiOperation(value = "동화 삭제", notes = "관리자는 동화를 삭제한다.", response = Page.class)
+    @ApiOperation(value = "동화 삭제", notes = "관리자는 동화를 삭제한다.", response = Map.class)
     @DeleteMapping("/book/{bookId}")
     public ResponseEntity<Map<String, Object>> deleteBook(@PathVariable @ApiParam(value = "삭제할 동화 아이디 번호") int bookId) {
         Map<String, Object> map = new HashMap<>();
 
         Book book = adminService.deleteBook(bookId);
         if(book != null){
+            map.put(MESSAGE, SUCCESS);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } else {
+            map.put(MESSAGE, FAIL);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @ApiOperation(value = "댓글 삭제", notes = "관리자는 댓글을 삭제한다.", response = Map.class)
+    @DeleteMapping("/comment/{commentId}")
+    public ResponseEntity<Map<String, Object>> deleteComment(@PathVariable @ApiParam(value = "삭제할 댓글을 아이디 번호") int commentId) {
+        Map<String, Object> map = new HashMap<>();
+
+        Comment comment = adminService.deleteComment(commentId);
+        if(comment != null){
             map.put(MESSAGE, SUCCESS);
             return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
         } else {
