@@ -77,13 +77,15 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             if(nickName == null){
                 return UriComponentsBuilder.fromUriString(targetUrl)
                         .queryParam("userId", userPrincipalDto.getUser().getUserId())
-                        .queryParam("nickName", nickName)
+                        .queryParam("userNickname", nickName)
+                        .queryParam("profileImgURL", userPrincipalDto.getUser().getUserProfileImg())
                         .queryParam("accessToken", token)
                         .build().toUriString();
             } else {
                 return UriComponentsBuilder.fromUriString(targetUrl)
                         .queryParam("userId", userPrincipalDto.getUser().getUserId())
-                        .queryParam("nickName", URLEncoder.encode(nickName, "UTF-8"))
+                        .queryParam("userNickname", URLEncoder.encode(nickName, "UTF-8"))
+                        .queryParam("profileImgURL", userPrincipalDto.getUser().getUserProfileImg())
                         .queryParam("accessToken", token)
                         .build().toUriString();
             }
