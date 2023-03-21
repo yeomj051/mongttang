@@ -1,18 +1,18 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <TokenBalance></TokenBalance>
+  <NFTList></NFTList>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import TokenBalance from '@/components/wallet/TokenBalance.vue';
+import NFTList from '@/components/wallet/NFTList.vue';
 
 export default {
-  name: 'HomeView',
+  name: 'WalletView',
+
   components: {
-    HelloWorld
+    TokenBalance,
+    NFTList,
   }
 }
 </script>
