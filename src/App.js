@@ -16,8 +16,12 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import UserLogin from 'pages/Login/UserLogin';
 import Notice from 'pages/Notice/Notice';
 import Test from 'pages/Home/Test';
+import { userStore } from 'store/userStore';
+import BookDetail from 'pages/Book/BookDetail';
 const queryClient = new QueryClient();
 function App() {
+  const userId = userStore((state) => state.userId);
+
   return (
     <CookiesProvider>
       <QueryClientProvider client={queryClient}>
@@ -34,6 +38,10 @@ function App() {
             <Route
               path="/myprofile/edit/introduction"
               element={<IntroductionEdit />}
+            />
+            <Route
+              path="/books/:bookId"
+              element={<BookDetail userId={userId} />}
             />
           </Routes>
         </BrowserRouter>
