@@ -10,11 +10,15 @@ import com.ssafy.mongttang.repository.BookRepository;
 import com.ssafy.mongttang.repository.ChallengRepository;
 import com.ssafy.mongttang.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,6 +27,8 @@ public class AdminService {
     private final ChallengRepository challengRepository;
     private final BookRepository bookRepository;
     private final CommentRepository commentRepository;
+
+    private final RedisTemplate redisTemplate;
 
     @Transactional
     public ResponseChallengeInfoDto addNewChallenge(ReqChallengeCreateFormDto reqChallengeCreateFormDto) {
@@ -61,5 +67,16 @@ public class AdminService {
         if(comment == null) return null;
         comment.changeStatus();
         return commentRepository.save(comment);
+    }
+
+    public int discountBook(int bookId, LocalDateTime endDate) {
+        Long curTime = Timestamp.valueOf(LocalDateTime.now()).getTime();
+        Long endTime = Timestamp.valueOf(endDate).getTime();
+        Book book = bookRepository.findByBookId(bookId);
+        if(book == null) return 0;
+        Long expiration = endTime - curTime;
+        redisTemplate.opsForValue()
+                .set("DC:" + bookId, String.valueOf(endTime), expiration, TimeUnit.MILLISECONDS);
+        return 1;
     }
 }
