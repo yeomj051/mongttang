@@ -1,14 +1,18 @@
+import axios from "axios";
+
 export default {
     state: {
-      // state properties
+      user: {},
     },
     mutations: {
-      // mutation functions
+      SET_USER(state, payload){
+        state.user = payload;
+      },
     },
     actions: {
       // action functions
-      getAddress(){
-      }
+      getUser(){
+      },
     },
     getters: {
       // getter functions
