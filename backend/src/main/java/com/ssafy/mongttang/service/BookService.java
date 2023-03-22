@@ -2,15 +2,10 @@ package com.ssafy.mongttang.service;
 
 import com.ssafy.mongttang.dto.ReqCreateBookDto;
 import com.ssafy.mongttang.dto.ReqUpdateBookDto;
-import com.ssafy.mongttang.entity.Book;
-import com.ssafy.mongttang.entity.Challenge;
-import com.ssafy.mongttang.entity.Illust;
-import com.ssafy.mongttang.entity.User;
-import com.ssafy.mongttang.repository.BookRepository;
-import com.ssafy.mongttang.repository.ChallengRepository;
-import com.ssafy.mongttang.repository.IllustRepository;
-import com.ssafy.mongttang.repository.UserRepository;
+import com.ssafy.mongttang.entity.*;
+import com.ssafy.mongttang.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,6 +19,7 @@ public class BookService {
     private final ChallengRepository challengeRepository;
     private final BookRepository bookRepository;
     private final IllustRepository illustRepository;
+    private final BookLikeRepository bookLikeRepository;
     private final S3Service s3Service;
 
     public int createBook(int userId, ReqCreateBookDto reqCreateBookDto, ArrayList<MultipartFile> imgList) throws IOException {
@@ -106,4 +102,20 @@ public class BookService {
         }
         return illustList;
     }
+
+    public BookLike createLikeBook(int userId, int bookId) {
+        User user = userRepository.findByUserId(userId);
+        Book book = bookRepository.findByBookId(bookId);
+
+        if(user == null || book == null) return null;
+        else{
+            BookLike bookLike = bookLikeRepository.findByBooklikeBookIdAndBooklikeUserId(book,userId);
+            if(bookLike == null) {
+                return bookLikeRepository.save(new BookLike(book, userId));
+            }
+            return null;
+        }
+    }
+
+
 }
