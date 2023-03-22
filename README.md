@@ -228,3 +228,60 @@ function useOutsideClick(ref, callback) {
 그리고 애플리케이션 시작 시에 localstorage에서 정보를 읽어와서 관련 state를 업데이트하는 방식이 일반적
 
 결론은 둘다 사용해야한다는것
+
+# 2023-03-22 정리
+
+### 많이 쓰게되는 CSS 정리
+
+display: flex (tw에선 flex)
+
+기본 정렬은 flex-row → div 내 아이템들이 가로(row)로 정렬
+
+flex-col로 하면 세로로 정렬
+
+align-items (tw에선 items-) : div의 중심가로축을 기준으로 아이템 정렬
+
+justify-content(tw에선 justify-) : div의 중심축(flex 정렬방향에 따라 다름)을 기준으로 아이템 정렬
+
+### 트러블 슈팅
+
+input태그는 한 줄로밖에 입력을 받지 못한다(줄바꿈이 안됨)
+
+입력폼에서 줄바꿈을 하고싶으면 textarea를 사용합시다
+
+[input tag 개행(줄바꿈) 안 될 때는 textarea tag로](https://sezzled.tistory.com/166)
+
+### react-query를 사용한 서버 데이터 동기화
+
+좋아요를 누르면 백엔드에서 좋아요 수를 받아와서 표시하게 하고싶다
+
+때문에 react query를 써서 구현을 해보았다
+
+```jsx
+//좋아요 수 가져오기
+const { status, data, error } = useQuery(
+ "getlikes",
+ authApi(requests.GET_BOOK_DETAIL(userId, bookId))
+);
+
+//좋아요 누르면 실행
+const likesMutation = useMutation(
+ authApi(requests.POST_BOOKLIKE(userId, bookId)),
+ {
+  onSuccess: () => {
+   queryClient.setQueryData("getlikes");
+  },
+ }
+);
+
+const dislikesMutation = useMutation(
+ authApi(requests.DELETE_BOOKLIKE(userId, bookId)),
+ {
+  onSuccess: () => {
+   queryClient.setQueryData("getlikes");
+  },
+ }
+);
+```
+
+사실 좋아요를 누르면 보내는 POST 요청에서 response 값에 새로 업데이트 된 좋아요 수를 백엔드에서 보내주면 간단하게 처리될 일이지만, 프론트엔드에서 해당 로직을 구현한다면 이런 식으로 처리할 수 있지 않을까 생각해봤다.
