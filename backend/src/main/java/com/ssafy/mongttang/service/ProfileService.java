@@ -26,8 +26,6 @@ public class ProfileService {
     private final InterestBookRepository interestBookRepository;
     private final BookRepository bookRepository;
 
-    followFromId
-            followToId
     public Follow followArtist(int followFromId, int followToId) {
         User followFrom = userRepository.findByUserId(followFromId);
         User followTo = userRepository.findByUserId(followToId);
@@ -41,12 +39,12 @@ public class ProfileService {
         }
     }
 
-    public int followCancleArtist(int userId, int artistId) {
-        User user = userRepository.findByUserId(userId);
-        User artist = userRepository.findByUserId(artistId);
-        if(user == null || artist == null || !artist.getUserRole().equals("ROLE_ARTIST")) return 0;
+    public int followCancleArtist(int followFromId, int followToId) {
+        User followFrom = userRepository.findByUserId(followFromId);
+        User followTo = userRepository.findByUserId(followToId);
+        if(followFrom == null || followTo == null) return 0;
         else{
-            Follow follow = followRepository.findByFollowFromAndFollowTo(user,artist);
+            Follow follow = followRepository.findByFollowFromAndFollowTo(followFrom,followTo);
             if(follow == null) return 0;
             else{
                 followRepository.delete(follow);
