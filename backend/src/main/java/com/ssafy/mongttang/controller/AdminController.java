@@ -2,6 +2,7 @@ package com.ssafy.mongttang.controller;
 
 
 import com.ssafy.mongttang.dto.ReqChallengeCreateFormDto;
+import com.ssafy.mongttang.dto.ResponseBookInfoDto;
 import com.ssafy.mongttang.dto.ResponseChallengeInfoDto;
 import com.ssafy.mongttang.dto.ResponseChallengeUpdateDto;
 import com.ssafy.mongttang.entity.Book;
@@ -140,6 +141,21 @@ public class AdminController {
         int cnt = adminService.discountBook(bookId, endDate);
         if(cnt == 1){
             map.put(MESSAGE, SUCCESS);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } else {
+            map.put(MESSAGE, FAIL);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @ApiOperation(value = "동화 목록 조회", notes = "관리자는 모든 동화를 조회한다.", response = Map.class)
+    @GetMapping("/book")
+    public ResponseEntity<Map<String, Object>> getBooks() {
+        Map<String, Object> map = new HashMap<>();
+        List<ResponseBookInfoDto> bookList = adminService.getBooks();
+        if(bookList != null){
+            map.put(MESSAGE, SUCCESS);
+            map.put("bookList", bookList);
             return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
         } else {
             map.put(MESSAGE, FAIL);

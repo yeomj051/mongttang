@@ -1,6 +1,7 @@
 package com.ssafy.mongttang.service;
 
 import com.ssafy.mongttang.dto.ReqChallengeCreateFormDto;
+import com.ssafy.mongttang.dto.ResponseBookInfoDto;
 import com.ssafy.mongttang.dto.ResponseChallengeInfoDto;
 import com.ssafy.mongttang.dto.ResponseChallengeUpdateDto;
 import com.ssafy.mongttang.entity.Book;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -78,5 +80,22 @@ public class AdminService {
         redisTemplate.opsForValue()
                 .set("DC:" + bookId, String.valueOf(endTime), expiration, TimeUnit.MILLISECONDS);
         return 1;
+    }
+
+    public List<ResponseBookInfoDto> getBooks() {
+        List<Book> bookList = bookRepository.findAllBooks();
+        List<ResponseBookInfoDto> resultBooks = new ArrayList<>();
+        for(Book book: bookList){
+            if(((String) redisTemplate.opsForValue().get("DC:" + book.getBookId())) != null) {
+                resultBooks.add(new ResponseBookInfoDto(book, "discount"));
+                continue;
+            }
+            if(((String) redisTemplate.opsForValue().get("FREE:" + book.getBookId())) != null){
+                resultBooks.add(new ResponseBookInfoDto(book, "free"));
+                continue;
+            }
+            resultBooks.add(new ResponseBookInfoDto(book, "pay"));
+        }
+        return resultBooks;
     }
 }
