@@ -109,6 +109,11 @@ function BookDetail({ userId }) {
   //요청받은 정보로 화면 렌더링
   const [isLiked, setIsLiked] = useState(false);
 
+  // 상세정보 받아오기
+  // authApi(requests.GET_BOOK_DETAIL(userId, bookId)).then((response) => {
+  //   const book = response.data;
+  // });
+
   const title = book.bookTitle;
   const artistNickname = book.artistNickname;
   const bookContent = book.bookSummary;
