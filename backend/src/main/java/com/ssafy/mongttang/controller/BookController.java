@@ -4,6 +4,7 @@ import com.ssafy.mongttang.dto.ReqCreateBookDto;
 import com.ssafy.mongttang.dto.ReqUpdateBookDto;
 import com.ssafy.mongttang.entity.Book;
 import com.ssafy.mongttang.entity.BookLike;
+import com.ssafy.mongttang.entity.CommentLike;
 import com.ssafy.mongttang.entity.Follow;
 import com.ssafy.mongttang.service.BookService;
 import com.ssafy.mongttang.util.TokenUtils;
@@ -178,6 +179,33 @@ public class BookController {
         }else{
             resultMap.put(MESSAGE, FAIL);
             resultMap.put("isLiked",true);
+            status = HttpStatus.BAD_REQUEST;
+        }
+
+        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    }
+
+    @ApiOperation(value = "댓글 좋아요 등록", notes = "댓글 좋아요를 등록한다.", response = Map.class)
+    @PostMapping("/commentlike")
+    public ResponseEntity<Map<String,Object>> createCommentLike(@ApiParam(value = "회원 아이디", required = true, example = "0") @RequestParam int userId,
+                                                             @ApiParam(value = "댓글 아이디", required = true, example = "0") @RequestParam int commentId, Principal principal){
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<Map<String, Object>>(resultMap, status);
+        }
+
+        CommentLike commentLike = bookService.createCommentLike(userId,commentId);
+
+        if(commentLike != null){
+            resultMap.put(MESSAGE,SUCCESS);
+            resultMap.put("isLiked",true);
+            status = HttpStatus.OK;
+        }else{
+            resultMap.put(MESSAGE, FAIL);
+            resultMap.put("isLiked",false);
             status = HttpStatus.BAD_REQUEST;
         }
 

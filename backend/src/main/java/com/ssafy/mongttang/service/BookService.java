@@ -20,6 +20,8 @@ public class BookService {
     private final BookRepository bookRepository;
     private final IllustRepository illustRepository;
     private final BookLikeRepository bookLikeRepository;
+    private final CommentRepository commentRepository;
+    private final CommentLikeRepository commentLikeRepository;
     private final S3Service s3Service;
 
     public int createBook(int userId, ReqCreateBookDto reqCreateBookDto, ArrayList<MultipartFile> imgList) throws IOException {
@@ -130,6 +132,21 @@ public class BookService {
                 bookLikeRepository.delete(bookLike);
                 return 1;
             }
+        }
+    }
+
+    public CommentLike createCommentLike(int userId, int commentId) {
+
+        User user = userRepository.findByUserId(userId);
+        Comment comment = commentRepository.findCommentByCommentId(commentId);
+
+        if(user == null || comment == null) return null;
+        else{
+            CommentLike commentLike = commentLikeRepository.findByCommentlikeCommentIdAndCommentlikeUserId(comment,userId);
+            if(commentLike == null) {
+                return commentLikeRepository.save(new CommentLike(comment, userId));
+            }
+            return null;
         }
     }
 }
