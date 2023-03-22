@@ -104,7 +104,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\n\r\npragma solidity ^0.8.0;\r\n\r\nimport \"../utils/cryptography/ECDSA.sol\";\r\nimport \"../utils/cryptography/EIP712.sol\";\r\n\r\nabstract contract EIP712Verifier is EIP712 {\r\n    function verify(bytes memory signature, address signer, address mailTo, string memory mailContents) external view {\r\n        bytes32 digest = _hashTypedDataV4(\r\n            keccak256(abi.encode(keccak256(\"Mail(address to,string contents)\"), mailTo, keccak256(bytes(mailContents))))\r\n        );\r\n        address recoveredSigner = ECDSA.recover(digest, signature);\r\n        require(recoveredSigner == signer);\r\n    }\r\n}\r\n",
-  "sourcePath": "C:\\Users\\SSAFY\\Desktop\\S08P22A308\\smart-contracts\\contracts\\mocks\\EIP712Verifier.sol",
+  "sourcePath": "C:\\Users\\akqjq\\Desktop\\S08P22A308\\smart-contracts\\contracts\\mocks\\EIP712Verifier.sol",
   "ast": {
     "absolutePath": "project:/contracts/mocks/EIP712Verifier.sol",
     "exportedSymbols": {
@@ -909,7 +909,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.13",
-  "updatedAt": "2023-03-22T03:48:03.470Z",
+  "updatedAt": "2023-03-22T16:34:02.689Z",
   "devdoc": {
     "events": {
       "EIP712DomainChanged()": {

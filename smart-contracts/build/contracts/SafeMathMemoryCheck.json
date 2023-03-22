@@ -10,7 +10,7 @@
   "sourceMap": "102:1710:101:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
   "deployedSourceMap": "102:1710:101:-:0;;;;;;;;",
   "source": "// SPDX-License-Identifier: MIT\r\n\r\npragma solidity ^0.8.0;\r\n\r\nimport \"../utils/math/SafeMath.sol\";\r\n\r\nlibrary SafeMathMemoryCheck {\r\n    function addMemoryCheck() internal pure returns (uint256 mem) {\r\n        uint256 length = 32;\r\n        assembly {\r\n            mem := mload(0x40)\r\n        }\r\n        for (uint256 i = 0; i < length; ++i) {\r\n            SafeMath.add(1, 1);\r\n        }\r\n        assembly {\r\n            mem := sub(mload(0x40), mem)\r\n        }\r\n    }\r\n\r\n    function subMemoryCheck() internal pure returns (uint256 mem) {\r\n        uint256 length = 32;\r\n        assembly {\r\n            mem := mload(0x40)\r\n        }\r\n        for (uint256 i = 0; i < length; ++i) {\r\n            SafeMath.sub(1, 1);\r\n        }\r\n        assembly {\r\n            mem := sub(mload(0x40), mem)\r\n        }\r\n    }\r\n\r\n    function mulMemoryCheck() internal pure returns (uint256 mem) {\r\n        uint256 length = 32;\r\n        assembly {\r\n            mem := mload(0x40)\r\n        }\r\n        for (uint256 i = 0; i < length; ++i) {\r\n            SafeMath.mul(1, 1);\r\n        }\r\n        assembly {\r\n            mem := sub(mload(0x40), mem)\r\n        }\r\n    }\r\n\r\n    function divMemoryCheck() internal pure returns (uint256 mem) {\r\n        uint256 length = 32;\r\n        assembly {\r\n            mem := mload(0x40)\r\n        }\r\n        for (uint256 i = 0; i < length; ++i) {\r\n            SafeMath.div(1, 1);\r\n        }\r\n        assembly {\r\n            mem := sub(mload(0x40), mem)\r\n        }\r\n    }\r\n\r\n    function modMemoryCheck() internal pure returns (uint256 mem) {\r\n        uint256 length = 32;\r\n        assembly {\r\n            mem := mload(0x40)\r\n        }\r\n        for (uint256 i = 0; i < length; ++i) {\r\n            SafeMath.mod(1, 1);\r\n        }\r\n        assembly {\r\n            mem := sub(mload(0x40), mem)\r\n        }\r\n    }\r\n}\r\n",
-  "sourcePath": "C:\\Users\\SSAFY\\Desktop\\S08P22A308\\smart-contracts\\contracts\\mocks\\SafeMathMemoryCheck.sol",
+  "sourcePath": "C:\\Users\\akqjq\\Desktop\\S08P22A308\\smart-contracts\\contracts\\mocks\\SafeMathMemoryCheck.sol",
   "ast": {
     "absolutePath": "project:/contracts/mocks/SafeMathMemoryCheck.sol",
     "exportedSymbols": {
@@ -2427,7 +2427,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.13",
-  "updatedAt": "2023-03-22T03:48:03.578Z",
+  "updatedAt": "2023-03-22T16:34:02.775Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

@@ -1042,7 +1042,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\n\r\npragma solidity ^0.8.0;\r\n\r\nimport \"../../governance/extensions/GovernorCountingSimple.sol\";\r\nimport \"../../governance/extensions/GovernorVotesComp.sol\";\r\n\r\nabstract contract GovernorCompMock is GovernorVotesComp, GovernorCountingSimple {\r\n    function quorum(uint256) public pure override returns (uint256) {\r\n        return 0;\r\n    }\r\n\r\n    function votingDelay() public pure override returns (uint256) {\r\n        return 4;\r\n    }\r\n\r\n    function votingPeriod() public pure override returns (uint256) {\r\n        return 16;\r\n    }\r\n}\r\n",
-  "sourcePath": "C:\\Users\\SSAFY\\Desktop\\S08P22A308\\smart-contracts\\contracts\\mocks\\governance\\GovernorCompMock.sol",
+  "sourcePath": "C:\\Users\\akqjq\\Desktop\\S08P22A308\\smart-contracts\\contracts\\mocks\\governance\\GovernorCompMock.sol",
   "ast": {
     "absolutePath": "project:/contracts/mocks/governance/GovernorCompMock.sol",
     "exportedSymbols": {
@@ -1568,7 +1568,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.13",
-  "updatedAt": "2023-03-22T03:48:03.642Z",
+  "updatedAt": "2023-03-22T16:34:02.831Z",
   "devdoc": {
     "errors": {
       "Empty()": [

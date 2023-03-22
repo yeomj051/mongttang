@@ -347,7 +347,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\n\r\npragma solidity ^0.8.0;\r\n\r\nimport \"../governance/utils/Votes.sol\";\r\n\r\nabstract contract VotesMock is Votes {\r\n    mapping(address => uint256) private _balances;\r\n    mapping(uint256 => address) private _owners;\r\n\r\n    function getTotalSupply() public view returns (uint256) {\r\n        return _getTotalSupply();\r\n    }\r\n\r\n    function delegate(address account, address newDelegation) public {\r\n        return _delegate(account, newDelegation);\r\n    }\r\n\r\n    function _getVotingUnits(address account) internal view override returns (uint256) {\r\n        return _balances[account];\r\n    }\r\n\r\n    function _mint(address account, uint256 voteId) internal {\r\n        _balances[account] += 1;\r\n        _owners[voteId] = account;\r\n        _transferVotingUnits(address(0), account, 1);\r\n    }\r\n\r\n    function _burn(uint256 voteId) internal {\r\n        address owner = _owners[voteId];\r\n        _balances[owner] -= 1;\r\n        _transferVotingUnits(owner, address(0), 1);\r\n    }\r\n}\r\n\r\nabstract contract VotesTimestampMock is VotesMock {\r\n    function clock() public view override returns (uint48) {\r\n        return uint48(block.timestamp);\r\n    }\r\n\r\n    // solhint-disable-next-line func-name-mixedcase\r\n    function CLOCK_MODE() public view virtual override returns (string memory) {\r\n        return \"mode=timestamp\";\r\n    }\r\n}\r\n",
-  "sourcePath": "C:\\Users\\SSAFY\\Desktop\\S08P22A308\\smart-contracts\\contracts\\mocks\\VotesMock.sol",
+  "sourcePath": "C:\\Users\\akqjq\\Desktop\\S08P22A308\\smart-contracts\\contracts\\mocks\\VotesMock.sol",
   "ast": {
     "absolutePath": "project:/contracts/mocks/VotesMock.sol",
     "exportedSymbols": {
@@ -1999,7 +1999,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.13",
-  "updatedAt": "2023-03-22T03:48:03.596Z",
+  "updatedAt": "2023-03-22T16:34:02.790Z",
   "devdoc": {
     "events": {
       "DelegateChanged(address,address,address)": {

@@ -361,7 +361,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\n// OpenZeppelin Contracts (last updated v4.6.0) (token/ERC1155/extensions/ERC1155Supply.sol)\r\n\r\npragma solidity ^0.8.0;\r\n\r\nimport \"../ERC1155.sol\";\r\n\r\n/**\r\n * @dev Extension of ERC1155 that adds tracking of total supply per id.\r\n *\r\n * Useful for scenarios where Fungible and Non-fungible tokens have to be\r\n * clearly identified. Note: While a totalSupply of 1 might mean the\r\n * corresponding is an NFT, there is no guarantees that no other token with the\r\n * same id are not going to be minted.\r\n */\r\nabstract contract ERC1155Supply is ERC1155 {\r\n    mapping(uint256 => uint256) private _totalSupply;\r\n\r\n    /**\r\n     * @dev Total amount of tokens in with a given id.\r\n     */\r\n    function totalSupply(uint256 id) public view virtual returns (uint256) {\r\n        return _totalSupply[id];\r\n    }\r\n\r\n    /**\r\n     * @dev Indicates whether any token exist with a given id, or not.\r\n     */\r\n    function exists(uint256 id) public view virtual returns (bool) {\r\n        return ERC1155Supply.totalSupply(id) > 0;\r\n    }\r\n\r\n    /**\r\n     * @dev See {ERC1155-_beforeTokenTransfer}.\r\n     */\r\n    function _beforeTokenTransfer(\r\n        address operator,\r\n        address from,\r\n        address to,\r\n        uint256[] memory ids,\r\n        uint256[] memory amounts,\r\n        bytes memory data\r\n    ) internal virtual override {\r\n        super._beforeTokenTransfer(operator, from, to, ids, amounts, data);\r\n\r\n        if (from == address(0)) {\r\n            for (uint256 i = 0; i < ids.length; ++i) {\r\n                _totalSupply[ids[i]] += amounts[i];\r\n            }\r\n        }\r\n\r\n        if (to == address(0)) {\r\n            for (uint256 i = 0; i < ids.length; ++i) {\r\n                uint256 id = ids[i];\r\n                uint256 amount = amounts[i];\r\n                uint256 supply = _totalSupply[id];\r\n                require(supply >= amount, \"ERC1155: burn amount exceeds totalSupply\");\r\n                unchecked {\r\n                    _totalSupply[id] = supply - amount;\r\n                }\r\n            }\r\n        }\r\n    }\r\n}\r\n",
-  "sourcePath": "C:\\Users\\SSAFY\\Desktop\\S08P22A308\\smart-contracts\\contracts\\token\\ERC1155\\extensions\\ERC1155Supply.sol",
+  "sourcePath": "C:\\Users\\akqjq\\Desktop\\S08P22A308\\smart-contracts\\contracts\\token\\ERC1155\\extensions\\ERC1155Supply.sol",
   "ast": {
     "absolutePath": "project:/contracts/token/ERC1155/extensions/ERC1155Supply.sol",
     "exportedSymbols": {
@@ -2315,7 +2315,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.13",
-  "updatedAt": "2023-03-22T03:48:03.884Z",
+  "updatedAt": "2023-03-22T16:34:03.023Z",
   "devdoc": {
     "details": "Extension of ERC1155 that adds tracking of total supply per id. Useful for scenarios where Fungible and Non-fungible tokens have to be clearly identified. Note: While a totalSupply of 1 might mean the corresponding is an NFT, there is no guarantees that no other token with the same id are not going to be minted.",
     "events": {

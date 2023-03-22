@@ -1215,7 +1215,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\n\r\npragma solidity ^0.8.0;\r\n\r\nimport \"../../governance/extensions/GovernorProposalThreshold.sol\";\r\nimport \"../../governance/extensions/GovernorSettings.sol\";\r\nimport \"../../governance/extensions/GovernorCountingSimple.sol\";\r\nimport \"../../governance/extensions/GovernorVotesQuorumFraction.sol\";\r\n\r\nabstract contract GovernorMock is\r\n    GovernorProposalThreshold,\r\n    GovernorSettings,\r\n    GovernorVotesQuorumFraction,\r\n    GovernorCountingSimple\r\n{\r\n    function proposalThreshold() public view override(Governor, GovernorSettings) returns (uint256) {\r\n        return super.proposalThreshold();\r\n    }\r\n\r\n    function propose(\r\n        address[] memory targets,\r\n        uint256[] memory values,\r\n        bytes[] memory calldatas,\r\n        string memory description\r\n    ) public override(Governor, GovernorProposalThreshold) returns (uint256) {\r\n        return super.propose(targets, values, calldatas, description);\r\n    }\r\n}\r\n",
-  "sourcePath": "C:\\Users\\SSAFY\\Desktop\\S08P22A308\\smart-contracts\\contracts\\mocks\\governance\\GovernorMock.sol",
+  "sourcePath": "C:\\Users\\akqjq\\Desktop\\S08P22A308\\smart-contracts\\contracts\\mocks\\governance\\GovernorMock.sol",
   "ast": {
     "absolutePath": "project:/contracts/mocks/governance/GovernorMock.sol",
     "exportedSymbols": {
@@ -1974,7 +1974,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.13",
-  "updatedAt": "2023-03-22T03:48:03.646Z",
+  "updatedAt": "2023-03-22T16:34:02.835Z",
   "devdoc": {
     "errors": {
       "Empty()": [

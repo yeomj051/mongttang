@@ -24,7 +24,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\n// OpenZeppelin Contracts (last updated v4.5.0) (interfaces/draft-IERC1822.sol)\r\n\r\npragma solidity ^0.8.0;\r\n\r\n/**\r\n * @dev ERC1822: Universal Upgradeable Proxy Standard (UUPS) documents a method for upgradeability through a simplified\r\n * proxy whose upgrades are fully controlled by the current implementation.\r\n */\r\ninterface IERC1822Proxiable {\r\n    /**\r\n     * @dev Returns the storage slot that the proxiable contract assumes is being used to store the implementation\r\n     * address.\r\n     *\r\n     * IMPORTANT: A proxy pointing at a proxiable contract should not be considered proxiable itself, because this risks\r\n     * bricking a proxy that upgrades to it, by delegating to itself until out of gas. Thus it is critical that this\r\n     * function revert if invoked through a proxy.\r\n     */\r\n    function proxiableUUID() external view returns (bytes32);\r\n}\r\n",
-  "sourcePath": "C:\\Users\\SSAFY\\Desktop\\S08P22A308\\smart-contracts\\contracts\\interfaces\\draft-IERC1822.sol",
+  "sourcePath": "C:\\Users\\akqjq\\Desktop\\S08P22A308\\smart-contracts\\contracts\\interfaces\\draft-IERC1822.sol",
   "ast": {
     "absolutePath": "project:/contracts/interfaces/draft-IERC1822.sol",
     "exportedSymbols": {
@@ -143,7 +143,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.13",
-  "updatedAt": "2023-03-22T03:48:03.425Z",
+  "updatedAt": "2023-03-22T16:34:02.651Z",
   "devdoc": {
     "details": "ERC1822: Universal Upgradeable Proxy Standard (UUPS) documents a method for upgradeability through a simplified proxy whose upgrades are fully controlled by the current implementation.",
     "kind": "dev",

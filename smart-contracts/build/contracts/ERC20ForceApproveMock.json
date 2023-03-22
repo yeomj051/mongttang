@@ -281,7 +281,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\n\r\npragma solidity ^0.8.0;\r\n\r\nimport \"../../token/ERC20/ERC20.sol\";\r\n\r\n// contract that replicate USDT (0xdac17f958d2ee523a2206206994597c13d831ec7) approval beavior\r\nabstract contract ERC20ForceApproveMock is ERC20 {\r\n    function approve(address spender, uint256 amount) public virtual override returns (bool) {\r\n        require(amount == 0 || allowance(msg.sender, spender) == 0, \"USDT approval failure\");\r\n        return super.approve(spender, amount);\r\n    }\r\n}\r\n",
-  "sourcePath": "C:\\Users\\SSAFY\\Desktop\\S08P22A308\\smart-contracts\\contracts\\mocks\\token\\ERC20ForceApproveMock.sol",
+  "sourcePath": "C:\\Users\\akqjq\\Desktop\\S08P22A308\\smart-contracts\\contracts\\mocks\\token\\ERC20ForceApproveMock.sol",
   "ast": {
     "absolutePath": "project:/contracts/mocks/token/ERC20ForceApproveMock.sol",
     "exportedSymbols": {
@@ -834,7 +834,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.13",
-  "updatedAt": "2023-03-22T03:48:03.679Z",
+  "updatedAt": "2023-03-22T16:34:02.862Z",
   "devdoc": {
     "events": {
       "Approval(address,address,uint256)": {

@@ -228,7 +228,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\n// OpenZeppelin Contracts (last updated v4.6.0) (access/AccessControlCrossChain.sol)\r\n\r\npragma solidity ^0.8.4;\r\n\r\nimport \"./AccessControl.sol\";\r\nimport \"../crosschain/CrossChainEnabled.sol\";\r\n\r\n/**\r\n * @dev An extension to {AccessControl} with support for cross-chain access management.\r\n * For each role, is extension implements an equivalent \"aliased\" role that is used for\r\n * restricting calls originating from other chains.\r\n *\r\n * For example, if a function `myFunction` is protected by `onlyRole(SOME_ROLE)`, and\r\n * if an address `x` has role `SOME_ROLE`, it would be able to call `myFunction` directly.\r\n * A wallet or contract at the same address on another chain would however not be able\r\n * to call this function. In order to do so, it would require to have the role\r\n * `_crossChainRoleAlias(SOME_ROLE)`.\r\n *\r\n * This aliasing is required to protect against multiple contracts living at the same\r\n * address on different chains but controlled by conflicting entities.\r\n *\r\n * _Available since v4.6._\r\n */\r\nabstract contract AccessControlCrossChain is AccessControl, CrossChainEnabled {\r\n    bytes32 public constant CROSSCHAIN_ALIAS = keccak256(\"CROSSCHAIN_ALIAS\");\r\n\r\n    /**\r\n     * @dev See {AccessControl-_checkRole}.\r\n     */\r\n    function _checkRole(bytes32 role) internal view virtual override {\r\n        if (_isCrossChain()) {\r\n            _checkRole(_crossChainRoleAlias(role), _crossChainSender());\r\n        } else {\r\n            super._checkRole(role);\r\n        }\r\n    }\r\n\r\n    /**\r\n     * @dev Returns the aliased role corresponding to `role`.\r\n     */\r\n    function _crossChainRoleAlias(bytes32 role) internal pure virtual returns (bytes32) {\r\n        return role ^ CROSSCHAIN_ALIAS;\r\n    }\r\n}\r\n",
-  "sourcePath": "C:\\Users\\SSAFY\\Desktop\\S08P22A308\\smart-contracts\\contracts\\access\\AccessControlCrossChain.sol",
+  "sourcePath": "C:\\Users\\akqjq\\Desktop\\S08P22A308\\smart-contracts\\contracts\\access\\AccessControlCrossChain.sol",
   "ast": {
     "absolutePath": "project:/contracts/access/AccessControlCrossChain.sol",
     "exportedSymbols": {
@@ -929,7 +929,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.13",
-  "updatedAt": "2023-03-22T03:48:03.289Z",
+  "updatedAt": "2023-03-22T16:34:02.543Z",
   "devdoc": {
     "details": "An extension to {AccessControl} with support for cross-chain access management. For each role, is extension implements an equivalent \"aliased\" role that is used for restricting calls originating from other chains. For example, if a function `myFunction` is protected by `onlyRole(SOME_ROLE)`, and if an address `x` has role `SOME_ROLE`, it would be able to call `myFunction` directly. A wallet or contract at the same address on another chain would however not be able to call this function. In order to do so, it would require to have the role `_crossChainRoleAlias(SOME_ROLE)`. This aliasing is required to protect against multiple contracts living at the same address on different chains but controlled by conflicting entities. _Available since v4.6._",
     "events": {

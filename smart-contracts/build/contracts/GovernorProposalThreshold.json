@@ -1000,7 +1000,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\n// OpenZeppelin Contracts v4.4.1 (governance/extensions/GovernorProposalThreshold.sol)\r\n\r\npragma solidity ^0.8.0;\r\n\r\nimport \"../Governor.sol\";\r\n\r\n/**\r\n * @dev Extension of {Governor} for proposal restriction to token holders with a minimum balance.\r\n *\r\n * _Available since v4.3._\r\n * _Deprecated since v4.4._\r\n */\r\nabstract contract GovernorProposalThreshold is Governor {\r\n    function propose(\r\n        address[] memory targets,\r\n        uint256[] memory values,\r\n        bytes[] memory calldatas,\r\n        string memory description\r\n    ) public virtual override returns (uint256) {\r\n        return super.propose(targets, values, calldatas, description);\r\n    }\r\n}\r\n",
-  "sourcePath": "C:\\Users\\SSAFY\\Desktop\\S08P22A308\\smart-contracts\\contracts\\governance\\extensions\\GovernorProposalThreshold.sol",
+  "sourcePath": "C:\\Users\\akqjq\\Desktop\\S08P22A308\\smart-contracts\\contracts\\governance\\extensions\\GovernorProposalThreshold.sol",
   "ast": {
     "absolutePath": "project:/contracts/governance/extensions/GovernorProposalThreshold.sol",
     "exportedSymbols": {
@@ -1487,7 +1487,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.13",
-  "updatedAt": "2023-03-22T03:48:03.379Z",
+  "updatedAt": "2023-03-22T16:34:02.617Z",
   "devdoc": {
     "details": "Extension of {Governor} for proposal restriction to token holders with a minimum balance. _Available since v4.3._ _Deprecated since v4.4._",
     "errors": {

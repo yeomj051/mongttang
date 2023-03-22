@@ -86,7 +86,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\n// OpenZeppelin Contracts v4.4.1 (interfaces/IERC2612.sol)\r\n\r\npragma solidity ^0.8.0;\r\n\r\nimport \"../token/ERC20/extensions/IERC20Permit.sol\";\r\n\r\ninterface IERC2612 is IERC20Permit {}\r\n",
-  "sourcePath": "C:\\Users\\SSAFY\\Desktop\\S08P22A308\\smart-contracts\\contracts\\interfaces\\IERC2612.sol",
+  "sourcePath": "C:\\Users\\akqjq\\Desktop\\S08P22A308\\smart-contracts\\contracts\\interfaces\\IERC2612.sol",
   "ast": {
     "absolutePath": "project:/contracts/interfaces/IERC2612.sol",
     "exportedSymbols": {
@@ -169,7 +169,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.13",
-  "updatedAt": "2023-03-22T03:48:03.415Z",
+  "updatedAt": "2023-03-22T16:34:02.641Z",
   "devdoc": {
     "kind": "dev",
     "methods": {

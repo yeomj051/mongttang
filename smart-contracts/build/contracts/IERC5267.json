@@ -60,7 +60,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\n\r\npragma solidity ^0.8.0;\r\n\r\ninterface IERC5267 {\r\n    /**\r\n     * @dev MAY be emitted to signal that the domain could have changed.\r\n     */\r\n    event EIP712DomainChanged();\r\n\r\n    /**\r\n     * @dev returns the fields and values that describe the domain separator used by this contract for EIP-712\r\n     * signature.\r\n     */\r\n    function eip712Domain()\r\n        external\r\n        view\r\n        returns (\r\n            bytes1 fields,\r\n            string memory name,\r\n            string memory version,\r\n            uint256 chainId,\r\n            address verifyingContract,\r\n            bytes32 salt,\r\n            uint256[] memory extensions\r\n        );\r\n}\r\n",
-  "sourcePath": "C:\\Users\\SSAFY\\Desktop\\S08P22A308\\smart-contracts\\contracts\\interfaces\\IERC5267.sol",
+  "sourcePath": "C:\\Users\\akqjq\\Desktop\\S08P22A308\\smart-contracts\\contracts\\interfaces\\IERC5267.sol",
   "ast": {
     "absolutePath": "project:/contracts/interfaces/IERC5267.sol",
     "exportedSymbols": {
@@ -366,7 +366,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.13",
-  "updatedAt": "2023-03-22T03:48:03.422Z",
+  "updatedAt": "2023-03-22T16:34:02.648Z",
   "devdoc": {
     "events": {
       "EIP712DomainChanged()": {

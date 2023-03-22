@@ -15,7 +15,7 @@ function createAPIInstance() {
 }
 
 function createRPCInstance() {
-    const web3 = new Web3(new Web3.providers.HttpProvider(`${BLOCKCHAIN_URL}`);
+    const web3 = new Web3(new Web3.providers.HttpProvider(`${BLOCKCHAIN_URL}`));
     return web3;
 }
 

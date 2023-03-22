@@ -10,7 +10,7 @@
   "sourceMap": "534:887:20:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
   "deployedSourceMap": "534:887:20:-:0;;;;;;;;",
   "source": "// SPDX-License-Identifier: MIT\r\n// OpenZeppelin Contracts (last updated v4.7.0) (crosschain/optimism/LibOptimism.sol)\r\n\r\npragma solidity ^0.8.4;\r\n\r\nimport {ICrossDomainMessenger as Optimism_Bridge} from \"../../vendor/optimism/ICrossDomainMessenger.sol\";\r\nimport \"../errors.sol\";\r\n\r\n/**\r\n * @dev Primitives for cross-chain aware contracts for https://www.optimism.io/[Optimism].\r\n * See the https://community.optimism.io/docs/developers/bridge/messaging/#accessing-msg-sender[documentation]\r\n * for the functionality used here.\r\n */\r\nlibrary LibOptimism {\r\n    /**\r\n     * @dev Returns whether the current function call is the result of a\r\n     * cross-chain message relayed by `messenger`.\r\n     */\r\n    function isCrossChain(address messenger) internal view returns (bool) {\r\n        return msg.sender == messenger;\r\n    }\r\n\r\n    /**\r\n     * @dev Returns the address of the sender that triggered the current\r\n     * cross-chain message through `messenger`.\r\n     *\r\n     * NOTE: {isCrossChain} should be checked before trying to recover the\r\n     * sender, as it will revert with `NotCrossChainCall` if the current\r\n     * function call is not the result of a cross-chain message.\r\n     */\r\n    function crossChainSender(address messenger) internal view returns (address) {\r\n        if (!isCrossChain(messenger)) revert NotCrossChainCall();\r\n\r\n        return Optimism_Bridge(messenger).xDomainMessageSender();\r\n    }\r\n}\r\n",
-  "sourcePath": "C:\\Users\\SSAFY\\Desktop\\S08P22A308\\smart-contracts\\contracts\\crosschain\\optimism\\LibOptimism.sol",
+  "sourcePath": "C:\\Users\\akqjq\\Desktop\\S08P22A308\\smart-contracts\\contracts\\crosschain\\optimism\\LibOptimism.sol",
   "ast": {
     "absolutePath": "project:/contracts/crosschain/optimism/LibOptimism.sol",
     "exportedSymbols": {
@@ -566,7 +566,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.13",
-  "updatedAt": "2023-03-22T03:48:03.314Z",
+  "updatedAt": "2023-03-22T16:34:02.561Z",
   "devdoc": {
     "details": "Primitives for cross-chain aware contracts for https://www.optimism.io/[Optimism]. See the https://community.optimism.io/docs/developers/bridge/messaging/#accessing-msg-sender[documentation] for the functionality used here.",
     "kind": "dev",

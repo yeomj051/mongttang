@@ -102,7 +102,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\n// OpenZeppelin Contracts (last updated v4.8.0) (access/Ownable2Step.sol)\r\n\r\npragma solidity ^0.8.0;\r\n\r\nimport \"./Ownable.sol\";\r\n\r\n/**\r\n * @dev Contract module which provides access control mechanism, where\r\n * there is an account (an owner) that can be granted exclusive access to\r\n * specific functions.\r\n *\r\n * By default, the owner account will be the one that deploys the contract. This\r\n * can later be changed with {transferOwnership} and {acceptOwnership}.\r\n *\r\n * This module is used through inheritance. It will make available all functions\r\n * from parent (Ownable).\r\n */\r\nabstract contract Ownable2Step is Ownable {\r\n    address private _pendingOwner;\r\n\r\n    event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner);\r\n\r\n    /**\r\n     * @dev Returns the address of the pending owner.\r\n     */\r\n    function pendingOwner() public view virtual returns (address) {\r\n        return _pendingOwner;\r\n    }\r\n\r\n    /**\r\n     * @dev Starts the ownership transfer of the contract to a new account. Replaces the pending transfer if there is one.\r\n     * Can only be called by the current owner.\r\n     */\r\n    function transferOwnership(address newOwner) public virtual override onlyOwner {\r\n        _pendingOwner = newOwner;\r\n        emit OwnershipTransferStarted(owner(), newOwner);\r\n    }\r\n\r\n    /**\r\n     * @dev Transfers ownership of the contract to a new account (`newOwner`) and deletes any pending owner.\r\n     * Internal function without access restriction.\r\n     */\r\n    function _transferOwnership(address newOwner) internal virtual override {\r\n        delete _pendingOwner;\r\n        super._transferOwnership(newOwner);\r\n    }\r\n\r\n    /**\r\n     * @dev The new owner accepts the ownership transfer.\r\n     */\r\n    function acceptOwnership() public virtual {\r\n        address sender = _msgSender();\r\n        require(pendingOwner() == sender, \"Ownable2Step: caller is not the new owner\");\r\n        _transferOwnership(sender);\r\n    }\r\n}\r\n",
-  "sourcePath": "C:\\Users\\SSAFY\\Desktop\\S08P22A308\\smart-contracts\\contracts\\access\\Ownable2Step.sol",
+  "sourcePath": "C:\\Users\\akqjq\\Desktop\\S08P22A308\\smart-contracts\\contracts\\access\\Ownable2Step.sol",
   "ast": {
     "absolutePath": "project:/contracts/access/Ownable2Step.sol",
     "exportedSymbols": {
@@ -1082,7 +1082,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.13",
-  "updatedAt": "2023-03-22T03:48:03.302Z",
+  "updatedAt": "2023-03-22T16:34:02.553Z",
   "devdoc": {
     "details": "Contract module which provides access control mechanism, where there is an account (an owner) that can be granted exclusive access to specific functions. By default, the owner account will be the one that deploys the contract. This can later be changed with {transferOwnership} and {acceptOwnership}. This module is used through inheritance. It will make available all functions from parent (Ownable).",
     "kind": "dev",

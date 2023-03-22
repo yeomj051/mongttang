@@ -281,7 +281,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\n\r\npragma solidity ^0.8.0;\r\n\r\nimport \"../../token/ERC20/ERC20.sol\";\r\n\r\nabstract contract ERC20NoReturnMock is ERC20 {\r\n    function transfer(address to, uint256 amount) public override returns (bool) {\r\n        super.transfer(to, amount);\r\n        assembly {\r\n            return(0, 0)\r\n        }\r\n    }\r\n\r\n    function transferFrom(address from, address to, uint256 amount) public override returns (bool) {\r\n        super.transferFrom(from, to, amount);\r\n        assembly {\r\n            return(0, 0)\r\n        }\r\n    }\r\n\r\n    function approve(address spender, uint256 amount) public override returns (bool) {\r\n        super.approve(spender, amount);\r\n        assembly {\r\n            return(0, 0)\r\n        }\r\n    }\r\n}\r\n",
-  "sourcePath": "C:\\Users\\SSAFY\\Desktop\\S08P22A308\\smart-contracts\\contracts\\mocks\\token\\ERC20NoReturnMock.sol",
+  "sourcePath": "C:\\Users\\akqjq\\Desktop\\S08P22A308\\smart-contracts\\contracts\\mocks\\token\\ERC20NoReturnMock.sol",
   "ast": {
     "absolutePath": "project:/contracts/mocks/token/ERC20NoReturnMock.sol",
     "exportedSymbols": {
@@ -1186,7 +1186,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.13",
-  "updatedAt": "2023-03-22T03:48:03.681Z",
+  "updatedAt": "2023-03-22T16:34:02.864Z",
   "devdoc": {
     "events": {
       "Approval(address,address,uint256)": {

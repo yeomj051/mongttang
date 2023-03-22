@@ -10,7 +10,7 @@
   "sourceMap": "587:1029:16:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
   "deployedSourceMap": "587:1029:16:-:0;;;;;;;;",
   "source": "// SPDX-License-Identifier: MIT\r\n// OpenZeppelin Contracts (last updated v4.8.0) (crosschain/arbitrum/LibArbitrumL1.sol)\r\n\r\npragma solidity ^0.8.4;\r\n\r\nimport {IBridge as ArbitrumL1_Bridge} from \"../../vendor/arbitrum/IBridge.sol\";\r\nimport {IOutbox as ArbitrumL1_Outbox} from \"../../vendor/arbitrum/IOutbox.sol\";\r\nimport \"../errors.sol\";\r\n\r\n/**\r\n * @dev Primitives for cross-chain aware contracts for\r\n * https://arbitrum.io/[Arbitrum].\r\n *\r\n * This version should only be used on L1 to process cross-chain messages\r\n * originating from L2. For the other side, use {LibArbitrumL2}.\r\n */\r\nlibrary LibArbitrumL1 {\r\n    /**\r\n     * @dev Returns whether the current function call is the result of a\r\n     * cross-chain message relayed by the `bridge`.\r\n     */\r\n    function isCrossChain(address bridge) internal view returns (bool) {\r\n        return msg.sender == bridge;\r\n    }\r\n\r\n    /**\r\n     * @dev Returns the address of the sender that triggered the current\r\n     * cross-chain message through the `bridge`.\r\n     *\r\n     * NOTE: {isCrossChain} should be checked before trying to recover the\r\n     * sender, as it will revert with `NotCrossChainCall` if the current\r\n     * function call is not the result of a cross-chain message.\r\n     */\r\n    function crossChainSender(address bridge) internal view returns (address) {\r\n        if (!isCrossChain(bridge)) revert NotCrossChainCall();\r\n\r\n        address sender = ArbitrumL1_Outbox(ArbitrumL1_Bridge(bridge).activeOutbox()).l2ToL1Sender();\r\n        require(sender != address(0), \"LibArbitrumL1: system messages without sender\");\r\n\r\n        return sender;\r\n    }\r\n}\r\n",
-  "sourcePath": "C:\\Users\\SSAFY\\Desktop\\S08P22A308\\smart-contracts\\contracts\\crosschain\\arbitrum\\LibArbitrumL1.sol",
+  "sourcePath": "C:\\Users\\akqjq\\Desktop\\S08P22A308\\smart-contracts\\contracts\\crosschain\\arbitrum\\LibArbitrumL1.sol",
   "ast": {
     "absolutePath": "project:/contracts/crosschain/arbitrum/LibArbitrumL1.sol",
     "exportedSymbols": {
@@ -873,7 +873,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.13",
-  "updatedAt": "2023-03-22T03:48:03.310Z",
+  "updatedAt": "2023-03-22T16:34:02.558Z",
   "devdoc": {
     "details": "Primitives for cross-chain aware contracts for https://arbitrum.io/[Arbitrum]. This version should only be used on L1 to process cross-chain messages originating from L2. For the other side, use {LibArbitrumL2}.",
     "kind": "dev",

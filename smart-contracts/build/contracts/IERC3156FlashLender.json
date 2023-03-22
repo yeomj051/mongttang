@@ -88,7 +88,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\n// OpenZeppelin Contracts v4.4.1 (interfaces/IERC3156FlashLender.sol)\r\n\r\npragma solidity ^0.8.0;\r\n\r\nimport \"./IERC3156FlashBorrower.sol\";\r\n\r\n/**\r\n * @dev Interface of the ERC3156 FlashLender, as defined in\r\n * https://eips.ethereum.org/EIPS/eip-3156[ERC-3156].\r\n *\r\n * _Available since v4.1._\r\n */\r\ninterface IERC3156FlashLender {\r\n    /**\r\n     * @dev The amount of currency available to be lended.\r\n     * @param token The loan currency.\r\n     * @return The amount of `token` that can be borrowed.\r\n     */\r\n    function maxFlashLoan(address token) external view returns (uint256);\r\n\r\n    /**\r\n     * @dev The fee to be charged for a given loan.\r\n     * @param token The loan currency.\r\n     * @param amount The amount of tokens lent.\r\n     * @return The amount of `token` to be charged for the loan, on top of the returned principal.\r\n     */\r\n    function flashFee(address token, uint256 amount) external view returns (uint256);\r\n\r\n    /**\r\n     * @dev Initiate a flash loan.\r\n     * @param receiver The receiver of the tokens in the loan, and the receiver of the callback.\r\n     * @param token The loan currency.\r\n     * @param amount The amount of tokens lent.\r\n     * @param data Arbitrary data structure, intended to contain user-defined parameters.\r\n     */\r\n    function flashLoan(\r\n        IERC3156FlashBorrower receiver,\r\n        address token,\r\n        uint256 amount,\r\n        bytes calldata data\r\n    ) external returns (bool);\r\n}\r\n",
-  "sourcePath": "C:\\Users\\SSAFY\\Desktop\\S08P22A308\\smart-contracts\\contracts\\interfaces\\IERC3156FlashLender.sol",
+  "sourcePath": "C:\\Users\\akqjq\\Desktop\\S08P22A308\\smart-contracts\\contracts\\interfaces\\IERC3156FlashLender.sol",
   "ast": {
     "absolutePath": "project:/contracts/interfaces/IERC3156FlashLender.sol",
     "exportedSymbols": {
@@ -549,7 +549,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.13",
-  "updatedAt": "2023-03-22T03:48:03.417Z",
+  "updatedAt": "2023-03-22T16:34:02.644Z",
   "devdoc": {
     "details": "Interface of the ERC3156 FlashLender, as defined in https://eips.ethereum.org/EIPS/eip-3156[ERC-3156]. _Available since v4.1._",
     "kind": "dev",

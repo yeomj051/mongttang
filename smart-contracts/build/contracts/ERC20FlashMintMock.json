@@ -384,7 +384,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\n\r\npragma solidity ^0.8.0;\r\n\r\nimport \"../../token/ERC20/extensions/ERC20FlashMint.sol\";\r\n\r\nabstract contract ERC20FlashMintMock is ERC20FlashMint {\r\n    uint256 _flashFeeAmount;\r\n    address _flashFeeReceiverAddress;\r\n\r\n    function setFlashFee(uint256 amount) public {\r\n        _flashFeeAmount = amount;\r\n    }\r\n\r\n    function _flashFee(address, uint256) internal view override returns (uint256) {\r\n        return _flashFeeAmount;\r\n    }\r\n\r\n    function setFlashFeeReceiver(address receiver) public {\r\n        _flashFeeReceiverAddress = receiver;\r\n    }\r\n\r\n    function _flashFeeReceiver() internal view override returns (address) {\r\n        return _flashFeeReceiverAddress;\r\n    }\r\n}\r\n",
-  "sourcePath": "C:\\Users\\SSAFY\\Desktop\\S08P22A308\\smart-contracts\\contracts\\mocks\\token\\ERC20FlashMintMock.sol",
+  "sourcePath": "C:\\Users\\akqjq\\Desktop\\S08P22A308\\smart-contracts\\contracts\\mocks\\token\\ERC20FlashMintMock.sol",
   "ast": {
     "absolutePath": "project:/contracts/mocks/token/ERC20FlashMintMock.sol",
     "exportedSymbols": {
@@ -990,7 +990,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.13",
-  "updatedAt": "2023-03-22T03:48:03.678Z",
+  "updatedAt": "2023-03-22T16:34:02.861Z",
   "devdoc": {
     "events": {
       "Approval(address,address,uint256)": {

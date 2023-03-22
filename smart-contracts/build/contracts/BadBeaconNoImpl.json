@@ -10,7 +10,7 @@
   "sourceMap": "62:27:119:-:0;;;;;;;;;;;;;;;;;;;",
   "deployedSourceMap": "62:27:119:-:0;;;;;",
   "source": "// SPDX-License-Identifier: MIT\r\n\r\npragma solidity ^0.8.0;\r\n\r\ncontract BadBeaconNoImpl {}\r\n\r\ncontract BadBeaconNotContract {\r\n    function implementation() external pure returns (address) {\r\n        return address(0x1);\r\n    }\r\n}\r\n",
-  "sourcePath": "C:\\Users\\SSAFY\\Desktop\\S08P22A308\\smart-contracts\\contracts\\mocks\\proxy\\BadBeacon.sol",
+  "sourcePath": "C:\\Users\\akqjq\\Desktop\\S08P22A308\\smart-contracts\\contracts\\mocks\\proxy\\BadBeacon.sol",
   "ast": {
     "absolutePath": "project:/contracts/mocks/proxy/BadBeacon.sol",
     "exportedSymbols": {
@@ -214,7 +214,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.13",
-  "updatedAt": "2023-03-22T03:48:03.657Z",
+  "updatedAt": "2023-03-22T16:34:02.844Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

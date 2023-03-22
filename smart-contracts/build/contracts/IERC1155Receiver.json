@@ -108,7 +108,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\n// OpenZeppelin Contracts (last updated v4.5.0) (token/ERC1155/IERC1155Receiver.sol)\r\n\r\npragma solidity ^0.8.0;\r\n\r\nimport \"../../utils/introspection/IERC165.sol\";\r\n\r\n/**\r\n * @dev _Available since v3.1._\r\n */\r\ninterface IERC1155Receiver is IERC165 {\r\n    /**\r\n     * @dev Handles the receipt of a single ERC1155 token type. This function is\r\n     * called at the end of a `safeTransferFrom` after the balance has been updated.\r\n     *\r\n     * NOTE: To accept the transfer, this must return\r\n     * `bytes4(keccak256(\"onERC1155Received(address,address,uint256,uint256,bytes)\"))`\r\n     * (i.e. 0xf23a6e61, or its own function selector).\r\n     *\r\n     * @param operator The address which initiated the transfer (i.e. msg.sender)\r\n     * @param from The address which previously owned the token\r\n     * @param id The ID of the token being transferred\r\n     * @param value The amount of tokens being transferred\r\n     * @param data Additional data with no specified format\r\n     * @return `bytes4(keccak256(\"onERC1155Received(address,address,uint256,uint256,bytes)\"))` if transfer is allowed\r\n     */\r\n    function onERC1155Received(\r\n        address operator,\r\n        address from,\r\n        uint256 id,\r\n        uint256 value,\r\n        bytes calldata data\r\n    ) external returns (bytes4);\r\n\r\n    /**\r\n     * @dev Handles the receipt of a multiple ERC1155 token types. This function\r\n     * is called at the end of a `safeBatchTransferFrom` after the balances have\r\n     * been updated.\r\n     *\r\n     * NOTE: To accept the transfer(s), this must return\r\n     * `bytes4(keccak256(\"onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)\"))`\r\n     * (i.e. 0xbc197c81, or its own function selector).\r\n     *\r\n     * @param operator The address which initiated the batch transfer (i.e. msg.sender)\r\n     * @param from The address which previously owned the token\r\n     * @param ids An array containing ids of each token being transferred (order and length must match values array)\r\n     * @param values An array containing amounts of each token being transferred (order and length must match ids array)\r\n     * @param data Additional data with no specified format\r\n     * @return `bytes4(keccak256(\"onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)\"))` if transfer is allowed\r\n     */\r\n    function onERC1155BatchReceived(\r\n        address operator,\r\n        address from,\r\n        uint256[] calldata ids,\r\n        uint256[] calldata values,\r\n        bytes calldata data\r\n    ) external returns (bytes4);\r\n}\r\n",
-  "sourcePath": "C:\\Users\\SSAFY\\Desktop\\S08P22A308\\smart-contracts\\contracts\\token\\ERC1155\\IERC1155Receiver.sol",
+  "sourcePath": "C:\\Users\\akqjq\\Desktop\\S08P22A308\\smart-contracts\\contracts\\token\\ERC1155\\IERC1155Receiver.sol",
   "ast": {
     "absolutePath": "project:/contracts/token/ERC1155/IERC1155Receiver.sol",
     "exportedSymbols": {
@@ -614,7 +614,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.13",
-  "updatedAt": "2023-03-22T03:48:03.879Z",
+  "updatedAt": "2023-03-22T16:34:03.020Z",
   "devdoc": {
     "details": "_Available since v3.1._",
     "kind": "dev",

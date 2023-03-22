@@ -37,7 +37,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\n// OpenZeppelin Contracts (interfaces/IERC6372.sol)\r\n\r\npragma solidity ^0.8.0;\r\n\r\ninterface IERC6372 {\r\n    /**\r\n     * @dev Clock used for flagging checkpoints. Can be overridden to implement timestamp based checkpoints (and voting).\r\n     */\r\n    function clock() external view returns (uint48);\r\n\r\n    /**\r\n     * @dev Description of the clock\r\n     */\r\n    // solhint-disable-next-line func-name-mixedcase\r\n    function CLOCK_MODE() external view returns (string memory);\r\n}\r\n",
-  "sourcePath": "C:\\Users\\SSAFY\\Desktop\\S08P22A308\\smart-contracts\\contracts\\interfaces\\IERC6372.sol",
+  "sourcePath": "C:\\Users\\akqjq\\Desktop\\S08P22A308\\smart-contracts\\contracts\\interfaces\\IERC6372.sol",
   "ast": {
     "absolutePath": "project:/contracts/interfaces/IERC6372.sol",
     "exportedSymbols": {
@@ -211,7 +211,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.13",
-  "updatedAt": "2023-03-22T03:48:03.425Z",
+  "updatedAt": "2023-03-22T16:34:02.651Z",
   "devdoc": {
     "kind": "dev",
     "methods": {

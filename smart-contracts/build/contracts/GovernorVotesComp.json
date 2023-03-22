@@ -1013,7 +1013,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\n// OpenZeppelin Contracts (last updated v4.6.0) (governance/extensions/GovernorVotesComp.sol)\r\n\r\npragma solidity ^0.8.0;\r\n\r\nimport \"../Governor.sol\";\r\nimport \"../../token/ERC20/extensions/ERC20VotesComp.sol\";\r\n\r\n/**\r\n * @dev Extension of {Governor} for voting weight extraction from a Comp token.\r\n *\r\n * _Available since v4.3._\r\n */\r\nabstract contract GovernorVotesComp is Governor {\r\n    ERC20VotesComp public immutable token;\r\n\r\n    constructor(ERC20VotesComp token_) {\r\n        token = token_;\r\n    }\r\n\r\n    /**\r\n     * @dev Clock (as specified in EIP-6372) is set to match the token's clock. Fallback to block numbers if the token\r\n     * does not implement EIP-6372.\r\n     */\r\n    function clock() public view virtual override returns (uint48) {\r\n        try token.clock() returns (uint48 timepoint) {\r\n            return timepoint;\r\n        } catch {\r\n            return SafeCast.toUint48(block.number);\r\n        }\r\n    }\r\n\r\n    /**\r\n     * @dev Machine-readable description of the clock as specified in EIP-6372.\r\n     */\r\n    // solhint-disable-next-line func-name-mixedcase\r\n    function CLOCK_MODE() public view virtual override returns (string memory) {\r\n        try token.CLOCK_MODE() returns (string memory clockmode) {\r\n            return clockmode;\r\n        } catch {\r\n            return \"mode=blocknumber&from=default\";\r\n        }\r\n    }\r\n\r\n    /**\r\n     * Read the voting weight from the token's built-in snapshot mechanism (see {Governor-_getVotes}).\r\n     */\r\n    function _getVotes(\r\n        address account,\r\n        uint256 timepoint,\r\n        bytes memory /*params*/\r\n    ) internal view virtual override returns (uint256) {\r\n        return token.getPriorVotes(account, timepoint);\r\n    }\r\n}\r\n",
-  "sourcePath": "C:\\Users\\SSAFY\\Desktop\\S08P22A308\\smart-contracts\\contracts\\governance\\extensions\\GovernorVotesComp.sol",
+  "sourcePath": "C:\\Users\\akqjq\\Desktop\\S08P22A308\\smart-contracts\\contracts\\governance\\extensions\\GovernorVotesComp.sol",
   "ast": {
     "absolutePath": "project:/contracts/governance/extensions/GovernorVotesComp.sol",
     "exportedSymbols": {
@@ -2139,7 +2139,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.13",
-  "updatedAt": "2023-03-22T03:48:03.395Z",
+  "updatedAt": "2023-03-22T16:34:02.628Z",
   "devdoc": {
     "details": "Extension of {Governor} for voting weight extraction from a Comp token. _Available since v4.3._",
     "errors": {

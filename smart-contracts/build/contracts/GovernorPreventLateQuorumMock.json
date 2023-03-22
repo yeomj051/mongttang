@@ -1202,7 +1202,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\n\r\npragma solidity ^0.8.0;\r\n\r\nimport \"../../governance/extensions/GovernorPreventLateQuorum.sol\";\r\nimport \"../../governance/extensions/GovernorSettings.sol\";\r\nimport \"../../governance/extensions/GovernorCountingSimple.sol\";\r\nimport \"../../governance/extensions/GovernorVotes.sol\";\r\n\r\nabstract contract GovernorPreventLateQuorumMock is\r\n    GovernorSettings,\r\n    GovernorVotes,\r\n    GovernorCountingSimple,\r\n    GovernorPreventLateQuorum\r\n{\r\n    uint256 private _quorum;\r\n\r\n    constructor(uint256 quorum_) {\r\n        _quorum = quorum_;\r\n    }\r\n\r\n    function quorum(uint256) public view override returns (uint256) {\r\n        return _quorum;\r\n    }\r\n\r\n    function proposalDeadline(\r\n        uint256 proposalId\r\n    ) public view override(Governor, GovernorPreventLateQuorum) returns (uint256) {\r\n        return super.proposalDeadline(proposalId);\r\n    }\r\n\r\n    function proposalThreshold() public view override(Governor, GovernorSettings) returns (uint256) {\r\n        return super.proposalThreshold();\r\n    }\r\n\r\n    function _castVote(\r\n        uint256 proposalId,\r\n        address account,\r\n        uint8 support,\r\n        string memory reason,\r\n        bytes memory params\r\n    ) internal override(Governor, GovernorPreventLateQuorum) returns (uint256) {\r\n        return super._castVote(proposalId, account, support, reason, params);\r\n    }\r\n}\r\n",
-  "sourcePath": "C:\\Users\\SSAFY\\Desktop\\S08P22A308\\smart-contracts\\contracts\\mocks\\governance\\GovernorPreventLateQuorumMock.sol",
+  "sourcePath": "C:\\Users\\akqjq\\Desktop\\S08P22A308\\smart-contracts\\contracts\\mocks\\governance\\GovernorPreventLateQuorumMock.sol",
   "ast": {
     "absolutePath": "project:/contracts/mocks/governance/GovernorPreventLateQuorumMock.sol",
     "exportedSymbols": {
@@ -2409,7 +2409,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.13",
-  "updatedAt": "2023-03-22T03:48:03.647Z",
+  "updatedAt": "2023-03-22T16:34:02.837Z",
   "devdoc": {
     "errors": {
       "Empty()": [

@@ -193,7 +193,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\n// OpenZeppelin Contracts (last updated v4.5.0) (governance/utils/IVotes.sol)\r\npragma solidity ^0.8.0;\r\n\r\n/**\r\n * @dev Common interface for {ERC20Votes}, {ERC721Votes}, and other {Votes}-enabled contracts.\r\n *\r\n * _Available since v4.5._\r\n */\r\ninterface IVotes {\r\n    /**\r\n     * @dev Emitted when an account changes their delegate.\r\n     */\r\n    event DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate);\r\n\r\n    /**\r\n     * @dev Emitted when a token transfer or delegate change results in changes to a delegate's number of votes.\r\n     */\r\n    event DelegateVotesChanged(address indexed delegate, uint256 previousBalance, uint256 newBalance);\r\n\r\n    /**\r\n     * @dev Returns the current amount of votes that `account` has.\r\n     */\r\n    function getVotes(address account) external view returns (uint256);\r\n\r\n    /**\r\n     * @dev Returns the amount of votes that `account` had at a specific moment in the past. If the `clock()` is\r\n     * configured to use block numbers, this will return the value the end of the corresponding block.\r\n     */\r\n    function getPastVotes(address account, uint256 timepoint) external view returns (uint256);\r\n\r\n    /**\r\n     * @dev Returns the total supply of votes available at a specific moment in the past. If the `clock()` is\r\n     * configured to use block numbers, this will return the value the end of the corresponding block.\r\n     *\r\n     * NOTE: This value is the sum of all available votes, which is not necessarily the sum of all delegated votes.\r\n     * Votes that have not been delegated are still part of total supply, even though they would not participate in a\r\n     * vote.\r\n     */\r\n    function getPastTotalSupply(uint256 timepoint) external view returns (uint256);\r\n\r\n    /**\r\n     * @dev Returns the delegate that `account` has chosen.\r\n     */\r\n    function delegates(address account) external view returns (address);\r\n\r\n    /**\r\n     * @dev Delegates votes from the sender to `delegatee`.\r\n     */\r\n    function delegate(address delegatee) external;\r\n\r\n    /**\r\n     * @dev Delegates votes from signer to `delegatee`.\r\n     */\r\n    function delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s) external;\r\n}\r\n",
-  "sourcePath": "C:\\Users\\SSAFY\\Desktop\\S08P22A308\\smart-contracts\\contracts\\governance\\utils\\IVotes.sol",
+  "sourcePath": "C:\\Users\\akqjq\\Desktop\\S08P22A308\\smart-contracts\\contracts\\governance\\utils\\IVotes.sol",
   "ast": {
     "absolutePath": "project:/contracts/governance/utils/IVotes.sol",
     "exportedSymbols": {
@@ -1113,7 +1113,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.13",
-  "updatedAt": "2023-03-22T03:48:03.403Z",
+  "updatedAt": "2023-03-22T16:34:02.633Z",
   "devdoc": {
     "details": "Common interface for {ERC20Votes}, {ERC721Votes}, and other {Votes}-enabled contracts. _Available since v4.5._",
     "events": {

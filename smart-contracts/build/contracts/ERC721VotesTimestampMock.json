@@ -646,7 +646,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\n\r\npragma solidity ^0.8.0;\r\n\r\nimport \"../../token/ERC20/extensions/ERC20Votes.sol\";\r\nimport \"../../token/ERC20/extensions/ERC20VotesComp.sol\";\r\nimport \"../../token/ERC721/extensions/ERC721Votes.sol\";\r\n\r\nabstract contract ERC20VotesTimestampMock is ERC20Votes {\r\n    function clock() public view virtual override returns (uint48) {\r\n        return SafeCast.toUint48(block.timestamp);\r\n    }\r\n\r\n    // solhint-disable-next-line func-name-mixedcase\r\n    function CLOCK_MODE() public view virtual override returns (string memory) {\r\n        return \"mode=timestamp\";\r\n    }\r\n}\r\n\r\nabstract contract ERC20VotesCompTimestampMock is ERC20VotesComp {\r\n    function clock() public view virtual override returns (uint48) {\r\n        return SafeCast.toUint48(block.timestamp);\r\n    }\r\n\r\n    // solhint-disable-next-line func-name-mixedcase\r\n    function CLOCK_MODE() public view virtual override returns (string memory) {\r\n        return \"mode=timestamp\";\r\n    }\r\n}\r\n\r\nabstract contract ERC721VotesTimestampMock is ERC721Votes {\r\n    function clock() public view virtual override returns (uint48) {\r\n        return SafeCast.toUint48(block.timestamp);\r\n    }\r\n\r\n    // solhint-disable-next-line func-name-mixedcase\r\n    function CLOCK_MODE() public view virtual override returns (string memory) {\r\n        return \"mode=timestamp\";\r\n    }\r\n}\r\n",
-  "sourcePath": "C:\\Users\\SSAFY\\Desktop\\S08P22A308\\smart-contracts\\contracts\\mocks\\token\\VotesTimestamp.sol",
+  "sourcePath": "C:\\Users\\akqjq\\Desktop\\S08P22A308\\smart-contracts\\contracts\\mocks\\token\\VotesTimestamp.sol",
   "ast": {
     "absolutePath": "project:/contracts/mocks/token/VotesTimestamp.sol",
     "exportedSymbols": {
@@ -1721,7 +1721,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.13",
-  "updatedAt": "2023-03-22T03:48:03.752Z",
+  "updatedAt": "2023-03-22T16:34:02.919Z",
   "devdoc": {
     "events": {
       "Approval(address,address,uint256)": {

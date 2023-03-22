@@ -4,11 +4,12 @@ import { ERC20_CONTRACT_ABI, NFT_CONTRACT_ABI, MTT_CONTRACT_ABI } from "@/config
 
 const rpcInstance = createRPCInstance();
 
-async function getMMTBalance(accountAddress){
+async function getMTTBalance(accountAddress){
     const mttContract = new rpcInstance.eth.Contract(MTT_CONTRACT_ABI, MTT_CONTRACT_ADDRESS);
     let balance;
     try{
         balance = await mttContract.methods.balanceOf(accountAddress).call();
+        console.log("mtt : "+balance);
     } catch(error){
         console.error(error);
     }
@@ -21,6 +22,7 @@ async function getSSFBalance(accountAddress){
     let balance;
     try{
         balance = await ssfContract.methods.balanceOf(accountAddress).call();
+        console.log("ssf : "+balance)
     } catch(error){
         console.error(error);
     }
@@ -41,7 +43,7 @@ async function getNTFList(accountAddress){
 }
 
 export{
-    getMMTBalance,
+    getMTTBalance,
     getNTFList,
     getSSFBalance,
 }

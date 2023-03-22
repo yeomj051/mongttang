@@ -328,7 +328,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\n\r\npragma solidity ^0.8.0;\r\n\r\nimport \"./IERC165.sol\";\r\nimport \"./IERC721.sol\";\r\n\r\n/// @title EIP-721 Metadata Update Extension\r\ninterface IERC4906 is IERC165, IERC721 {\r\n    /// @dev This event emits when the metadata of a token is changed.\r\n    /// So that the third-party platforms such as NFT market could\r\n    /// timely update the images and related attributes of the NFT.\r\n    event MetadataUpdate(uint256 _tokenId);\r\n\r\n    /// @dev This event emits when the metadata of a range of tokens is changed.\r\n    /// So that the third-party platforms such as NFT market could\r\n    /// timely update the images and related attributes of the NFTs.\r\n    event BatchMetadataUpdate(uint256 _fromTokenId, uint256 _toTokenId);\r\n}\r\n",
-  "sourcePath": "C:\\Users\\SSAFY\\Desktop\\S08P22A308\\smart-contracts\\contracts\\interfaces\\IERC4906.sol",
+  "sourcePath": "C:\\Users\\akqjq\\Desktop\\S08P22A308\\smart-contracts\\contracts\\interfaces\\IERC4906.sol",
   "ast": {
     "absolutePath": "project:/contracts/interfaces/IERC4906.sol",
     "exportedSymbols": {
@@ -577,7 +577,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.13",
-  "updatedAt": "2023-03-22T03:48:03.421Z",
+  "updatedAt": "2023-03-22T16:34:02.647Z",
   "devdoc": {
     "events": {
       "Approval(address,address,uint256)": {
