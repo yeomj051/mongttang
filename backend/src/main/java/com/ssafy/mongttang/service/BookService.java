@@ -103,7 +103,7 @@ public class BookService {
         return illustList;
     }
 
-    public BookLike createLikeBook(int userId, int bookId) {
+    public BookLike createBookLike(int userId, int bookId) {
         User user = userRepository.findByUserId(userId);
         Book book = bookRepository.findByBookId(bookId);
 
@@ -118,4 +118,18 @@ public class BookService {
     }
 
 
+    public int cancleBookLike(int userId, int bookId) {
+        User user = userRepository.findByUserId(userId);
+        Book book = bookRepository.findByBookId(bookId);
+
+        if(user == null || book == null) return 0;
+        else{
+            BookLike bookLike = bookLikeRepository.findByBooklikeBookIdAndBooklikeUserId(book, userId);
+            if(bookLike == null) return 0;
+            else{
+                bookLikeRepository.delete(bookLike);
+                return 1;
+            }
+        }
+    }
 }

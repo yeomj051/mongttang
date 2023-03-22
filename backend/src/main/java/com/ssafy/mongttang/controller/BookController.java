@@ -132,7 +132,7 @@ public class BookController {
 
     @ApiOperation(value = "동화 좋아요 등록", notes = "동화 좋아요를 등록한다.", response = Map.class)
     @PostMapping("/booklike")
-    public ResponseEntity<Map<String,Object>> createLikeBook(@ApiParam(value = "회원 아이디", required = true, example = "0") @RequestParam int userId,
+    public ResponseEntity<Map<String,Object>> createBookLike(@ApiParam(value = "회원 아이디", required = true, example = "0") @RequestParam int userId,
                                                            @ApiParam(value = "동화 아이디", required = true, example = "0") @RequestParam int bookId, Principal principal){
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = null;
@@ -142,7 +142,7 @@ public class BookController {
             return new ResponseEntity<Map<String, Object>>(resultMap, status);
         }
 
-        BookLike bookLike = bookService.createLikeBook(userId,bookId);
+        BookLike bookLike = bookService.createBookLike(userId,bookId);
 
         if(bookLike != null){
             resultMap.put(MESSAGE,SUCCESS);
@@ -151,6 +151,33 @@ public class BookController {
         }else{
             resultMap.put(MESSAGE, FAIL);
             resultMap.put("isLiked",false);
+            status = HttpStatus.BAD_REQUEST;
+        }
+
+        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    }
+
+    @ApiOperation(value = "동화 좋아요 취소", notes = "동화 좋아요를 취소한다.", response = Map.class)
+    @DeleteMapping("/booklike")
+    public ResponseEntity<Map<String,Object>> cancleBookLike(@ApiParam(value = "회원 아이디", required = true, example = "0") @RequestParam int userId,
+                                                           @ApiParam(value = "동화 아이디", required = true, example = "0") @RequestParam int bookId, Principal principal){
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<Map<String, Object>>(resultMap, status);
+        }
+
+        int isDeleted = bookService.cancleBookLike(userId,bookId);
+
+        if(isDeleted > 0){
+            resultMap.put(MESSAGE,SUCCESS);
+            resultMap.put("isLiked",false);
+            status = HttpStatus.OK;
+        }else{
+            resultMap.put(MESSAGE, FAIL);
+            resultMap.put("isLiked",true);
             status = HttpStatus.BAD_REQUEST;
         }
 
