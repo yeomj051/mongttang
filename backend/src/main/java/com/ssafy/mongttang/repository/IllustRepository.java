@@ -15,4 +15,7 @@ public interface IllustRepository extends JpaRepository<Illust, Integer> {
     @Transactional
     @Query(value = "delete from Illust illust where illust.illustBookId = :book")
     void deleteByIllustBookId(@Param("book") Book book);
+
+    @Query("select i.illustFilePath from Illust i where i.illustPageNumber = 0 and i.illustBookId.bookId = :bookId")
+    String findCoverIllust(int bookId);
 }

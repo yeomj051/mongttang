@@ -4,12 +4,21 @@ import com.ssafy.mongttang.dto.*;
 import com.ssafy.mongttang.entity.*;
 import com.ssafy.mongttang.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.codec.Charsets;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.Cursor;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +32,7 @@ public class BookService {
     private final CommentLikeRepository commentLikeRepository;
     private final CommentReportRepository commentReportRepository;
     private final S3Service s3Service;
+    private final RedisTemplate redisTemplate;
 
     public int createBook(int userId, ReqCreateBookDto reqCreateBookDto, ArrayList<MultipartFile> imgList) throws IOException {
         User user = userRepository.findByUserId(userId);
@@ -236,5 +246,24 @@ public class BookService {
         if(commentLike == null)  return 0;
         commentLikeRepository.delete(commentLike);
         return 1;
+    }
+
+    public List<ResponseDiscountBookDto> getDiscountBooks() {
+        RedisConnectionFactory connectionFactory = redisTemplate.getConnectionFactory();
+        RedisConnection connection = connectionFactory.getConnection();
+        ScanOptions options = ScanOptions.scanOptions().match("DC*").build();
+
+        Cursor<byte[]> cursor = connection.scan(options);
+        ArrayList<Integer> bookIdList = new ArrayList<>();
+        while (cursor.hasNext()) {
+            byte[] next = cursor.next();
+            String matchedKey = (new String(next, Charsets.UTF_8)).substring(3);
+            bookIdList.add(Integer.parseInt(matchedKey));
+        }
+
+        return bookRepository.findDiscountBooks(bookIdList).stream()
+                .map(book ->
+                        new ResponseDiscountBookDto(book, (new Timestamp(Long.valueOf((String) redisTemplate.opsForValue().get("DC:" + book.getBookId())))).toLocalDateTime(), illustRepository.findCoverIllust(book.getBookId())))
+                .collect(Collectors.toList());
     }
 }
