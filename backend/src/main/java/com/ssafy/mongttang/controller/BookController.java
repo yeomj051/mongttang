@@ -156,7 +156,7 @@ public class BookController {
 
     @ApiOperation(value = "댓글 등록", notes = "댓글을 등록한다.", response = Map.class)
     @PostMapping("/comment")
-    public ResponseEntity<Map<String, Object>> addNewChallenge(@ApiParam(value = "회원 아이디, 동화 아이디, 댓글 내용 dto") @RequestBody ReqCreateCommentDto reqCreateCommentDto, Principal principal) {
+    public ResponseEntity<Map<String, Object>> createComment(@ApiParam(value = "회원 아이디, 동화 아이디, 댓글 내용 dto") @RequestBody ReqCreateCommentDto reqCreateCommentDto, Principal principal) {
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = null;
 
@@ -165,19 +165,45 @@ public class BookController {
             return new ResponseEntity<Map<String, Object>>(resultMap, status);
         }
 
-        ResponseCommentDto comment = bookService.createComment(reqCreateCommentDto);
+        ArrayList<ResponseCommentDto> comments = bookService.createComment(reqCreateCommentDto);
 
-        if(comment == null){
+        if(comments == null){
             resultMap.put(MESSAGE, FAIL);
             status = HttpStatus.BAD_REQUEST;
         }else{
             resultMap.put(MESSAGE,SUCCESS);
-            resultMap.put("comment",comment);
+            resultMap.put("comments",comments);
             status = HttpStatus.OK;
         }
 
         return new ResponseEntity<Map<String, Object>>(resultMap, status);
     }
+
+    @ApiOperation(value = "댓글 수정", notes = "댓글을 수정한다.", response = Map.class)
+    @PatchMapping("/comment")
+    public ResponseEntity<Map<String, Object>> updateComment(@ApiParam(value = "댓글 아이디, 회원 아이디, 동화 아이디, 댓글 내용 dto") @RequestBody ReqUpdateCommentDto reqUpdateCommentDto, Principal principal) {
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        if(TokenUtils.compareUserIdAndToken(reqUpdateCommentDto.getCommentUserId(), principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<Map<String, Object>>(resultMap, status);
+        }
+
+        ArrayList<ResponseCommentDto> comments = bookService.updateComment(reqUpdateCommentDto);
+
+        if(comments == null){
+            resultMap.put(MESSAGE, FAIL);
+            status = HttpStatus.BAD_REQUEST;
+        }else{
+            resultMap.put(MESSAGE,SUCCESS);
+            resultMap.put("comments",comments);
+            status = HttpStatus.OK;
+        }
+
+        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    }
+
 
     @ApiOperation(value = "동화 좋아요 취소", notes = "동화 좋아요를 취소한다.", response = Map.class)
     @DeleteMapping("/booklike")

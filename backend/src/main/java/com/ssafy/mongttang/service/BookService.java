@@ -1,9 +1,6 @@
 package com.ssafy.mongttang.service;
 
-import com.ssafy.mongttang.dto.ReqCreateBookDto;
-import com.ssafy.mongttang.dto.ReqCreateCommentDto;
-import com.ssafy.mongttang.dto.ReqUpdateBookDto;
-import com.ssafy.mongttang.dto.ResponseCommentDto;
+import com.ssafy.mongttang.dto.*;
 import com.ssafy.mongttang.entity.*;
 import com.ssafy.mongttang.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -137,13 +134,39 @@ public class BookService {
         }
     }
 
-    public ResponseCommentDto createComment(ReqCreateCommentDto reqCreateCommentDto) {
+    public ArrayList<ResponseCommentDto> createComment(ReqCreateCommentDto reqCreateCommentDto) {
         User user = userRepository.findByUserId(reqCreateCommentDto.getCommentUserId());
         Book book = bookRepository.findByBookId(reqCreateCommentDto.getCommentBookId());
-        Comment comment = commentRepository.save(new Comment(book, user, reqCreateCommentDto.getCommentContent()));
+        commentRepository.save(new Comment(book, user, reqCreateCommentDto.getCommentContent()));
 
-        ResponseCommentDto responseCommentDto = new ResponseCommentDto(comment);
-        return responseCommentDto;
+        ArrayList<Comment> commentList = commentRepository.findByCommentBookId(book);
+        ArrayList<ResponseCommentDto> comments = new ArrayList<>();
+
+        for(Comment comment : commentList){
+            comments.add(new ResponseCommentDto(comment));
+        }
+
+        return comments;
+    }
+
+    public ArrayList<ResponseCommentDto> updateComment(ReqUpdateCommentDto reqUpdateCommentDto) {
+        User user = userRepository.findByUserId(reqUpdateCommentDto.getCommentUserId());
+        Book book = bookRepository.findByBookId(reqUpdateCommentDto.getCommentBookId());
+        Comment comment = commentRepository.findCommentByCommentId(reqUpdateCommentDto.getCommentId());
+
+        if(comment != null && comment.getCommentUserId() == user && comment.getCommentBookId() == book){
+            comment.changeContent(reqUpdateCommentDto.getCommentContent());
+            commentRepository.save(comment);
+
+            ArrayList<Comment> commentList = commentRepository.findByCommentBookId(book);
+            ArrayList<ResponseCommentDto> comments = new ArrayList<>();
+
+            for(Comment ment : commentList){
+                comments.add(new ResponseCommentDto(ment));
+            }
+            return comments;
+        }
+        return null;
     }
 
     public CommentLike createCommentLike(int userId, int commentId) {
@@ -160,6 +183,5 @@ public class BookService {
             return null;
         }
     }
-
 
 }
