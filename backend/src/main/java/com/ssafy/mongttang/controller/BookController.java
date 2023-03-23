@@ -204,6 +204,32 @@ public class BookController {
         return new ResponseEntity<Map<String, Object>>(resultMap, status);
     }
 
+    @ApiOperation(value = "댓글 삭제", notes = "댓글을 삭제한다.", response = Map.class)
+    @DeleteMapping("/comment/{commentId}")
+    public ResponseEntity<Map<String, Object>> deleteComment(@ApiParam(value = "댓글 아이디") @PathVariable int commentId,
+                                                             @ApiParam(value = "회원 아이디") @RequestParam int commentUserId,Principal principal) {
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        if(TokenUtils.compareUserIdAndToken(commentUserId, principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<Map<String, Object>>(resultMap, status);
+        }
+
+        ArrayList<ResponseCommentDto> comments = bookService.deleteComment(commentId, commentUserId);
+
+        if(comments == null){
+            resultMap.put(MESSAGE, FAIL);
+            status = HttpStatus.BAD_REQUEST;
+        }else{
+            resultMap.put(MESSAGE,SUCCESS);
+            resultMap.put("comments",comments);
+            status = HttpStatus.OK;
+        }
+
+        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    }
+
 
     @ApiOperation(value = "동화 좋아요 취소", notes = "동화 좋아요를 취소한다.", response = Map.class)
     @DeleteMapping("/booklike")

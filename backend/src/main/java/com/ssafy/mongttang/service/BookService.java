@@ -169,6 +169,24 @@ public class BookService {
         return null;
     }
 
+    public ArrayList<ResponseCommentDto> deleteComment(int commentId, int commentUserId) {
+        User user = userRepository.findByUserId(commentUserId);
+        Comment comment = commentRepository.findCommentByCommentId(commentId);
+
+        if(comment != null && comment.getCommentUserId() == user){
+            commentRepository.delete(comment);
+
+            ArrayList<Comment> commentList = commentRepository.findByCommentBookId(comment.getCommentBookId());
+            ArrayList<ResponseCommentDto> comments = new ArrayList<>();
+
+            for(Comment ment : commentList){
+                comments.add(new ResponseCommentDto(ment));
+            }
+            return comments;
+        }
+        return null;
+    }
+
     public CommentLike createCommentLike(int userId, int commentId) {
 
         User user = userRepository.findByUserId(userId);
