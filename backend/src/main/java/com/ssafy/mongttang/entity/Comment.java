@@ -19,7 +19,9 @@ public class Comment extends BaseEntity{
     private int commentId;
 
     @NotNull
-    private int commentBookId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "comment_book_id")
+    private Book commentBookId;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
@@ -31,6 +33,13 @@ public class Comment extends BaseEntity{
     @NotNull
     @Column(columnDefinition = "boolean default true")
     private Boolean commentStatus;
+
+    public Comment(Book commentBook, User commentUser, String commentContent) {
+        this.commentBookId = commentBook;
+        this.commentUserId = commentUser;
+        this.commentContent = commentContent;
+        this.commentStatus = true;
+    }
 
     public void changeStatus(){
         this.commentStatus = false;

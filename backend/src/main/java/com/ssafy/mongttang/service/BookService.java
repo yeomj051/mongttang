@@ -1,7 +1,9 @@
 package com.ssafy.mongttang.service;
 
 import com.ssafy.mongttang.dto.ReqCreateBookDto;
+import com.ssafy.mongttang.dto.ReqCreateCommentDto;
 import com.ssafy.mongttang.dto.ReqUpdateBookDto;
+import com.ssafy.mongttang.dto.ResponseCommentDto;
 import com.ssafy.mongttang.entity.*;
 import com.ssafy.mongttang.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -135,6 +137,15 @@ public class BookService {
         }
     }
 
+    public ResponseCommentDto createComment(ReqCreateCommentDto reqCreateCommentDto) {
+        User user = userRepository.findByUserId(reqCreateCommentDto.getCommentUserId());
+        Book book = bookRepository.findByBookId(reqCreateCommentDto.getCommentBookId());
+        Comment comment = commentRepository.save(new Comment(book, user, reqCreateCommentDto.getCommentContent()));
+
+        ResponseCommentDto responseCommentDto = new ResponseCommentDto(comment);
+        return responseCommentDto;
+    }
+
     public CommentLike createCommentLike(int userId, int commentId) {
 
         User user = userRepository.findByUserId(userId);
@@ -149,4 +160,6 @@ public class BookService {
             return null;
         }
     }
+
+
 }

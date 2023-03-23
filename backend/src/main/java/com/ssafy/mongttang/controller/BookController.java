@@ -1,11 +1,7 @@
 package com.ssafy.mongttang.controller;
 
-import com.ssafy.mongttang.dto.ReqCreateBookDto;
-import com.ssafy.mongttang.dto.ReqUpdateBookDto;
-import com.ssafy.mongttang.entity.Book;
-import com.ssafy.mongttang.entity.BookLike;
-import com.ssafy.mongttang.entity.CommentLike;
-import com.ssafy.mongttang.entity.Follow;
+import com.ssafy.mongttang.dto.*;
+import com.ssafy.mongttang.entity.*;
 import com.ssafy.mongttang.service.BookService;
 import com.ssafy.mongttang.util.TokenUtils;
 import io.swagger.annotations.ApiOperation;
@@ -153,6 +149,31 @@ public class BookController {
             resultMap.put(MESSAGE, FAIL);
             resultMap.put("isLiked",false);
             status = HttpStatus.BAD_REQUEST;
+        }
+
+        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    }
+
+    @ApiOperation(value = "댓글 등록", notes = "댓글을 등록한다.", response = Map.class)
+    @PostMapping("/comment")
+    public ResponseEntity<Map<String, Object>> addNewChallenge(@ApiParam(value = "회원 아이디, 동화 아이디, 댓글 내용 dto") @RequestBody ReqCreateCommentDto reqCreateCommentDto, Principal principal) {
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        if(TokenUtils.compareUserIdAndToken(reqCreateCommentDto.getCommentUserId(), principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<Map<String, Object>>(resultMap, status);
+        }
+
+        ResponseCommentDto comment = bookService.createComment(reqCreateCommentDto);
+
+        if(comment == null){
+            resultMap.put(MESSAGE, FAIL);
+            status = HttpStatus.BAD_REQUEST;
+        }else{
+            resultMap.put(MESSAGE,SUCCESS);
+            resultMap.put("comment",comment);
+            status = HttpStatus.OK;
         }
 
         return new ResponseEntity<Map<String, Object>>(resultMap, status);
