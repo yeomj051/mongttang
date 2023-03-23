@@ -11,7 +11,4 @@ import java.util.List;
 public interface BookLikeRepository extends JpaRepository<BookLike,Integer>, BookLikeRepositoryCustom {
     BookLike findByBooklikeBookIdAndBooklikeUserId(Book book,int userId);
     int countByBooklikeBookId_BookId(int bookId);
-
-    @Query("select b.booklikeBookId from BookLike b where b.booklikeChallengId = :challengeId group by b.booklikeBookId.bookId order by count(b.booklikeBookId.bookId) desc")
-    List<Book> findTop3LikeBook(int challengeId, Pageable paging);
 }
