@@ -154,6 +154,33 @@ public class BookController {
         return new ResponseEntity<Map<String, Object>>(resultMap, status);
     }
 
+    @ApiOperation(value = "동화 좋아요 취소", notes = "동화 좋아요를 취소한다.", response = Map.class)
+    @DeleteMapping("/booklike")
+    public ResponseEntity<Map<String,Object>> cancleBookLike(@ApiParam(value = "회원 아이디", required = true, example = "0") @RequestParam int userId,
+                                                             @ApiParam(value = "동화 아이디", required = true, example = "0") @RequestParam int bookId, Principal principal){
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<Map<String, Object>>(resultMap, status);
+        }
+
+        int isDeleted = bookService.cancleBookLike(userId,bookId);
+
+        if(isDeleted > 0){
+            resultMap.put(MESSAGE,SUCCESS);
+            resultMap.put("isLiked",false);
+            status = HttpStatus.OK;
+        }else{
+            resultMap.put(MESSAGE, FAIL);
+            resultMap.put("isLiked",true);
+            status = HttpStatus.BAD_REQUEST;
+        }
+
+        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    }
+
     @ApiOperation(value = "댓글 등록", notes = "댓글을 등록한다.", response = Map.class)
     @PostMapping("/comment")
     public ResponseEntity<Map<String, Object>> createComment(@ApiParam(value = "회원 아이디, 동화 아이디, 댓글 내용 dto") @RequestBody ReqCreateCommentDto reqCreateCommentDto, Principal principal) {
@@ -230,34 +257,6 @@ public class BookController {
         return new ResponseEntity<Map<String, Object>>(resultMap, status);
     }
 
-
-    @ApiOperation(value = "동화 좋아요 취소", notes = "동화 좋아요를 취소한다.", response = Map.class)
-    @DeleteMapping("/booklike")
-    public ResponseEntity<Map<String,Object>> cancleBookLike(@ApiParam(value = "회원 아이디", required = true, example = "0") @RequestParam int userId,
-                                                           @ApiParam(value = "동화 아이디", required = true, example = "0") @RequestParam int bookId, Principal principal){
-        Map<String, Object> resultMap = new HashMap<>();
-        HttpStatus status = null;
-
-        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
-            status = HttpStatus.BAD_REQUEST;
-            return new ResponseEntity<Map<String, Object>>(resultMap, status);
-        }
-
-        int isDeleted = bookService.cancleBookLike(userId,bookId);
-
-        if(isDeleted > 0){
-            resultMap.put(MESSAGE,SUCCESS);
-            resultMap.put("isLiked",false);
-            status = HttpStatus.OK;
-        }else{
-            resultMap.put(MESSAGE, FAIL);
-            resultMap.put("isLiked",true);
-            status = HttpStatus.BAD_REQUEST;
-        }
-
-        return new ResponseEntity<Map<String, Object>>(resultMap, status);
-    }
-
     @ApiOperation(value = "댓글 좋아요 등록", notes = "댓글 좋아요를 등록한다.", response = Map.class)
     @PostMapping("/commentlike")
     public ResponseEntity<Map<String,Object>> createCommentLike(@ApiParam(value = "회원 아이디", required = true, example = "0") @RequestParam int userId,
@@ -279,6 +278,33 @@ public class BookController {
         }else{
             resultMap.put(MESSAGE, FAIL);
             resultMap.put("isLiked",false);
+            status = HttpStatus.BAD_REQUEST;
+        }
+
+        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    }
+
+    @ApiOperation(value = "댓글 좋아요 취소", notes = "댓글 좋아요를 취소한다.", response = Map.class)
+    @DeleteMapping("/commentlike")
+    public ResponseEntity<Map<String,Object>> deleteCommentLike(@ApiParam(value = "회원 아이디", required = true, example = "0") @RequestParam int userId,
+                                                                @ApiParam(value = "댓글 아이디", required = true, example = "0") @RequestParam int commentId, Principal principal){
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<Map<String, Object>>(resultMap, status);
+        }
+
+        int isDeleted = bookService.deleteCommentLike(userId,commentId);
+
+        if(isDeleted > 0){
+            resultMap.put(MESSAGE,SUCCESS);
+            resultMap.put("isLiked",false);
+            status = HttpStatus.OK;
+        }else{
+            resultMap.put(MESSAGE, FAIL);
+            resultMap.put("isLiked",true);
             status = HttpStatus.BAD_REQUEST;
         }
 

@@ -29,8 +29,12 @@ public class BookLike extends BaseEntity {
     @NotNull
     private int booklikeUserId;
 
-    public BookLike(Book booklikeBook, int booklikeUserId) {
+    @NotNull
+    private int booklikeChallengId;
+
+    public BookLike(Book booklikeBook, int booklikeUserId, int booklikeChallengId) {
         this.booklikeBookId = booklikeBook;
         this.booklikeUserId = booklikeUserId;
+        this.booklikeChallengId = booklikeChallengId;
     }
 }

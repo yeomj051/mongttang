@@ -21,6 +21,7 @@ public class BookService {
     private final BookLikeRepository bookLikeRepository;
     private final CommentRepository commentRepository;
     private final CommentLikeRepository commentLikeRepository;
+    private final CommentReportRepository commentReportRepository;
     private final S3Service s3Service;
 
     public int createBook(int userId, ReqCreateBookDto reqCreateBookDto, ArrayList<MultipartFile> imgList) throws IOException {
@@ -112,12 +113,11 @@ public class BookService {
         else{
             BookLike bookLike = bookLikeRepository.findByBooklikeBookIdAndBooklikeUserId(book,userId);
             if(bookLike == null) {
-                return bookLikeRepository.save(new BookLike(book, userId));
+                return bookLikeRepository.save(new BookLike(book, userId,book.getBookChallengeId().getChallengeId()));
             }
-            return null;
+            return bookLike;
         }
     }
-
 
     public int cancleBookLike(int userId, int bookId) {
         User user = userRepository.findByUserId(userId);
@@ -143,7 +143,16 @@ public class BookService {
         ArrayList<ResponseCommentDto> comments = new ArrayList<>();
 
         for(Comment comment : commentList){
-            comments.add(new ResponseCommentDto(comment));
+            int numOfLike = commentLikeRepository.countByCommentlikeCommentId(comment);
+            CommentLike commentLike = commentLikeRepository.findByCommentlikeCommentIdAndCommentlikeUserId(comment,reqCreateCommentDto.getCommentUserId());
+            boolean isLiked = true;
+            if(commentLike == null) isLiked = false;
+
+            CommentReport commentReport = commentReportRepository.findCommentReportByCommentreportCommentId_CommentIdAndCommentreportReportUserId(comment.getCommentId(),reqCreateCommentDto.getCommentUserId());
+            boolean isReported = true;
+            if(commentReport == null) isReported = false;
+
+            comments.add(new ResponseCommentDto(comment,numOfLike,isLiked,isReported));
         }
 
         return comments;
@@ -162,7 +171,16 @@ public class BookService {
             ArrayList<ResponseCommentDto> comments = new ArrayList<>();
 
             for(Comment ment : commentList){
-                comments.add(new ResponseCommentDto(ment));
+                int numOfLike = commentLikeRepository.countByCommentlikeCommentId(ment);
+                CommentLike commentLike = commentLikeRepository.findByCommentlikeCommentIdAndCommentlikeUserId(ment,reqUpdateCommentDto.getCommentUserId());
+                boolean isLiked = true;
+                if(commentLike == null) isLiked = false;
+
+                CommentReport commentReport = commentReportRepository.findCommentReportByCommentreportCommentId_CommentIdAndCommentreportReportUserId(ment.getCommentId(),reqUpdateCommentDto.getCommentUserId());
+                boolean isReported = true;
+                if(commentReport == null) isReported = false;
+
+                comments.add(new ResponseCommentDto(ment,numOfLike,isLiked,isReported));
             }
             return comments;
         }
@@ -180,7 +198,16 @@ public class BookService {
             ArrayList<ResponseCommentDto> comments = new ArrayList<>();
 
             for(Comment ment : commentList){
-                comments.add(new ResponseCommentDto(ment));
+                int numOfLike = commentLikeRepository.countByCommentlikeCommentId(ment);
+                CommentLike commentLike = commentLikeRepository.findByCommentlikeCommentIdAndCommentlikeUserId(ment,commentUserId);
+                boolean isLiked = true;
+                if(commentLike == null) isLiked = false;
+
+                CommentReport commentReport = commentReportRepository.findCommentReportByCommentreportCommentId_CommentIdAndCommentreportReportUserId(ment.getCommentId(),commentUserId);
+                boolean isReported = true;
+                if(commentReport == null) isReported = false;
+
+                comments.add(new ResponseCommentDto(ment,numOfLike,isLiked,isReported));
             }
             return comments;
         }
@@ -198,8 +225,16 @@ public class BookService {
             if(commentLike == null) {
                 return commentLikeRepository.save(new CommentLike(comment, userId));
             }
-            return null;
+            return commentLike;
         }
     }
 
+    public int deleteCommentLike(int userId, int commentId) {
+        Comment comment = commentRepository.findCommentByCommentId(commentId);
+
+        CommentLike commentLike = commentLikeRepository.findByCommentlikeCommentIdAndCommentlikeUserId(comment,userId);
+        if(commentLike == null)  return 0;
+        commentLikeRepository.delete(commentLike);
+        return 1;
+    }
 }
