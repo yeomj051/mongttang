@@ -114,7 +114,7 @@ public class ProfileService {
     public ResponseProfileDto getProfile(int userId, int lookUserId) {
         //보고자 하는 사용자의 정보
         User user = userRepository.findByUserId(userId);
-        ResponseProfileDto responseProfileDto = new ResponseProfileDto();
+        ResponseProfileDto responseProfileDto = new ResponseProfileDto(user, followRepository.findByFollowTo(user).size(),followRepository.findByFollowFrom(user).size());
 
         //내 프로필일 경우
         if(userId == lookUserId){
@@ -137,8 +137,29 @@ public class ProfileService {
 
         //다른 사람의 프로필일 경우
         else {
+            User lookUser = userRepository.findByUserId(lookUserId);
 
+            boolean isFollow = true;
+            if(followRepository.findByFollowFromAndFollowTo(lookUser,user) == null) isFollow = false;
+
+            responseProfileDto.addIsFollow(isFollow);
         }
+
+        //해당 프로필 회원의 동화
+        ArrayList<BookInfo> myBookInfos = new ArrayList<>();
+        ArrayList<Book> myBooks = bookRepository.findByBookUserIdAndBookStatus(user,"complete");
+        for (Book book : myBooks) {
+            myBookInfos.add(new BookInfo(illustRepository.findByIllustBookIdAndIllustPageNumber(book,0).getIllustFilePath(),book.getBookId()));
+        }
+
+        //해당 프로필 회원의 관심 동화
+        ArrayList<BookInfo> interestBookInfos = new ArrayList<>();
+        ArrayList<InterestBook> interestBooks = interestBookRepository.findByInterestbookUserId(user);
+        for (InterestBook interestBook : interestBooks) {
+            interestBookInfos.add(new BookInfo(illustRepository.findByIllustBookIdAndIllustPageNumber(interestBook.getInterestbookBookId(),0).getIllustFilePath(),interestBook.getInterestbookBookId().getBookId()));
+        }
+
+        responseProfileDto.addMyBooksAndInterestBooks(myBookInfos,interestBookInfos);
 
         return responseProfileDto;
     }

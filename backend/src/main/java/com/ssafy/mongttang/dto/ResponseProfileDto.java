@@ -1,5 +1,6 @@
 package com.ssafy.mongttang.dto;
 
+import com.ssafy.mongttang.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,9 +24,27 @@ public class ResponseProfileDto {
     private ArrayList<BookInfo> interestBooks;
     private ArrayList<BookInfo> paidBooks;
 
+    public ResponseProfileDto(User user, int numOfFollower, int numOfFollowing) {
+        this.userId = user.getUserId();
+        this.profileImgURL = user.getUserProfileImg();
+        this.userNickname = user.getUserNickname();
+        this.userInfo = user.getUserInfo();
+        this.numOfFollower = numOfFollower;
+        this.numOfFollowing = numOfFollowing;
+    }
+
     public void addMyprofileInfo(ArrayList<BookInfo> inCompleteBooks, ArrayList<BookInfo> paidBooks) {
         this.inCompleteBooks = inCompleteBooks;
         this.paidBooks = paidBooks;
+    }
+
+    public void addIsFollow(boolean isFollow){
+        this.isFollow = isFollow;
+    }
+
+    public void addMyBooksAndInterestBooks(ArrayList<BookInfo> myBookInfos, ArrayList<BookInfo> interestBookInfos) {
+        this.myBooks = myBookInfos;
+        this.interestBooks = interestBookInfos;
     }
 }
 
