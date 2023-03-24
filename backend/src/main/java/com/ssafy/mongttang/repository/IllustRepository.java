@@ -18,4 +18,9 @@ public interface IllustRepository extends JpaRepository<Illust, Integer> {
 
     @Query("select i.illustFilePath from Illust i where i.illustPageNumber = 0 and i.illustBookId.bookId = :bookId")
     String findCoverIllust(int bookId);
+
+    Illust findByIllustBookIdAndIllustPageNumber(Book book, int illustPageNumber);
+
+    Illust findByIllustBookId_BookIdAndIllustPageNumber(int bookId, int illustPageNumber);
+
 }

@@ -1,12 +1,10 @@
 package com.ssafy.mongttang.repository;
 
 import com.ssafy.mongttang.entity.Book;
-import com.ssafy.mongttang.entity.Challenge;
-import org.hibernate.sql.Select;
+
+import com.ssafy.mongttang.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,5 +23,7 @@ public interface BookRepository extends JpaRepository<Book,Integer> {
 
     @Query("select b from Book b where b.bookTitle like concat('%', :bookTitle, '%') and b.bookStatus = 'complete'")
     List<Book> searchBooks(String bookTitle);
+
+    ArrayList<Book> findByBookUserIdAndBookStatus(User user, String complete);
 }
 

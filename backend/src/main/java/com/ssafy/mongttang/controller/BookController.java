@@ -340,6 +340,7 @@ public class BookController {
     @GetMapping("/check/{userId}")
     public ResponseEntity<Map<String,Object>> getIsCanView(@ApiParam(value = "회원 아이디", required = true, example = "0") @PathVariable int userId,
                                                            @ApiParam(value = "동화 아이디", required = true, example = "0") @RequestParam int bookId,Principal principal){
+
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = null;
 
