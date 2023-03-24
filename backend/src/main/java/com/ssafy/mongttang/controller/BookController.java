@@ -311,4 +311,31 @@ public class BookController {
         return new ResponseEntity<Map<String, Object>>(resultMap, status);
     }
 
+    @ApiOperation(value = "동화 접근 가능 여부 조회", notes = "사용자의 해당 동화 접근 가능 여부를 조회한다.", response = Map.class)
+    @GetMapping("/check/{userId}")
+    public ResponseEntity<Map<String,Object>> getProfile(@ApiParam(value = "회원 아이디", required = true, example = "0") @PathVariable int userId,
+                                                         @ApiParam(value = "동화 아이디", required = true, example = "0") @RequestParam int bookId,Principal principal){
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<Map<String, Object>>(resultMap, status);
+        }
+
+        boolean canView = bookService.getCanView(userId,bookId);
+
+        if(canView){
+            resultMap.put(MESSAGE,SUCCESS);
+            resultMap.put("canView",true);
+            status = HttpStatus.OK;
+        }else{
+            resultMap.put(MESSAGE, FAIL);
+            resultMap.put("canView",false);
+            status = HttpStatus.BAD_REQUEST;
+        }
+
+        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    }
+
 }
