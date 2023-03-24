@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -365,7 +366,7 @@ public class BookController {
     }
 
     @ApiOperation(value = "동화 구매내역 저장", notes = "동화 구매 내역을 저장한다.", response = Map.class)
-    @GetMapping("/pay/{userId}")
+    @PostMapping("/pay/{userId}")
     public ResponseEntity<Map<String,Object>> savePaidBook(@ApiParam(value = "회원 아이디", required = true, example = "0") @PathVariable int userId,
                                                            @ApiParam(value = "동화 아이디", required = true, example = "0") @RequestParam int bookId,Principal principal){
         Map<String, Object> resultMap = new HashMap<>();
@@ -388,4 +389,26 @@ public class BookController {
 
         return new ResponseEntity<Map<String, Object>>(resultMap, status);
     }
+
+    @ApiOperation(value = "동화 뷰어 조회", notes = "동화 그림을 조회한다.", response = Map.class)
+    @GetMapping("/{bookId}")
+    public ResponseEntity<Map<String,Object>> getBookIllust(@ApiParam(value = "동화 아이디", required = true, example = "0") @PathVariable int bookId){
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        ArrayList<IllustInfo> illustes = bookService.getBookIllust(bookId);
+
+        if(illustes == null){
+            resultMap.put(MESSAGE, FAIL);
+            status = HttpStatus.BAD_REQUEST;
+        }else{
+            resultMap.put(MESSAGE,SUCCESS);
+            resultMap.put("illustes",illustes);
+            status = HttpStatus.OK;
+        }
+
+        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    }
+
+
 }

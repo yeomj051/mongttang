@@ -317,4 +317,19 @@ public class BookService {
         return null;
 
     }
+
+    public ArrayList<IllustInfo> getBookIllust(int bookId) {
+        Book book = bookRepository.findByBookId(bookId);
+
+        if(book == null) return null;
+
+        ArrayList<IllustInfo> illustInfos = new ArrayList<>();
+        ArrayList<Illust> illusts = illustRepository.findByIllustBookId(book);
+
+        for (Illust illust : illusts) {
+            illustInfos.add(new IllustInfo(illust));
+        }
+
+        return illustInfos;
+    }
 }
