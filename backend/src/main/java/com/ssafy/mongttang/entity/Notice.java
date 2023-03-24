@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Getter
@@ -15,11 +16,10 @@ public class Notice extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int noticeId;
-
-    @Column(nullable = false)
+    @NotNull
     private String noticeTitle;
 
-    @Column(nullable = false)
+    @NotNull
     private String noticeContent;
 
     @Builder

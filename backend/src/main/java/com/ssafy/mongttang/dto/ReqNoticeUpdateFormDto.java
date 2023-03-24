@@ -15,6 +15,6 @@ public class ReqNoticeUpdateFormDto {
     private int noticeId;
     @NotBlank(message = "제목은 필수 입력 값입니다.")
     private String noticeTitle;
-    @NotNull(message = "내용은 필수 입력 값입니다.")
+    @NotBlank(message = "내용은 필수 입력 값입니다.")
     private String noticeContent;
 }
