@@ -77,20 +77,6 @@ public class ChallengeService {
         return bookResult;
     }
 
-    private void toChallengeBookInfoList(int userId, List<Book> bookList, List<ResponseChallengeBookInfoDto> bookResult) {
-        for(Book book: bookList) {
-            //동화 표지 가져요기
-            String coverImgPath = illustRepository.findCoverIllust(book.getBookId());
-            //댓글 개수 가져오기
-            int numOfComment = commentRepository.countByCommentBookId_BookId(book.getBookId());
-            //좋아요 개수 가져오기
-            int numOfLike = bookLikeRepository.countByBooklikeBookId_BookId(book.getBookId()) - 1;
-            //좋아요 여부 가져오기
-            BookLike bookLike = bookLikeRepository.findByBooklikeBookIdAndBooklikeUserId(book, userId);
-            bookResult.add(new ResponseChallengeBookInfoDto(book, coverImgPath, numOfComment, numOfLike, (bookLike == null) ? false : true));
-        }
-    }
-
     public List<ResponseThisWeekChallengeDto> getBeforeChallenge(int userId) {
         LocalDateTime currentDateTime = LocalDateTime.now();
         List<Challenge> challengeList = challengRepository.findBeforeChallenge(currentDateTime);
@@ -106,5 +92,19 @@ public class ChallengeService {
             result.add(new ResponseThisWeekChallengeDto(challenge, bookResult));
         }
         return result;
+    }
+
+    private void toChallengeBookInfoList(int userId, List<Book> bookList, List<ResponseChallengeBookInfoDto> bookResult) {
+        for(Book book: bookList) {
+            //동화 표지 가져요기
+            String coverImgPath = illustRepository.findCoverIllust(book.getBookId());
+            //댓글 개수 가져오기
+            int numOfComment = commentRepository.countByCommentBookId_BookId(book.getBookId());
+            //좋아요 개수 가져오기
+            int numOfLike = bookLikeRepository.countByBooklikeBookId_BookId(book.getBookId()) - 1;
+            //좋아요 여부 가져오기
+            BookLike bookLike = bookLikeRepository.findByBooklikeBookIdAndBooklikeUserId(book, userId);
+            bookResult.add(new ResponseChallengeBookInfoDto(book, coverImgPath, numOfComment, numOfLike, (bookLike == null) ? false : true));
+        }
     }
 }

@@ -22,5 +22,8 @@ public interface BookRepository extends JpaRepository<Book,Integer> {
 
     @Query("select b from Book b where b.bookChallengeId.challengeId = :challengeId and b.bookStatus = 'complete' order by b.createdTime desc")
     List<Book> findLatesBooks(int challengeId);
+
+    @Query("select b from Book b where b.bookTitle like concat('%', :bookTitle, '%') and b.bookStatus = 'complete'")
+    List<Book> searchBooks(String bookTitle);
 }
 

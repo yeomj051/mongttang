@@ -266,4 +266,28 @@ public class BookService {
                         new ResponseDiscountBookDto(book, (new Timestamp(Long.valueOf((String) redisTemplate.opsForValue().get("DC:" + book.getBookId())))).toLocalDateTime(), illustRepository.findCoverIllust(book.getBookId())))
                 .collect(Collectors.toList());
     }
+
+    public List<ResponseChallengeBookInfoDto> searchBookByTitle(String bookTitle, int userId) {
+        List<Book> bookList = bookRepository.searchBooks(bookTitle);
+        if(bookList == null) return null;
+
+        List<ResponseChallengeBookInfoDto> bookResult = new ArrayList<>();
+        toChallengeBookInfoList(userId, bookList, bookResult);
+
+        return bookResult;
+    }
+
+    private void toChallengeBookInfoList(int userId, List<Book> bookList, List<ResponseChallengeBookInfoDto> bookResult) {
+        for(Book book: bookList) {
+            //동화 표지 가져요기
+            String coverImgPath = illustRepository.findCoverIllust(book.getBookId());
+            //댓글 개수 가져오기
+            int numOfComment = commentRepository.countByCommentBookId_BookId(book.getBookId());
+            //좋아요 개수 가져오기
+            int numOfLike = bookLikeRepository.countByBooklikeBookId_BookId(book.getBookId()) - 1;
+            //좋아요 여부 가져오기
+            BookLike bookLike = bookLikeRepository.findByBooklikeBookIdAndBooklikeUserId(book, userId);
+            bookResult.add(new ResponseChallengeBookInfoDto(book, coverImgPath, numOfComment, numOfLike, (bookLike == null) ? false : true));
+        }
+    }
 }
