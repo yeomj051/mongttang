@@ -17,6 +17,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import UserLogin from 'pages/Login/UserLogin';
 import Notice from 'pages/Notice/Notice';
 import Test from 'pages/Home/Test';
+import BookViewer from 'components/viewer/BookViewer';
 const queryClient = new QueryClient();
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
         <BrowserRouter className="App">
           <NavBar />
           <Routes>
-            <Route path="/" element={<Test />} />
+            <Route path="/" element={<BookViewer />} />
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<UserLogin />} />
             <Route path="/notice" element={<Notice />} />
