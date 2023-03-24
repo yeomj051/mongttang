@@ -1,11 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Slider from 'react-slick';
+import Leaves from 'components/common/Leaves';
 import '../../assets/slick-theme.css';
 import '../../assets/slick.css';
+import '../../components/common/Leaves.css';
 
 import tw, { styled, css } from 'twin.macro';
 
 import { bookImg } from 'api/data';
+
+const PageContainer = styled.div`
+  ${tw`flex justify-center`}
+`;
+
+const PageWrapper = styled.div`
+  ${tw`fixed`}
+`;
 
 const ViewContainer = styled.div`
   ${tw`flex justify-center`}
@@ -132,54 +142,64 @@ function BookViewer() {
   //1단, 2단, 스크롤
 
   return (
-    <div>
-      <ViewContainer>
-        <Slider ref={slider} {...settings}>
-          {bookImg
-            ? bookImg.illustes.map((illuste) => {
-                return (
-                  <ImgSlide
-                    src={illuste.illustePath}
-                    key={illuste.pageNo}
-                    mode={settings.mode}
-                  />
-                );
-              })
-            : null}
-        </Slider>
-      </ViewContainer>
-      <BtnContainer>
-        <BarWrapper>
-          <input
-            onChange={(e) => slider.current.slickGoTo(e.target.value)}
-            value={slideIndex}
-            type="range"
-            min={0}
-            max={bookImg.illustes.length - 1}
-          />
-          {slideIndex + 1 + '/' + bookImg.illustes.length}
-        </BarWrapper>
-        <BtnWrapper>
-          {modeStatus ? (
-            <button onClick={() => setModeStatus(!modeStatus)}>2단</button>
-          ) : (
-            <button onClick={() => setModeStatus(!modeStatus)}>1단</button>
-          )}
-        </BtnWrapper>
-        <BtnWrapper>
-          <button onClick={slidePlay}>재생</button>
-        </BtnWrapper>
-        <BtnWrapper>
-          <button onClick={slidePause}>중지</button>
-        </BtnWrapper>
-        <BtnWrapper>
-          {rtl ? (
-            <button onClick={() => setRtl(!rtl)}>왼쪽부터 읽기</button>
-          ) : (
-            <button onClick={() => setRtl(!rtl)}>오른쪽부터 읽기</button>
-          )}
-        </BtnWrapper>
-      </BtnContainer>
+    <div className="leaves">
+      <Leaves />
+      <PageContainer>
+        <PageWrapper>
+          <ViewContainer>
+            <Slider ref={slider} {...settings}>
+              {bookImg
+                ? bookImg.illustes.map((illuste) => {
+                    return (
+                      <ImgSlide
+                        src={illuste.illustePath}
+                        key={illuste.pageNo}
+                        mode={settings.mode}
+                      />
+                    );
+                  })
+                : null}
+            </Slider>
+          </ViewContainer>
+          <BtnContainer>
+            <BarWrapper>
+              <input
+                onChange={(e) => slider.current.slickGoTo(e.target.value)}
+                value={slideIndex}
+                type="range"
+                min={0}
+                max={bookImg.illustes.length - 1}
+              />
+              {!rtl
+                ? slideIndex + 1 + '/' + bookImg.illustes.length
+                : bookImg.illustes.length -
+                  slideIndex +
+                  '/' +
+                  bookImg.illustes.length}
+            </BarWrapper>
+            <BtnWrapper>
+              {modeStatus ? (
+                <button onClick={() => setModeStatus(!modeStatus)}>2단</button>
+              ) : (
+                <button onClick={() => setModeStatus(!modeStatus)}>1단</button>
+              )}
+            </BtnWrapper>
+            <BtnWrapper>
+              <button onClick={slidePlay}>재생</button>
+            </BtnWrapper>
+            <BtnWrapper>
+              <button onClick={slidePause}>중지</button>
+            </BtnWrapper>
+            <BtnWrapper>
+              {rtl ? (
+                <button onClick={() => setRtl(!rtl)}>왼쪽부터 읽기</button>
+              ) : (
+                <button onClick={() => setRtl(!rtl)}>오른쪽부터 읽기</button>
+              )}
+            </BtnWrapper>
+          </BtnContainer>
+        </PageWrapper>
+      </PageContainer>
     </div>
   );
 }
