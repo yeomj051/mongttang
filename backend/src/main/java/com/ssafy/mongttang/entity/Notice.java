@@ -23,8 +23,7 @@ public class Notice extends BaseEntity {
     private String noticeContent;
 
     @Builder
-    public Notice(int noticeId, String noticeTitle, String noticeContent) {
-        this.noticeId = noticeId;
+    public Notice(String noticeTitle, String noticeContent) {
         this.noticeTitle = noticeTitle;
         this.noticeContent = noticeContent;
     }

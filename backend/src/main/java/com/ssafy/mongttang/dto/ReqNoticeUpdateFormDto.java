@@ -10,7 +10,6 @@ import javax.validation.constraints.NotNull;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class ReqNoticeUpdateFormDto {
 
     private int noticeId;
@@ -18,12 +17,4 @@ public class ReqNoticeUpdateFormDto {
     private String noticeTitle;
     @NotNull(message = "내용은 필수 입력 값입니다.")
     private String noticeContent;
-
-    public Notice toEntity(int noticeId) {
-        return Notice.builder()
-                .noticeId(noticeId)
-                .noticeTitle(noticeTitle)
-                .noticeContent(noticeContent)
-                .build();
-    }
 }
