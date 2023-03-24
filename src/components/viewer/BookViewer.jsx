@@ -22,7 +22,7 @@ const ViewContainer = styled.div`
 `;
 
 const BarWrapper = styled.div`
-  ${tw``}
+  ${tw`m-0 pr-1`}
 `;
 
 const BtnContainer = styled.div`
@@ -169,7 +169,10 @@ function BookViewer() {
                 type="range"
                 min={0}
                 max={bookImg.illustes.length - 1}
-              />
+                style={{
+                  width: '25vw',
+                }}
+              />{' '}
               {!rtl
                 ? slideIndex + 1 + '/' + bookImg.illustes.length
                 : bookImg.illustes.length -
