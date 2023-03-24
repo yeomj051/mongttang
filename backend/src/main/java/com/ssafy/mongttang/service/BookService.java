@@ -241,7 +241,7 @@ public class BookService {
         return 1;
     }
 
-    public boolean getCanView(int userId, int bookId) {
+    public boolean getIsCanView(int userId, int bookId) {
         User user = userRepository.findByUserId(userId);
         Book book = bookRepository.findByBookId(bookId);
         if( book.getBookChallengeId().getChallengeEndDate().isAfter(LocalDateTime.now())) return true;
@@ -250,5 +250,16 @@ public class BookService {
             return false;
         }
         return true;
+    }
+
+    public PaidBook savePaidBook(int userId, int bookId) {
+        User user = userRepository.findByUserId(userId);
+
+        PaidBook paidBook = new PaidBook(user, bookId);
+
+        if(paidBookRepositoy.findByPaidbookUserIdAndBookId(user,bookId) == null){
+            return paidBookRepositoy.save(paidBook);
+        }
+        return null;
     }
 }
