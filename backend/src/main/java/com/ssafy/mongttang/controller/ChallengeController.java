@@ -63,11 +63,30 @@ public class ChallengeController {
         List<ResponseChallengeBookInfoDto> best = challengeService.getBestBooks(challengeId, userId);
         List<ResponseChallengeBookInfoDto> liked = challengeService.getLikeBooks(challengeId, userId);
         List<ResponseChallengeBookInfoDto> recent = challengeService.getLatesBooks(challengeId, userId);
-        if(best != null || liked != null || recent != null){
+        if(best != null && liked != null && recent != null){
             map.put(MESSAGE, SUCCESS);
             map.put("best", best);
             map.put("liked", liked);
             map.put("recent", recent);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } else {
+            map.put(MESSAGE, FAIL);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @ApiOperation(value = "이전 챌린지 조회", notes = "이전 챌린지를 조회한다.", response = Map.class)
+    @GetMapping("/before")
+    public ResponseEntity<Map<String, Object>> getBeforeChallenge(Principal principal) {
+        Map<String, Object> map = new HashMap<>();
+        int userId = -1;
+        if(principal != null){
+            userId = Integer.valueOf(principal.getName());
+        }
+        List<ResponseThisWeekChallengeDto> beforeChallenges = challengeService.getBeforeChallenge(userId);
+        if(beforeChallenges != null){
+            map.put(MESSAGE, SUCCESS);
+            map.put("totalChallenges", beforeChallenges);
             return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
         } else {
             map.put(MESSAGE, FAIL);

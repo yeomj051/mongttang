@@ -90,4 +90,21 @@ public class ChallengeService {
             bookResult.add(new ResponseChallengeBookInfoDto(book, coverImgPath, numOfComment, numOfLike, (bookLike == null) ? false : true));
         }
     }
+
+    public List<ResponseThisWeekChallengeDto> getBeforeChallenge(int userId) {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        List<Challenge> challengeList = challengRepository.findBeforeChallenge(currentDateTime);
+        List<ResponseThisWeekChallengeDto> result = new ArrayList<>();
+        if(challengeList == null) return null;
+        for(Challenge challenge : challengeList){
+            // 좋아요 Top3만 가져오기
+            // 좋아요 테이블에서 top3의 bookId 조회
+            List<Book> bookList = bookLikeRepository.findTop3LikeBook(challenge.getChallengeId());
+            if(bookList == null) return null;
+            List<ResponseChallengeBookInfoDto> bookResult = new ArrayList<>();
+            toChallengeBookInfoList(userId, bookList, bookResult);
+            result.add(new ResponseThisWeekChallengeDto(challenge, bookResult));
+        }
+        return result;
+    }
 }
