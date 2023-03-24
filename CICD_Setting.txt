@@ -302,24 +302,58 @@ docker logs jenkins
 
 	=>로그를 확인하여 비밀번호를 확인 후 8090포트로 접속, 비밀번호 입력 후 plugin을 설치한다.
 
-Jenkins 관리 => 플러그인 관리 => 설치가능 ssh 검색, Publish Over SSH, 지금 다운로드 => 재시작, 설치
 
-새로운 item => pipeline
+Jenkins 관리 => 플러그인 관리 => 설치가능 gitlab검색 후 gitlab api, webhook 설치
 
-스크립트 작성
-
-- pipeline  script vs pipeline script from scm
-	- pipeline script : 젠킨스 웹 내에서 스크립트를 작성하고 관리한다
-	- pipeline script from scm : 프로젝트 내에서 스크립트 작성 및 관리
-
-- 문법(Groovy 기반)
-	- Declarative Pipeline : 쉽게 작성 가능한 것이 장점(pipeline으로 시작하면 이 문법이다.)
-	- Scripted Pipeline : 어렵지만 더 많은 기능이 있다.(node로 시작이면 이것이다.)
-
-- 실제 작성
+- 배포 자동화 절차
+	- 새로운 Item 생성 : 이름을 정하고 Freestyle project 프로젝트를 생성한다.
+	
+	- GitLab 접속 => Settings => Repository => Deploy tokens => 생성된 id와 비밀번호(token)으로 jenkins Credentials에 등록하여 gitlab에 연결한다.
+	
+	- webhook 설정
+		빌드 유발 => Build when a change is pushed to GitLab ~ 체크 => Push Events 체크
+		고급 => Secret token => generate
+		Git Lab으로 이동하여 settings=> webhooks => URL, Secret token 젠킨스에서 복사하여 넣는다. => push events 체크 및 원하는 브랜치 이름 작성 => Add webhook
+		하단의 test를 통하여 작동 확인.
+	
+	- Shell Script 작성
+		- Build Steps에서 Execute shell 선택
+	예시
 
 ```
+cd /var/jenkins_home/workspace/mongttang_spring/backend
+chmod +x gradlew
+./gradlew build
+docker build -t mongttang-spring .
+if [ $( docker ps -a | grep mongttang-spring | wc -l ) -gt 0 ]; then
+echo "mongttang-spring container exists"
+echo "delete container"
+docker stop mongttang-spring
+docker rm mongttang-spring
+else
+echo "mongttang-spring container does not exist"
+fi
+docker run -p 8080:8080 --name mongttang-spring -d mongttang-spring
+```		
 
+	- dockerfile 설정
+		- docker run 명령을 실행시키기 위해 dockerfile을 프로젝트 루트폴더에 위치시켜야한다.
+		예시
+
+```
+OM openjdk:8-jdk
+
+#JAR_FILE 변수 정의 -> 기본적으로 jar file이 2개이기 때문에 이름을 특정해야함
+ARG JAR_FILE= build/libs/mongttang-0.0.1-SNAPSHOT.jar
+
+#JAR 파일 메인 디렉토리에 복사
+COPY ${JAR_FILE} app.jar
+
+#시스템 진입점 정의. /home/jenkins/workspace에 application.properties를 작성하여 내부의 설정을 override한다.
+ENTRYPOINT ["java","-jar","/app.jar","--spring.config.location=file:/home/jenkins/workspace"]
+```
+		- application.properties/yml을 배포 설정으로 작성하여 /home/jenkins/workspace에 넣어둔다.
+		
 ----------------------------------------------------------------------------------------------------------------------------
 # nginx + certbot https 인증서 발급
 
