@@ -9,24 +9,26 @@ import lombok.NoArgsConstructor;
 public class ResponseChallengeBookInfoDto {
     private int bookId;
     private String bookTitle;
-    private int userId;
-    private String userNickname;
-    private String coverImgURL;
+    private String bookSummary;
+    private int artistId;
+    private String artistNickname;
+    private String bookImgUrl;
     private String profileImgURL;
     private int numOfComment;
 
     private int numOfLike;
 
-    private boolean isLike;
-    public ResponseChallengeBookInfoDto(Book book, String coverImgURL, int numOfComment, int numOfLike, boolean isLike) {
+    private boolean isLiked;
+    public ResponseChallengeBookInfoDto(Book book, String coverImgURL, int numOfComment, int numOfLike, boolean isLiked) {
         this.bookId = book.getBookId();
         this.bookTitle = book.getBookTitle();
-        this.userId = book.getBookUserId().getUserId();
-        this.userNickname = book.getBookUserId().getUserNickname();
-        this.coverImgURL = coverImgURL;
+        this.bookSummary = book.getBookSummary();
+        this.artistId = book.getBookUserId().getUserId();
+        this.artistNickname = book.getBookUserId().getUserNickname();
+        this.bookImgUrl = coverImgURL;
         this.profileImgURL = book.getBookUserId().getUserProfileImg();
         this.numOfComment = numOfComment;
         this.numOfLike = numOfLike;
-        this.isLike = isLike;
+        this.isLiked = isLiked;
     }
 }
