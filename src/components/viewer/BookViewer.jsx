@@ -11,8 +11,15 @@ const ViewContainer = styled.div`
   ${tw`flex justify-center`}
 `;
 
+const BarWrapper = styled.div`
+  ${tw``}
+`;
+
+const BtnContainer = styled.div`
+  ${tw`flex justify-end space-x-1 m-0 p-2`}
+`;
 const BtnWrapper = styled.div`
-  ${tw`w-fit h-[24px] p-1 py-[12px] text-sub-bold text-black rounded-full flex justify-center items-center shadow cursor-pointer`}
+  ${tw`w-fit h-[24px] p-1 py-[12px] bg-btnBlack text-whiteText text-sub-bold rounded-full flex justify-center items-center shadow cursor-pointer`}
 `;
 
 //이미지 슬라이드
@@ -75,6 +82,9 @@ const PrevArrow = (props) => {
 function BookViewer() {
   const [slidesToShow, setSlidesToShow] = useState(1);
   const [modeStatus, setModeStatus] = useState(false); //페이지 모드
+  const [rtl, setRtl] = useState(false); //rtl 모드
+  const [slideIndex, setSlideIndex] = useState(0);
+  const [updateCount, setUpdateCount] = useState(0);
 
   const slider = useRef();
 
@@ -88,20 +98,22 @@ function BookViewer() {
   useEffect(() => {
     if (modeStatus) setSlidesToShow(1);
     else setSlidesToShow(2);
-  }, [modeStatus]);
+  }, [modeStatus, rtl]);
 
   const settings = {
-    dots: true, //페이징용 도트
+    dots: false, //페이징용 도트
     // fade: true, //페이드
     lazyLoad: false, //레이지로딩
-    infinite: true, //무한반복 옵션
+    infinite: false, //무한반복 옵션
     // vertical: true, //수직 모드
     // verticalSwiping: true, //수직 스크롤링 옵션
+    // focusOnSelect: true, //클릭 시 해당 화면을 현재화면으로
+    rtl: rtl, //Right to Left
     beforeChange: function (currentSlide, nextSlide) {
-      console.log('before change', currentSlide, nextSlide);
+      setSlideIndex(nextSlide);
     },
     afterChange: function (currentSlide) {
-      console.log('after change', currentSlide);
+      setUpdateCount(updateCount + 1);
     },
     speed: 500, //넘어가는 속도(클수록 느림)
     slidesToShow: slidesToShow, //한번에 보이는 페이지 수
@@ -115,6 +127,9 @@ function BookViewer() {
     prevArrow: <PrevArrow />,
     mode: slidesToShow,
   };
+
+  //화면 모드에 따른 옵션세팅을 따로 정리해서 임포트해오는 것도 고려
+  //1단, 2단, 스크롤
 
   return (
     <div>
@@ -133,19 +148,38 @@ function BookViewer() {
             : null}
         </Slider>
       </ViewContainer>
-      <BtnWrapper>
-        {modeStatus ? (
-          <button onClick={() => setModeStatus(!modeStatus)}>1단</button>
-        ) : (
-          <button onClick={() => setModeStatus(!modeStatus)}>2단</button>
-        )}
-      </BtnWrapper>
-      <BtnWrapper>
-        <button onClick={slidePlay}>재생</button>
-      </BtnWrapper>
-      <BtnWrapper>
-        <button onClick={slidePause}>중지</button>
-      </BtnWrapper>
+      <BtnContainer>
+        <BarWrapper>
+          <input
+            onChange={(e) => slider.current.slickGoTo(e.target.value)}
+            value={slideIndex}
+            type="range"
+            min={0}
+            max={bookImg.illustes.length - 1}
+          />
+          {slideIndex + 1 + '/' + bookImg.illustes.length}
+        </BarWrapper>
+        <BtnWrapper>
+          {modeStatus ? (
+            <button onClick={() => setModeStatus(!modeStatus)}>2단</button>
+          ) : (
+            <button onClick={() => setModeStatus(!modeStatus)}>1단</button>
+          )}
+        </BtnWrapper>
+        <BtnWrapper>
+          <button onClick={slidePlay}>재생</button>
+        </BtnWrapper>
+        <BtnWrapper>
+          <button onClick={slidePause}>중지</button>
+        </BtnWrapper>
+        <BtnWrapper>
+          {rtl ? (
+            <button onClick={() => setRtl(!rtl)}>왼쪽부터 읽기</button>
+          ) : (
+            <button onClick={() => setRtl(!rtl)}>오른쪽부터 읽기</button>
+          )}
+        </BtnWrapper>
+      </BtnContainer>
     </div>
   );
 }
