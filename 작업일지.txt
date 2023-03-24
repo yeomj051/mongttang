@@ -278,3 +278,22 @@
 		- 보유 nft 목록 및 잔액
 	- privatekey로 연결 주소 설정 완료.
 	- 쿼리스트링으로 privatekey 받도록 설정 => vuex의 state에서 관리
+
+--------------------------------------------------------------------------------------------
+
+# 23/03/24
+
+- 배포작업
+	- jenkins => git lab 연동
+		- deploy token을 통해 repository에 접근 권한 부여
+			- access token 이용해 접근 권한 부여하는 것은 git lab api를 통해 연결 후 다시 git lab ssh 연결을 해야하는데, 사용성이 너무 안 좋은 것 같다.
+			- deploy token을 이용하면 별도 설정 없이 id, password를 대신하여 접근권한을 부여할 수 있다.
+		- webhook을 통하여 특정 branch의 push상태를 읽어 자동 빌드 설정 완료. 
+	- Spring 배포
+		- 해결한 이슈들
+		- application.yml의 위치 문제
+			- application.yml은 git에 upload되지 않아 직접 ec2내부에 생성해주어야 한다. 외부에 파일을 만든 후, 구동시에 --spring.config.loaction 옵션으로 처리하려 했으나, 빌드시에 에러를 겪에 됨.
+			- 결국 git을 pull 받은 후, 내부에 새로 생성해 주는 것으로 해결.
+		- docker not found 문제
+			- jenkins 구동중인 container에 docker.sock을 매핑해도 docker 명령어를 인식하지 않는 문제 발생 
+			- "-v /usr/bin/docker:/usr/bin/docker"를 추가해서 해결
