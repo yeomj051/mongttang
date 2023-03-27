@@ -285,7 +285,7 @@ sudo apt update
 
 #젠킨스 컨테이너 실행
 
-docker run -d -p 8090:8080 -v /home/jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock --name jenkins -u root jenkins/jenkins
+docker run -d -p 8090:8080 -v /home/jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin/docker:/usr/bin/docker --name jenkins -u root jenkins/jenkins
 
 	jenkins/jenkins로 젠킨스 최신 이미지를 설치한다.
 
@@ -296,6 +296,10 @@ docker run -d -p 8090:8080 -v /home/jenkins:/var/jenkins_home -v /var/run/docker
 	-v /var/run/docker.sock:/var/run/docker.sock
 	우린 젠킨스를 사용해서 도커로 말아진 nest 서버와 db를 build 해야 한다.
 	이를 위해서 젠킨스 컨테이너 내부에서 도커 명령어를 사용해야 하고 호스트에 도커를 build 해야하기 때문에 /var/run/docker.sock:/var/run/docker.sock 으로 호스트와 컨테이너 내부 도커 데몬을 매핑하는 것이다.
+
+
+	-v /usr/bin/docker:/usr/bin/docker
+	docker를 연결해주어도 docker cli를 찾지 못해 명령어를 실행 못하는 경우가 있다. docker cli binary를 호스트에서 도커 내부로 매핑한다.
 
 
 docker logs jenkins 
