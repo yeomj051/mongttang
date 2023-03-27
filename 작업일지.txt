@@ -297,3 +297,14 @@
 		- docker not found 문제
 			- jenkins 구동중인 container에 docker.sock을 매핑해도 docker 명령어를 인식하지 않는 문제 발생 
 			- "-v /usr/bin/docker:/usr/bin/docker"를 추가해서 해결
+
+-----------------------------------------------------------------------------------------------
+
+# 23/03/27
+
+- Spring 배포 과정 오류 해결
+	- 원인 : dockerfile syntax error
+	- 상세 : dockerfile에서 스페이스는 문자로 인식되므로 명령어를 구분할 때를 제외해선 사용해선 안된다.
+
+- Ngingx reverse proxy 미작동 오류 해결
+	- 원인 : nginx 설정 파일의 포트 번호를 변경한 후 reload하지 않음
