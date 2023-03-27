@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/book")
+@RequestMapping("/book")
 @RequiredArgsConstructor
 public class BookController {
     private static final String MESSAGE = "message";
@@ -410,5 +410,30 @@ public class BookController {
         return new ResponseEntity<Map<String, Object>>(resultMap, status);
     }
 
+    @ApiOperation(value = "동화 상세 정보 조회", notes = "동화 상세정보를 조회한다.", response = Map.class)
+    @GetMapping("/{userId}/{bookId}")
+    public ResponseEntity<Map<String,Object>> getBookDetail(@ApiParam(value = "회원 아이디", required = true, example = "0") @PathVariable int userId,
+                                                            @ApiParam(value = "동화 아이디", required = true, example = "0") @PathVariable int bookId,Principal principal){
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<Map<String, Object>>(resultMap, status);
+        }
+
+        ResponseBookDetailDto responseBookDetailDto = bookService.getBookDetail(userId, bookId);
+
+        if(responseBookDetailDto == null){
+            resultMap.put(MESSAGE, FAIL);
+            status = HttpStatus.BAD_REQUEST;
+        }else{
+            resultMap.put(MESSAGE,SUCCESS);
+            resultMap.put("bookDetail",responseBookDetailDto);
+            status = HttpStatus.OK;
+        }
+
+        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    }
 
 }
