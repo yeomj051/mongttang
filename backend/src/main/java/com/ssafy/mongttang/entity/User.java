@@ -67,6 +67,10 @@ public class User extends BaseEntity {
         this.userProfileImg = userProfileImg;
     }
 
+    public void changeUserInfo(String userInfo) {
+        this.userInfo = userInfo;
+    }
+
     public void deleteUser() {
         changeNickname("(알 수 없음)");
         this.userProviderId = "del";

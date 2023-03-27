@@ -1,5 +1,6 @@
 package com.ssafy.mongttang.service;
 
+import com.ssafy.mongttang.dto.ReqUserInfoDto;
 import com.ssafy.mongttang.entity.User;
 import com.ssafy.mongttang.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +19,12 @@ public class UserService {
         return userRepository.findByUserNickname(userNickname);
     }
 
-    public User nicknameModify(int userId, String userNickname) {
+    public String nicknameModify(int userId, String userNickname) {
         User user = userRepository.findByUserId(userId);
         if(user == null) return null;
         else {
             user.changeNickname(userNickname);
-            return userRepository.save(user);
+            return userRepository.save(user).getUserNickname();
         }
     }
 
@@ -49,5 +50,12 @@ public class UserService {
             return userRepository.save(user).getUserProfileImg();
         }
         return null;
+    }
+
+    public String infoModify(int userId, ReqUserInfoDto reqUserInfoDto) {
+        User user = userRepository.findByUserId(userId);
+        if(user == null) return null;
+        user.changeUserInfo(reqUserInfoDto.getUserInfo());
+        return userRepository.save(user).getUserInfo();
     }
 }
