@@ -49,10 +49,10 @@ public class User extends BaseEntity {
     private String userProfileImg;
 
     @Builder
-    public User(int userId, String userEmail, String userNickname, AuthProvider userProvider, String userProviderId ){
+    public User(int userId, String userEmail, AuthProvider userProvider, String userProviderId ){
         this.userId = userId;
         this.userEmail = userEmail;
-        this.userNickname = userNickname;
+        this.userNickname = " ";
         this.userRole = "ROLE_READER";
         this.userProvider = userProvider;
         this.userProviderId = userProviderId;
