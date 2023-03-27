@@ -28,7 +28,7 @@ const ChallengeContainer = styled.div`
 
 function Home() {
   const challenges = authApi(requests.GET_CHALLENGES()).then((response) => {
-    return response;
+    return response.data;
   });
 
   return (
