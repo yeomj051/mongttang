@@ -30,6 +30,7 @@ public class User extends BaseEntity {
     private String userEmail;
 
     @Column(length = 11)
+    @NotNull
     private String userRole;
 
     @Column(length = 50)
@@ -37,9 +38,11 @@ public class User extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 6)
+    @NotNull
     private AuthProvider userProvider;
 
     @Column
+    @NotNull
     private String userProviderId;
 
     @Column
@@ -48,9 +51,11 @@ public class User extends BaseEntity {
     @Column
     private String userProfileImg;
 
+    @Column
+    private String userPrivateKey;
+
     @Builder
-    public User(int userId, String userEmail, AuthProvider userProvider, String userProviderId ){
-        this.userId = userId;
+    public User(String userEmail, AuthProvider userProvider, String userProviderId ){
         this.userEmail = userEmail;
         this.userNickname = " ";
         this.userRole = "ROLE_READER";
@@ -69,6 +74,10 @@ public class User extends BaseEntity {
 
     public void changeUserInfo(String userInfo) {
         this.userInfo = userInfo;
+    }
+
+    public void changeWallet(String wallet) {
+        this.userPrivateKey = wallet;
     }
 
     public void deleteUser() {

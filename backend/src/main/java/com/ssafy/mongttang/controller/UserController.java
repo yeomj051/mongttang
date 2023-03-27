@@ -1,6 +1,7 @@
 package com.ssafy.mongttang.controller;
 
 import com.ssafy.mongttang.dto.ReqUserInfoDto;
+import com.ssafy.mongttang.dto.ReqWalletInfoDto;
 import com.ssafy.mongttang.dto.UserPrincipalDto;
 import com.ssafy.mongttang.entity.User;
 import com.ssafy.mongttang.service.TokenProviderService;
@@ -25,7 +26,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
     private static final String MESSAGE = "message";
@@ -183,6 +184,32 @@ public class UserController {
         resultMap.put(MESSAGE, SUCCESS);
         status = HttpStatus.OK;
 
+        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    }
+
+    @ApiOperation(value = "지갑 키 저장", notes = "지갑의 키를 저장한다.", response = Map.class)
+    @PostMapping("/wallet/{userId}")
+    public ResponseEntity<Map<String,Object>> storeWalletAddress(@ApiParam(value = "지갑 생성을 할 회원 아이디", required = true, example = "1") @PathVariable int userId, @RequestBody ReqWalletInfoDto reqWalletInfoDto, Principal principal) {
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<Map<String, Object>>(resultMap, status);
+        }
+        try {
+            User user = userService.storeWalletAddress(userId, reqWalletInfoDto);
+            if(user == null){
+                resultMap.put(MESSAGE, FAIL);
+                status = HttpStatus.BAD_REQUEST;
+            } else {
+                resultMap.put(MESSAGE, SUCCESS);
+                status = HttpStatus.OK;
+            }
+        } catch (Exception e) {
+            resultMap.put(MESSAGE, FAIL);
+            status = HttpStatus.BAD_REQUEST;
+        }
         return new ResponseEntity<Map<String, Object>>(resultMap, status);
     }
 }

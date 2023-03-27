@@ -1,8 +1,10 @@
 package com.ssafy.mongttang.service;
 
 import com.ssafy.mongttang.dto.ReqUserInfoDto;
+import com.ssafy.mongttang.dto.ReqWalletInfoDto;
 import com.ssafy.mongttang.entity.User;
 import com.ssafy.mongttang.repository.UserRepository;
+import com.ssafy.mongttang.util.AES256Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,6 +16,8 @@ import java.io.IOException;
 public class UserService {
     private final UserRepository userRepository;
     private final S3Service s3Service;
+
+    private final AES256Util aes256Util;
 
     public User nicknameDpcn(String userNickname) {
         return userRepository.findByUserNickname(userNickname);
@@ -57,5 +61,14 @@ public class UserService {
         if(user == null) return null;
         user.changeUserInfo(reqUserInfoDto.getUserInfo());
         return userRepository.save(user).getUserInfo();
+    }
+
+    public User storeWalletAddress(int userId, ReqWalletInfoDto reqWalletInfoDto) throws Exception {
+        User user = userRepository.findByUserId(userId);
+        if(user == null) return null;
+        if(user.getUserPrivateKey() != null) return null;
+
+        user.changeWallet(aes256Util.encrypt(reqWalletInfoDto.getWallet()));
+        return userRepository.save(user);
     }
 }
