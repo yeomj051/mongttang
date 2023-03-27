@@ -308,3 +308,11 @@
 
 - Ngingx reverse proxy 미작동 오류 해결
 	- 원인 : nginx 설정 파일의 포트 번호를 변경한 후 reload하지 않음
+
+- MongttangNFT 수정
+	- NFT별 총 누적 금액 추가
+	- getMyNFTs 함수 return값을 2차원 배열에서 1차원 배열 3개로 변경 : nftIds, nftBalances, nftTotalEarneds
+	- 변경 사항에 맞게 nftList.vue 변경
+	- 사용성을 위한 디자인 요청함
+
+------------------------------------------------------------------------------------------------------
