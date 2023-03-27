@@ -38,7 +38,7 @@ function ChallengeInfo({ challenge }) {
   const participant = challenge.challengeParticipants;
 
   //챌린지 번호
-  const id = challenge.challengeId;
+  const challengeId = challenge.challengeId;
   return (
     <Challenge>
       <TextContainer>
@@ -47,7 +47,7 @@ function ChallengeInfo({ challenge }) {
           <ContentWrapper>{content}</ContentWrapper>
         </TextWrapper>
         <LinkWrapper>
-          <Link to={`/challenge/${id}`}>더 많은 동화 보러가기 →</Link>
+          <Link to={`/challenge/${challengeId}`}>더 많은 동화 보러가기 →</Link>
         </LinkWrapper>
       </TextContainer>
       <ImageWrapper>
