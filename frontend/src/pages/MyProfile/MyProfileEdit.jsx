@@ -9,6 +9,7 @@ import ProfileImg2 from 'components/common/ProfileImg2';
 import Button from 'components/common/Button';
 import moveToEdit from 'assets/icons/moveToEdit.svg';
 import UserIcon from 'assets/images/UserIcon.svg';
+import WithdrawalModal from 'pages/Withdrawal/WithdrawalModal';
 
 const ProfileContainer = styled.div`
   ${tw`flex flex-col items-center justify-center w-full z-10`}
@@ -42,6 +43,7 @@ function MyProfileEdit() {
   //프로필 조회 API 추가
   const navigate = useNavigate();
   const userId = Number(localStorage.getItem('userId'));
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [userImage, setUserImage] = useState();
   const [newImage, setNewImage] = useState();
 
@@ -58,6 +60,11 @@ function MyProfileEdit() {
 
     get_user();
   }, []);
+
+
+  const onClose = () => {
+    setIsModalOpen(false);
+  };
 
   const handleClickAddImage = () => {
     document.getElementById('imageInput').click();
@@ -101,6 +108,7 @@ function MyProfileEdit() {
   };
   return (
     <div>
+      {isModalOpen ? <WithdrawalModal onClose={onClose} /> : null}
       <ProfileImgContainer>
         <ImgWrapper>
           {newImage ? (
@@ -167,8 +175,7 @@ function MyProfileEdit() {
       </InfoContainer>
       <InfoContainer>
         <InfoTitle>회원탈퇴</InfoTitle>
-        {/* 클릭 시 회원탈퇴 API 호출 */}
-        <div onClick={() => navigate('/myprofile')}>
+        <div onClick={() => setIsModalOpen(true)}>
           <img src={moveToEdit} alt="edit button" className="cursor-pointer" />
         </div>
       </InfoContainer>
