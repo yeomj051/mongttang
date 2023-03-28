@@ -21,7 +21,8 @@
   </template>
   
   <script>
-  import { getNTFList } from '@/api/blockchain';
+  import { getNFTList } from '@/api/blockchain';
+  import { createRPCInstance } from "@/api";
   
   export default {
     name: 'NFTList',
@@ -32,14 +33,25 @@
         nftTotalEarneds : []
       }
     },
+    computed: {
+      privateKey() {
+        return this.$store.state.privateKey;
+      }
+
+    }, 
     created(){
-      getNTFList()
+      const rpcInstance = createRPCInstance();
+      const userAccount = rpcInstance.eth.accounts.privateKeyToAccount(this.privateKey);  
+      console.log("userAddress : " + userAccount.address); 
+      getNFTList(userAccount.address)
       .then(res => {
+        console.log("het");
         console.log(res);
         this.nftIds = res[0];
         this.nftBalances = res[1];
         this.nftTotalEarneds = res[2];        
-      });
+      })
+      .catch(console.error);
     },
   }
   </script>

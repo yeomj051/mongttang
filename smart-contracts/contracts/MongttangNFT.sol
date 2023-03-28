@@ -69,11 +69,11 @@ contract MongttangNFT is ERC721, Ownable {
         return _nftTotalEarned[tokenId];
     }
 
-    function getMyNfts() public view returns (uint[] memory, uint[] memory, uint[] memory) {
+    function getNfts(address ownerAddress) public view returns (uint[] memory, uint[] memory, uint[] memory) {
 
         uint256 count = 0;
         for(uint i = 1; i<=_tokenIds.current(); i++) {
-            if( ownerOf(i) == _msgSender()) {
+            if( ownerOf(i) == ownerAddress) {
                 count++;
             }
         }
@@ -84,7 +84,7 @@ contract MongttangNFT is ERC721, Ownable {
                 
         count = 0;
         for(uint i = 1; i<=_tokenIds.current(); i++){
-            if(ownerOf(i) == _msgSender()){
+            if(ownerOf(i) == ownerAddress){
                 nftIds[count] = i;
                 nftBalances[count] = nftBalance(i);
                 nftTotalEarneds[count] = nftTotalEarned(i);

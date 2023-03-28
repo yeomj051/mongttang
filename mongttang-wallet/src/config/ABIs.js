@@ -640,8 +640,14 @@ const NFT_CONTRACT_ABI = [
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "getMyNfts",
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "ownerAddress",
+				"type": "address"
+			}
+		],
+		"name": "getNfts",
 		"outputs": [
 			{
 				"internalType": "uint256[]",
