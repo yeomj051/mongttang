@@ -33,11 +33,11 @@ function SocialLogin() {
     localStorage.setItem('accessToken', accessToken);
     localStorage.setItem('userImg', profileImg);
     //전역상태 저장
-    setUserId('userId', userId);
-    setUserNickname('userNickname', userNickname);
-    setUserImg('userImg', profileImg);
-    setUserRole('userRole', 'reader');
-    setToken('accessToken', accessToken);
+    setUserId(userId);
+    setUserNickname(userNickname);
+    setUserImg(profileImg);
+    setUserRole('reader');
+    setToken(accessToken);
     if (userNickname === '' || ' ') {
       navigate('/myprofile/edit/nickname');
     } else {
