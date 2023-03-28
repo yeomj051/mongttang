@@ -9,11 +9,12 @@
         <RouterLink to="/trade"><button type="button" class="btn btn-primary">거래소</button></RouterLink>
         <button type="button" class="btn btn-primary">내보내기</button>
         <button type="button" class="btn btn-primary">입금하기</button>
+        <button type="button" class="btn btn-primary" v-on:click="createNFT">만들기</button>
     </div>
   </template>
   
   <script>
-  import { getMTTBalance, getSSFBalance } from '@/api/blockchain';
+  import { getMTTBalance, getSSFBalance, makeNFT } from '@/api/blockchain';
 
   export default {
     name: "TokenBalance",
@@ -37,6 +38,13 @@
         this.ssf = response;
       });
     },
+    methods: {
+      createNFT(){
+       makeNFT("0x10CA83EdC0E53589B22f23f4dEaAb53EEe70b1f9", "jjjjjjjjjjj");
+      }  
+
+      
+    }
 }
   </script>
   
