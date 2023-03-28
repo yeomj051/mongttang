@@ -31,15 +31,16 @@ function LogoutModal({ onClose }) {
   console.log(id);
 
   const logout = () => {
-    authApi(requests.GET_LOGOUT(id)).then((response) => {
-      console.log(response);
-      // if (response.status === 200) {
-      // }
-      localStorage.clear();
-      removeCookie('refreshToken');
-      resetUser();
-    });
-    onClose();
+    authApi(requests.GET_LOGOUT(id))
+      .then((response) => {
+        console.log(response);
+        // if (response.status === 200) {
+        // }
+        localStorage.clear();
+        removeCookie('refreshToken');
+        resetUser();
+      })
+      .finally(() => onClose());
     navigate('/home');
   };
 
