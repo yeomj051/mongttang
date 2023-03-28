@@ -23,6 +23,10 @@ function SocialLogin() {
   const profileImg = new URL(window.location.href).searchParams.get(
     'profileImgURL',
   );
+
+  const refreshToken = new URL(window.location.href).searchParams.get(
+    'refreshToken',
+  );
   //첫 로그인(회원가입)이라면 닉네임 설정 페이지로?
 
   //리다이렉트
@@ -32,6 +36,7 @@ function SocialLogin() {
     localStorage.setItem('userNickname', userNickname);
     localStorage.setItem('accessToken', accessToken);
     localStorage.setItem('userImg', profileImg);
+    setCookie('refreshToken', refreshToken);
     //전역상태 저장
     setUserId(userId);
     setUserNickname(userNickname);

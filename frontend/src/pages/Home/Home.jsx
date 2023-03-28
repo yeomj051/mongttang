@@ -42,7 +42,7 @@ function Home() {
     getData();
   }, []);
 
-  console.log(challenges);
+  // console.log(challenges);
   return (
     <div>
       <BodyContainer>
