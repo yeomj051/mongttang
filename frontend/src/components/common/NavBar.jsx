@@ -25,6 +25,7 @@ const Tab = styled.span`
 function NavBar() {
   const [userId, setUserId] = useState();
   const [userNickname, setUserNickname] = useState();
+  const [userImg, setUserImg] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onClose = () => {
@@ -32,10 +33,13 @@ function NavBar() {
   };
 
   useEffect(() => {
-    userStore.subscribe((state) => setUserNickname(state.userNickname));
+    userStore.subscribe((state) => {
+      setUserNickname(state.userNickname);
+      setUserImg(state.userImg);
+    });
     setUserId(localStorage.getItem('userId'));
     setUserNickname(localStorage.getItem('userNickname'));
-  }, [userId, userNickname, isModalOpen]);
+  }, [userId, userNickname, userImg, isModalOpen]);
 
   const location = useLocation().pathname;
 
@@ -107,7 +111,7 @@ function NavBar() {
             </Link>
           )}
           <Link to="/myprofile">
-            <ProfileImg userImg={UserIcon} className="justify-end" />
+            <ProfileImg userImg={userImg} className="justify-end" />
           </Link>
         </IconWrapper>
       </Container>

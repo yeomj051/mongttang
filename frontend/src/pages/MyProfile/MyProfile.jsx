@@ -72,7 +72,7 @@ function MyProfile() {
         setInCompleteBooks(data.profile.inCompleteBooks);
         setInterestBooks(data.profile.interestBooks);
         setPaidBooks(data.profile.paidBooks);
-        return console.log('여긴가');
+        console.log(data);
       } catch (error) {
         throw error;
       }
