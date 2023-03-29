@@ -316,3 +316,28 @@
 	- 사용성을 위한 디자인 요청함
 
 ------------------------------------------------------------------------------------------------------
+
+# 23/03/28
+
+- nft 생성하기 기능 완료
+	- 생성 받을 주소, tokenURI 값을 인자로 받고 contract 배포자의 privateKey는 저장되어있는 파일에서 불러온다.
+	- privateKeyToAccount(배포자 privateKey)를 이용하여 ownerAccount 생성, ownerAccount.address로 주소값을 가져온다.
+	- getTransactionCount(ownerAccount.address)로 nonce 값을 가져온다.
+		- nonce란 주소가 보내는 요청의 번호로 네트워크에 대한 replay attack을 막기 위해 사용한다.
+	- 받은 정보로 transactionObject를 생성한 뒤, signTransaction(transactionObject, SITE_PRIVATE_KEY)를 통해 서명한다.
+	- sendSignedTransaction(signedTx.rawTransaction) 로 요청을 보내면 완료
+	- 반환 값은 promievent로 promise에 on, once, off 세 가지를 더한 객체이다. on('receipt[error]', (receipt[error]) => {})로 callback 함수를 부를 수 있다.
+
+----------------------------------------------------------------------------------------------------
+
+# 23/03/29
+
+- 토큰 거래 기능 완료
+	- 이슈 사항 : 네크워크에서 revert되는 문제
+		- 원인 : transferFrom을 사용했기 때문, transfer 함수로 변경하자 작동
+	- 이슈 사항2 : 거래 실패시 에러 처리가 불가능함
+		- 해결 : then, catch 대신 async await와 try catch문으로 간략화하고 return 값으로 거래 성공시 true 실패시 false를 반환하여 if문으로 에러 처리 성공
+	- 이슈 사항3 : 거래 중 화면을 끄거나 새로고침하면 js 코드의 동작이 중단됨
+		- 해결 : vue에서 직접 web3 통신을 하는 이상 해결이 불가능함. node.js로 지갑용 백엔드 서버를 하나 더 구동시켜야 함.
+
+-----------------------------------------------------------------------------------------------------------
