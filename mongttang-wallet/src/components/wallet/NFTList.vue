@@ -14,14 +14,14 @@
         <div>
           총 수익 금액 : {{ nftTotalEarneds[idx] }}
         </div>       
-        <button type="button" class="btn btn-primary">출금하기</button>
+        <button type="button" class="btn btn-primary" v-on:click="doWithdraw(nftId, nftBalaces[idx])">출금하기</button>
       </div>
         
     </div>
   </template>
   
   <script>
-  import { getNFTList } from '@/api/blockchain';
+  import { getNFTList, withdraw } from '@/api/blockchain';
   import { createRPCInstance } from "@/api";
   
   export default {
@@ -45,13 +45,16 @@
       console.log("userAddress : " + userAccount.address); 
       getNFTList(userAccount.address)
       .then(res => {
-        console.log("het");
-        console.log(res);
         this.nftIds = res[0];
         this.nftBalances = res[1];
         this.nftTotalEarneds = res[2];        
       })
       .catch(console.error);
     },
+    method: {
+      doWithdraw(tokenId, amount){
+        withdraw(tokenId, amount);
+      }
+    }
   }
   </script>

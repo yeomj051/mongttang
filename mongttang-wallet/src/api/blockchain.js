@@ -60,7 +60,7 @@ async function makeNFT(toAddress, tokenURI){
         };
 
         const signedTx = await rpcInstance.eth.accounts.signTransaction(transactionObject, OWNER_PRIVATE_KEY);
-        
+        console.log(signedTx);
         rpcInstance.eth.sendSignedTransaction(signedTx.rawTransaction).on('receipt', (receipt) => {
             console.log(`Transaction confirmed: ${receipt.transactionHash}`);
             console.log(`Gas used: ${receipt.gasUsed}`);
@@ -71,35 +71,47 @@ async function makeNFT(toAddress, tokenURI){
     })
 }
 
-function buyMMT(userPrivateKey, amount){
-    const ownerAccount = rpcInstance.eth.accounts.privateKeyToAccount(OWNER_PRIVATE_KEY);
-    const userAccount = rpcInstance.eth.accounts.privateKeyToAccount(userPrivateKey);
-    transferSSF(userPrivateKey, ownerAccount.address, amount/100).then( res =>{
-        console.log(res);
-        transferMTT(OWNER_PRIVATE_KEY, userAccount.address, amount)
-        .then(console.log)
-        .catch(console.log);
+async function buyMMT(userPrivateKey, amount){
+    try{
+        const ownerAccount = rpcInstance.eth.accounts.privateKeyToAccount(OWNER_PRIVATE_KEY);
+        const userAccount = rpcInstance.eth.accounts.privateKeyToAccount(userPrivateKey);  
+        const res1 = await transferSSF(userPrivateKey, ownerAccount.address, amount/100);
+        if(res1){
+            const res2 = await transferMTT(OWNER_PRIVATE_KEY, userAccount.address, amount);
+            if(!res2) {
+                const res3 = transferSSF(OWNER_PRIVATE_KEY, userAccount.address, amount/100);
+                if(!res3) window.alert("구매 중 오류. 관리자에게 문의해주세요."); 
+            }
+        }
+        
+    } catch(err) {
+        console.log;
     }
-    ).catch(console.log);
 }
 
 
 function sellMMT(userPrivateKey, amount){
-    const ownerAccount = rpcInstance.eth.accounts.privateKeyToAccount(OWNER_PRIVATE_KEY);
-    const userAccount = rpcInstance.eth.accounts.privateKeyToAccount(userPrivateKey);
-    transferMTT(userPrivateKey, ownerAccount.address, amount).then( res =>{
-        console.log(res);
-        transferSSF(OWNER_PRIVATE_KEY, userAccount.address, amount)
-        .then(console.log)
-        .catch(console.log);
-    }
-    ).catch(console.log);
+    try{
+        const ownerAccount = rpcInstance.eth.accounts.privateKeyToAccount(OWNER_PRIVATE_KEY);
+        const userAccount = rpcInstance.eth.accounts.privateKeyToAccount(userPrivateKey);
+        const res1 = transferMTT(userPrivateKey, ownerAccount.address, amount);
+        if(res1){
+            const res2 = transferSSF(OWNER_PRIVATE_KEY, userAccount.address, amount/100);
+            if(!res2) {
+                const res3 = transferMTT(OWNER_PRIVATE_KEY, userAccount.address, amount);
+                if(!res3) window.alert("판매 중 오류. 관리자에게 문의해주세요."); 
+            }
+        }   
+    } catch(err) {
+        console.log;
+    } 
 }
 
 async function transferMTT(fromPrivateKey, toAddress, amount){
-    const fromAccount = rpcInstance.eth.accounts.privateKeyToAccount(fromPrivateKey);
-    rpcInstance.eth.getTransactionCount(fromAccount.address).then(async(nonce)=>{
-        const functionAbi = mttContract.methods.transferFrom(fromAccount.address, toAddress, amount).encodeABI();
+    try {
+        const fromAccount = rpcInstance.eth.accounts.privateKeyToAccount(fromPrivateKey);
+        const nonce = await rpcInstance.eth.getTransactionCount(fromAccount.address);
+        const functionAbi = mttContract.methods.transfer(toAddress, amount).encodeABI();
         const gasPrice = 0;
         const gasLimit = 210000;
         const transactionObject = {
@@ -112,42 +124,66 @@ async function transferMTT(fromPrivateKey, toAddress, amount){
         }; 
 
         const signedTx = await rpcInstance.eth.accounts.signTransaction(transactionObject, fromPrivateKey);
-
-        rpcInstance.eth.sendSignedTransaction(signedTx.rawTransaction).on('receipt', (receipt) => {
-            console.log(`Transaction confirmed: ${receipt.transactionHash}`);
-            console.log(`Gas used: ${receipt.gasUsed}`);
-          })
-          .on('error', (error) => {
-            console.error(`Transaction error: ${error}`);
-          });
-    });
+        const receipt = rpcInstance.eth.sendSignedTransaction(signedTx.rawTransaction);
+        console.log(`Transaction confirmed: ${receipt.transactionHash}`);
+        console.log(`Gas used: ${receipt.gasUsed}`);
+        return true;
+    } catch (error) {
+        console.error(`Transaction error: ${error}`);
+        return false;
+    }
 }
 
 async function transferSSF(fromPrivateKey, toAddress, amount){
-    const fromAccount = rpcInstance.eth.accounts.privateKeyToAccount(fromPrivateKey);
-    rpcInstance.eth.getTransactionCount(fromAccount.address).then(async(nonce)=>{
-        const functionAbi = ssfContract.methods.transferFrom(fromAccount.address, toAddress, amount).encodeABI();
+    try {
+        const fromAccount = rpcInstance.eth.accounts.privateKeyToAccount(fromPrivateKey);
+        const nonce = await rpcInstance.eth.getTransactionCount(fromAccount.address);
+        const functionAbi = ssfContract.methods.transfer(toAddress, amount).encodeABI();
         const gasPrice = 0;
         const gasLimit = 210000;
         const transactionObject = {
-            nonce: rpcInstance.utils.toHex(nonce),
-            gasPrice: rpcInstance.utils.toHex(gasPrice),
-            gas: rpcInstance.utils.toHex(gasLimit),
-            to: MTT_CONTRACT_ADDRESS,
-            from: fromAccount.address,
-            data: functionAbi
-        }; 
-
+          nonce: rpcInstance.utils.toHex(nonce),
+          gasPrice: rpcInstance.utils.toHex(gasPrice),
+          gas: rpcInstance.utils.toHex(gasLimit),
+          to: SSF_CONTRACT_ADDRESS,
+          from: fromAccount.address,
+          data: functionAbi
+        };
         const signedTx = await rpcInstance.eth.accounts.signTransaction(transactionObject, fromPrivateKey);
+        const receipt = await rpcInstance.eth.sendSignedTransaction(signedTx.rawTransaction);
+        console.log(`Transaction confirmed: ${receipt.transactionHash}`);
+        console.log(`Gas used: ${receipt.gasUsed}`);
+        return true;
+      } catch (error) {
+        console.error(`Transaction error: ${error}`);
+        return false;
+      }
+}
 
-        rpcInstance.eth.sendSignedTransaction(signedTx.rawTransaction).on('receipt', (receipt) => {
-            console.log(`Transaction confirmed: ${receipt.transactionHash}`);
-            console.log(`Gas used: ${receipt.gasUsed}`);
-          })
-          .on('error', (error) => {
-            console.error(`Transaction error: ${error}`);
-          });
-    });
+async function withdraw(userPrivateKey, tokenId, amount){
+    try {
+        const userAccount = rpcInstance.eth.accounts.privateKeyToAccount(userPrivateKey);
+        const nonce = await rpcInstance.eth.getTransactionCount(userAccount.address);
+        const functionAbi = nftContract.methods.withdraw(tokenId, amount).encodeABI();
+        const gasPrice = 0;
+        const gasLimit = 210000;
+        const transactionObject = {
+          nonce: rpcInstance.utils.toHex(nonce),
+          gasPrice: rpcInstance.utils.toHex(gasPrice),
+          gas: rpcInstance.utils.toHex(gasLimit),
+          to: NFT_CONTRACT_ADDRESS,
+          from: userAccount.address,
+          data: functionAbi
+        };
+        const signedTx = await rpcInstance.eth.accounts.signTransaction(transactionObject, userPrivateKey);
+        const receipt = await rpcInstance.eth.sendSignedTransaction(signedTx.rawTransaction);
+        console.log(`Transaction confirmed: ${receipt.transactionHash}`);
+        console.log(`Gas used: ${receipt.gasUsed}`);
+        return true;
+      } catch (error) {
+        console.error(`Transaction error: ${error}`);
+        return false;
+      }
 }
 
 export{
@@ -156,5 +192,6 @@ export{
     getSSFBalance,
     makeNFT,
     buyMMT,
-    sellMMT
+    sellMMT,
+    withdraw
 }
