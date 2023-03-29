@@ -30,7 +30,7 @@ authApi.interceptors.request.use(
   (config) => {
     const accessToken = localStorage.getItem('accessToken'); //로컬스토리지에서 accessToken 가져오기
     if (accessToken) {
-      config.headers.Authorization = accessToken;
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
     return config;
   },
@@ -63,7 +63,7 @@ authApi.interceptors.response.use(
         })
         .then((response) => {
           const { data } = response;
-          console.log(data);
+          // console.log(data);
           localStorage.setItem('accessToken', data);
           config.headers.Authorization = data;
 
