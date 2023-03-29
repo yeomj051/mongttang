@@ -7,7 +7,8 @@ import {
   Navigate,
   useNavigate,
 } from 'react-router-dom';
-
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import NavBar from 'components/common/NavBar';
 
 // component
@@ -39,46 +40,51 @@ function App() {
   const userId = userStore((state) => state.userId);
 
   return (
-    <CookiesProvider>
-      <QueryClientProvider client={queryClient}>
-        <BrowserRouter className="App">
-          <NavBar />
-          <AdminNavBar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/login" element={<UserLogin />} />
-            <Route path="/oauth" element={<SocialLogin />} />
-            <Route path="/notice" element={<Notice />} />
-            <Route path="/myprofile" element={<MyProfile />} />
-            <Route path="/myprofile/edit" element={<MyProfileEdit />} />
-            <Route path="/myprofile/edit/nickname" element={<NicknameEdit />} />
-            <Route path="/prevchallenge" element={<PrevChallenge />} />
-            <Route
-              path="/myprofile/edit/introduction"
-              element={<IntroductionEdit />}
-            />
-            <Route path="/admin/notice" element={<AdminNotice />} />
-            <Route path="/admin/challenge" element={<AdminChallenge />} />
-            <Route path="/admin/report/book" element={<AdminBookReport />} />
-            <Route
-              path="/admin/report/comment"
-              element={<AdminCommentReport />}
-            />
-            <Route
-              path="/admin/challenge/create"
-              element={<ChallengeCreaete />}
-            />
-            <Route path="/admin/notice/create" element={<NoticeCreate />} />
-            <Route path="/books/viewer" element={<BookViewer />} />
-            <Route
-              path="/books/:bookId"
-              element={<BookDetail userId={userId} />}
-            />
-          </Routes>
-        </BrowserRouter>
-      </QueryClientProvider>
-    </CookiesProvider>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <CookiesProvider>
+        <QueryClientProvider client={queryClient}>
+          <BrowserRouter className="App">
+            <NavBar />
+            <AdminNavBar />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/login" element={<UserLogin />} />
+              <Route path="/oauth" element={<SocialLogin />} />
+              <Route path="/notice" element={<Notice />} />
+              <Route path="/myprofile" element={<MyProfile />} />
+              <Route path="/myprofile/edit" element={<MyProfileEdit />} />
+              <Route
+                path="/myprofile/edit/nickname"
+                element={<NicknameEdit />}
+              />
+              <Route path="/prevchallenge" element={<PrevChallenge />} />
+              <Route
+                path="/myprofile/edit/introduction"
+                element={<IntroductionEdit />}
+              />
+              <Route path="/admin/notice" element={<AdminNotice />} />
+              <Route path="/admin/challenge" element={<AdminChallenge />} />
+              <Route path="/admin/report/book" element={<AdminBookReport />} />
+              <Route
+                path="/admin/report/comment"
+                element={<AdminCommentReport />}
+              />
+              <Route
+                path="/admin/challenge/create"
+                element={<ChallengeCreaete />}
+              />
+              <Route path="/admin/notice/create" element={<NoticeCreate />} />
+              <Route path="/books/viewer" element={<BookViewer />} />
+              <Route
+                path="/books/:bookId"
+                element={<BookDetail userId={userId} />}
+              />
+            </Routes>
+          </BrowserRouter>
+        </QueryClientProvider>
+      </CookiesProvider>
+    </LocalizationProvider>
   );
 }
 
