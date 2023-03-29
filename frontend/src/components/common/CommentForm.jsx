@@ -9,7 +9,7 @@ import requests from 'api/config';
 import { defaultApi, authApi } from 'api/axios';
 
 const CommentContainer = styled.div`
-  ${tw`flex`}
+  ${tw`flex flex-col-reverse`}
 `;
 const UserInfoContainer = styled.div`
   ${tw`flex flex-col mx-2`}
@@ -93,17 +93,19 @@ function CommentForm({ bookComments }) {
             </ButtonContainer>
           </div>
         </CommentFormcontainer>
-        {comments
-          ? comments.map((comment) => (
-              <div key={comment.commentId}>
-                <CommentItem
-                  comment={comment}
-                  comments={comments}
-                  setComments={setComments}
-                />
-              </div>
-            ))
-          : null}
+        <CommentContainer>
+          {comments
+            ? comments.map((comment) => (
+                <div key={comment.commentId}>
+                  <CommentItem
+                    comment={comment}
+                    comments={comments}
+                    setComments={setComments}
+                  />
+                </div>
+              ))
+            : null}
+        </CommentContainer>
       </Comment>
     </div>
   );
