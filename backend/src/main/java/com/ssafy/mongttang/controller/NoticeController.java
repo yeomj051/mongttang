@@ -105,10 +105,10 @@ public class NoticeController {
                                                             @Valid @RequestBody @ApiParam(value = "수정 글 정보 담은 dto") ReqNoticeUpdateFormDto reqNoticeUpdateFormDto) {
         Map<String, Object> map = new HashMap<>();
 
-        Notice updatedNotice = noticeService.updateNotice(noticeId, reqNoticeUpdateFormDto);
-        if(updatedNotice != null) {
+        List<ResponseNoticeDetailDto> updatedNotices = noticeService.updateNotice(noticeId, reqNoticeUpdateFormDto);
+        if(updatedNotices != null) {
             map.put(MESSAGE, SUCCESS);
-            map.put("notice", updatedNotice);
+            map.put("notice", updatedNotices);
             return new ResponseEntity<>(map, HttpStatus.OK);
         } else {
             map.put(MESSAGE, FAIL);

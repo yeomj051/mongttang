@@ -45,12 +45,15 @@ public class NoticeService {
     }
 
     @Transactional
-    public Notice updateNotice(int noticeId, ReqNoticeUpdateFormDto reqNoticeUpdateFormDto) {
+    public List<ResponseNoticeDetailDto> updateNotice(int noticeId, ReqNoticeUpdateFormDto reqNoticeUpdateFormDto) {
         Optional<Notice> notice = noticeRepository.findById(noticeId);
         if(!notice.isPresent()) return null;
 
         notice.get().update(reqNoticeUpdateFormDto);
-        return noticeRepository.save(notice.get());
+        Notice getNotice = noticeRepository.save(notice.get());
+        if(getNotice == null) return null;
+
+        return getNotices();
     }
 
     @Transactional
