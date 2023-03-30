@@ -68,11 +68,11 @@ public class AdminService {
         return 1;
     }
 
-    public Comment deleteComment(int commentId) {
+    public int deleteComment(int commentId) {
         Comment comment = commentRepository.findCommentByCommentId(commentId);
-        if(comment == null) return null;
-        comment.changeStatus();
-        return commentRepository.save(comment);
+        if(comment == null) return 0;
+        commentRepository.delete(comment);
+        return 1;
     }
 
     public int discountBook(int bookId, LocalDateTime endDate) {
@@ -109,11 +109,11 @@ public class AdminService {
         book.changeStatus();
         return bookRepository.save(book);
     }
-//
-//    public Comment changeCommentStatus(int commentId) {
-//        Comment comment = commentRepository.findCommentByCommentId(commentId);
-//        if(comment == null) return null;
-//        comment.changeStatus();
-//        return commentRepository.save(comment);
-//    }
+
+    public Comment changeCommentStatus(int commentId) {
+        Comment comment = commentRepository.findCommentByCommentId(commentId);
+        if(comment == null) return null;
+        comment.changeStatus();
+        return commentRepository.save(comment);
+    }
 }

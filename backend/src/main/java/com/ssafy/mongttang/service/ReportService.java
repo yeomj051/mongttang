@@ -35,10 +35,14 @@ public class ReportService {
         if(commentReport != null) return - 1;
 
         if(comment.getCommentUserId().getUserId() == userId) return 0;
+        commentReportRepository.save(reqReportCommentDto.toEntity(comment, userId));
 
-        commentReport = commentReportRepository.save(reqReportCommentDto.toEntity(comment, userId));
-        if(commentReport == null) return 0;
-        else return 1;
+        int cnt = commentReportRepository.countDistinctByCommentreportCommentId_CommentId(commentId);
+        if(cnt % 5 == 0){
+            comment.changeStatus();
+            commentRepository.save(comment);
+        }
+        return 1;
     }
 
     public List<ResponseReportCommentInfoDto> getReportComments() {

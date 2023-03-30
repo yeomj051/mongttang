@@ -134,8 +134,8 @@ public class AdminController {
     public ResponseEntity<Map<String, Object>> deleteComment(@PathVariable @ApiParam(value = "삭제할 댓글을 아이디 번호") int commentId) {
         Map<String, Object> map = new HashMap<>();
 
-        Comment comment = adminService.deleteComment(commentId);
-        if(comment != null){
+        int cnt = adminService.deleteComment(commentId);
+        if(cnt == 1){
             map.put(MESSAGE, SUCCESS);
             return new ResponseEntity<>(map, HttpStatus.OK);
         } else {
@@ -144,20 +144,20 @@ public class AdminController {
         }
     }
 
-//    @ApiOperation(value = "댓글 삭제", notes = "관리자는 댓글을 삭제한다.", response = Map.class)
-//    @PatchMapping("/comment/{commentId}")
-//    public ResponseEntity<Map<String, Object>> changeCommentStatus(@PathVariable @ApiParam(value = "삭제할 댓글을 아이디 번호") int commentId) {
-//        Map<String, Object> map = new HashMap<>();
-//
-//        Comment comment = adminService.changeCommentStatus(commentId);
-//        if(comment != null){
-//            map.put(MESSAGE, SUCCESS);
-//            return new ResponseEntity<>(map, HttpStatus.OK);
-//        } else {
-//            map.put(MESSAGE, FAIL);
-//            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
-//        }
-//    }
+    @ApiOperation(value = "댓글 상태 변화", notes = "관리자는 댓글의 상태를 변화시킨다.", response = Map.class)
+    @PatchMapping("/comment/{commentId}")
+    public ResponseEntity<Map<String, Object>> changeCommentStatus(@PathVariable @ApiParam(value = "삭제할 댓글을 아이디 번호") int commentId) {
+        Map<String, Object> map = new HashMap<>();
+
+        Comment comment = adminService.changeCommentStatus(commentId);
+        if(comment != null){
+            map.put(MESSAGE, SUCCESS);
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        } else {
+            map.put(MESSAGE, FAIL);
+            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @ApiOperation(value = "해당 동화 할인", notes = "관리자는 할인 동화를 추가한다.", response = Map.class)
     @PostMapping("/discount/{bookId}")
