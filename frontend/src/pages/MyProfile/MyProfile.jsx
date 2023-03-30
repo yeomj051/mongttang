@@ -72,13 +72,14 @@ function MyProfile() {
         setInCompleteBooks(data.profile.inCompleteBooks);
         setInterestBooks(data.profile.interestBooks);
         setPaidBooks(data.profile.paidBooks);
+        console.log(data.profile.profileImgURL);
       } catch (error) {
         throw error;
       }
     };
 
     get_user();
-  }, []);
+  }, [userImg]);
 
   return (
     <div>

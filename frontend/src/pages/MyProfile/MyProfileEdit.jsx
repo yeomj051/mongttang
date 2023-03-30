@@ -96,8 +96,10 @@ function MyProfileEdit() {
   const submitHandler = () => {
     if (file !== null) {
       formData.append('userImg', file);
+      console.log(file);
     } else {
-      setFormData(new FormData());
+      formData.append('userImg', UserIcon, 'image.png');
+      console.log(UserIcon);
     }
 
     const patch_profile_image = async () => {
@@ -113,8 +115,7 @@ function MyProfileEdit() {
         throw error;
       }
     };
-    patch_profile_image();
-    navigate('/myprofile');
+    patch_profile_image().then(() => navigate('/myprofile'));
   };
   return (
     <div>

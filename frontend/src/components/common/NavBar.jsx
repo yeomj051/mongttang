@@ -53,7 +53,7 @@ function NavBar() {
       } catch (error) {}
     };
     fetchData();
-  }, [userImg]);
+  });
 
   const location = useLocation().pathname;
 
