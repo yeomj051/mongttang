@@ -16,7 +16,7 @@ public class ResponseChallengeBookInfoDto {
     private String bookImgUrl;
     private String profileImgURL;
     private int numOfComment;
-
+    private int numOfViews;
     private int numOfLike;
 
     private boolean isLiked;
@@ -31,6 +31,7 @@ public class ResponseChallengeBookInfoDto {
         if(!book.getBookUserId().getUserProfileImg().equals("defaultImg")){
             this.profileImgURL = "http://dd93ub3tw0bvd.cloudfront.net/" + book.getBookUserId().getUserProfileImg();
         }
+        this.numOfViews = book.getBookViews();
         this.numOfComment = numOfComment;
         this.numOfLike = numOfLike;
         this.isLiked = isLiked;

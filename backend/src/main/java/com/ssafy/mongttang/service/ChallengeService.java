@@ -92,6 +92,23 @@ public class ChallengeService {
         return result;
     }
 
+    public List<ResponseChallengeBookInfoDto> getBooksByOrder(int challengeId, int userId, String order) {
+        List<Book> bookList = null;
+        if("lates".equals(order)){
+            bookList = bookRepository.findLatesBooks(challengeId);
+        } else if("view".equals(order)){
+            bookList = bookRepository.findViewsBooks(challengeId);
+        } else if("like".equals(order)){
+            bookList = bookLikeRepository.getLikeBook(challengeId);
+        }
+
+        if(bookList == null) return null;
+        List<ResponseChallengeBookInfoDto> bookResult = new ArrayList<>();
+        toChallengeBookInfoList(userId, bookList, bookResult);
+
+        return bookResult;
+    }
+
     private void toChallengeBookInfoList(int userId, List<Book> bookList, List<ResponseChallengeBookInfoDto> bookResult) {
         for(Book book: bookList) {
             //동화 표지 가져요기
