@@ -44,12 +44,12 @@ export default {
     },
     methods: {
         showSsfToMtt: function() {
-            ssfToMttStatus = true;
-            mttToSsfStatus = false;
+            this.ssfToMttStatus = true;
+            this.mttToSsfStatus = false;
         },
         showMttToSsf: function() {
-            ssfToMttStatus = false;
-            mttToSsfStatus = true;
+            this.ssfToMttStatus = false;
+            this.mttToSsfStatus = true;
         },
     },
     data() {

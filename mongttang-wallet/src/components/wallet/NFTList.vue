@@ -11,10 +11,10 @@
         <div>
           현재 잔액 : {{ nftBalances[idx] }}
         </div> 
-        <div>
+        <div >
           총 수익 금액 : {{ nftTotalEarneds[idx] }}
         </div>       
-        <button type="button" class="btn btn-primary" v-on:click="doWithdraw(nftId, nftBalaces[idx])">출금하기</button>
+        <button type="button" class="btn btn-primary" v-on:click="doWithdraw(nftId, nftBalances[idx])">출금하기</button>
       </div>
         
     </div>
@@ -51,7 +51,7 @@
       })
       .catch(console.error);
     },
-    method: {
+    methods: {
       doWithdraw(tokenId, amount){
         withdraw(tokenId, amount);
       }
