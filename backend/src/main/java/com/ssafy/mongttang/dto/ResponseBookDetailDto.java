@@ -5,6 +5,7 @@ import lombok.Getter;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 public class ResponseBookDetailDto {
@@ -28,7 +29,7 @@ public class ResponseBookDetailDto {
     private boolean isReported;
     @NotNull
     private boolean isReportedMany;
-    private ArrayList<ResponseCommentDto> comments;
+    private List<ResponseCommentDto> comments;
 
     public ResponseBookDetailDto(Book book, String illustPath,boolean isLiked, boolean isReported, boolean isReportedMany, ArrayList<ResponseCommentDto> comments) {
         this.bookId = book.getBookId();
