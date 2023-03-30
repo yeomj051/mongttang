@@ -49,6 +49,7 @@ function MyProfileEdit() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userImage, setUserImage] = useState(UserIcon); //미리보기 이미지
 
+  const [formData, setFormData] = useState(new FormData());
   const [file, setFile] = useState(null);
   const fileInput = useRef(null);
 
@@ -90,19 +91,24 @@ function MyProfileEdit() {
   };
   const changeToDefaultImg = () => {
     setUserImage(UserIcon);
+    setFile(null);
   };
   const submitHandler = () => {
-    const formData = new FormData();
-
-    if (file !== null) formData.append('userImg', file);
+    if (file !== null) {
+      formData.append('userImg', file);
+    } else {
+      setFormData(new FormData());
+    }
 
     const patch_profile_image = async () => {
       try {
-        await authApi.patch(requests.PATCH_PROFILE_IMAGE(userId), formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+        await authApi
+          .patch(requests.PATCH_PROFILE_IMAGE(userId), formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          })
+          .then((res) => console.log(res));
       } catch (error) {
         throw error;
       }
