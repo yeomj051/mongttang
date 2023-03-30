@@ -105,10 +105,10 @@ public class NoticeController {
                                                             @Valid @RequestBody @ApiParam(value = "수정 글 정보 담은 dto") ReqNoticeUpdateFormDto reqNoticeUpdateFormDto) {
         Map<String, Object> map = new HashMap<>();
 
-        List<ResponseNoticeDetailDto> updatedNotices = noticeService.updateNotice(noticeId, reqNoticeUpdateFormDto);
-        if(updatedNotices != null) {
+        List<ResponseNoticeDetailDto> afterUpdatedNotices = noticeService.updateNotice(noticeId, reqNoticeUpdateFormDto);
+        if(afterUpdatedNotices != null) {
             map.put(MESSAGE, SUCCESS);
-            map.put("notice", updatedNotices);
+            map.put("notices", afterUpdatedNotices);
             return new ResponseEntity<>(map, HttpStatus.OK);
         } else {
             map.put(MESSAGE, FAIL);
@@ -122,8 +122,10 @@ public class NoticeController {
     @DeleteMapping("/{noticeId}")
     public ResponseEntity<Map<String, Object>> deleteNotice(@PathVariable @ApiParam(value = "삭제할 공지사항 번호", example = "0") int noticeId) {
         Map<String, Object> map = new HashMap<>();
-        if(noticeService.deleteNotice(noticeId) == 1) {
+        List<ResponseNoticeDetailDto> afterDeletedNotices = noticeService.deleteNotice(noticeId);
+        if(afterDeletedNotices != null) {
             map.put(MESSAGE, SUCCESS);
+            map.put("notices", afterDeletedNotices);
             return new ResponseEntity<>(map, HttpStatus.OK);
         } else {
             map.put(MESSAGE, FAIL);

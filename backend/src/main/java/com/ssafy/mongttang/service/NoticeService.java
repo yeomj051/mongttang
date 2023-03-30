@@ -57,13 +57,13 @@ public class NoticeService {
     }
 
     @Transactional
-    public int deleteNotice(int noticeId) {
+    public List<ResponseNoticeDetailDto> deleteNotice(int noticeId) {
         Optional<Notice> notice = noticeRepository.findById(noticeId);
         if(notice.isPresent()) {
             noticeRepository.deleteById(noticeId);
-            return 1;
+            return getNotices();
         } else {
-            return 0;
+            return null;
         }
     }
 
