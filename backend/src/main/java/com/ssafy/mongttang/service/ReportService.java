@@ -39,7 +39,7 @@ public class ReportService {
 
         int cnt = commentReportRepository.countDistinctByCommentreportCommentId_CommentId(commentId);
         if(cnt % 5 == 0){
-            comment.changeStatus();
+            comment.changeToDisabled();
             commentRepository.save(comment);
         }
         return 1;
@@ -64,7 +64,7 @@ public class ReportService {
 
         int cnt = bookReportRepository.countDistinctByBookreportBookId_BookId(bookId);
         if(cnt % 5 == 0){
-            book.changeStatus();
+            book.changeToDisabled();
             bookRepository.save(book);
         }
         return 1;

@@ -67,4 +67,8 @@ public class Book extends BaseEntity {
             this.bookStatus = "delete";
         }
     }
+
+    public void changeToDisabled(){
+        this.bookStatus = "delete";
+    }
 }

@@ -48,6 +48,10 @@ public class Comment extends BaseEntity{
         }
     }
 
+    public void changeToDisabled(){
+        this.commentStatus = false;
+    }
+
     public void changeContent(String commentContent){
         this.commentContent = commentContent;
     }
