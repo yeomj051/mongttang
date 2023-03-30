@@ -61,6 +61,10 @@ public class Book extends BaseEntity {
     }
 
     public void changeStatus(){
-        this.bookStatus = "delete";
+        if(this.bookStatus.equals("delete")) {
+            this.bookStatus = "complete";
+        } else {
+            this.bookStatus = "delete";
+        }
     }
 }
