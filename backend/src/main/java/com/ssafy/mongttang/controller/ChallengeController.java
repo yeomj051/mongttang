@@ -2,7 +2,6 @@ package com.ssafy.mongttang.controller;
 
 import com.ssafy.mongttang.dto.ResponseChallengeBookInfoDto;
 import com.ssafy.mongttang.dto.ResponseDiscountBookDto;
-import com.ssafy.mongttang.dto.ResponseThisWeekChallengeDto;
 import com.ssafy.mongttang.dto.ResponseThisWeekChallengeNativeDto;
 import com.ssafy.mongttang.service.BookService;
 import com.ssafy.mongttang.service.ChallengeService;
