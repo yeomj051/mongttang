@@ -109,6 +109,19 @@ public class ChallengeService {
         return bookResult;
     }
 
+    public ResponseThisWeekChallengeNativeDto getChallengeDetail(int challengeId, int userId) {
+        Challenge challenge = challengRepository.findByChallengeId(challengeId);
+        if(challenge == null) return null;
+
+        List<BookRepository.BookNativeDto> bookList = bookRepository.findBestBook(challengeId);
+        if(bookList == null) return null;
+
+        List<ResponseChallengeBookInfoNativeDto> bookResult = new ArrayList<>();
+        toNativeChallengeBookInfoList(userId, bookList, bookResult);
+
+        return new ResponseThisWeekChallengeNativeDto(challenge, bookResult);
+    }
+
     private void toChallengeBookInfoList(int userId, List<Book> bookList, List<ResponseChallengeBookInfoDto> bookResult) {
         for(Book book: bookList) {
             //동화 표지 가져요기
@@ -123,6 +136,7 @@ public class ChallengeService {
         }
     }
 
+
     private void toNativeChallengeBookInfoList(int userId, List<BookRepository.BookNativeDto> bookList, List<ResponseChallengeBookInfoNativeDto> bookResult) {
         for(BookRepository.BookNativeDto book: bookList) {
             //동화 표지 가져요기
@@ -132,4 +146,6 @@ public class ChallengeService {
             bookResult.add(new ResponseChallengeBookInfoNativeDto(book, coverImgPath, (bookLike == null) ? false : true));
         }
     }
+
+
 }

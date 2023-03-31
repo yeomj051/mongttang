@@ -49,34 +49,31 @@ public class ChallengeController {
         }
     }
 
-//    @ApiOperation(value = "챌린지 상세 조회", notes = "챌린지를 상세 조회한다.", response = Map.class)
-//    @GetMapping("/{challengeId}")
-//    public ResponseEntity<Map<String, Object>> getChallengeDetail(@PathVariable @ApiParam(value = "상세 조회할 챌린지 아이디", example = "1") int challengeId
-//                                                                  ,Principal principal) {
-//        Map<String, Object> map = new HashMap<>();
-//        int userId = -1;
-//
-//        if(principal != null){
-//            userId = Integer.valueOf(principal.getName());
-//        }
-//
-//        List<ResponseChallengeBookInfoDto> best = challengeService.getBestBooks(challengeId, userId);
-//        List<ResponseChallengeBookInfoDto> liked = challengeService.getLikeBooks(challengeId, userId);
-//        List<ResponseChallengeBookInfoDto> recent = challengeService.getLatesBooks(challengeId, userId);
-//        if(best != null && liked != null && recent != null){
-//            map.put(MESSAGE, SUCCESS);
-//            map.put("best", best);
-//            map.put("liked", liked);
-//            map.put("recent", recent);
-//            return new ResponseEntity<>(map, HttpStatus.OK);
-//        } else {
-//            map.put(MESSAGE, FAIL);
-//            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
-//        }
-//    }
+    @ApiOperation(value = "챌린지 상세 조회", notes = "챌린지를 상세 조회한다.", response = Map.class)
+    @GetMapping("/{challengeId}")
+    public ResponseEntity<Map<String, Object>> getChallengeDetail(@PathVariable @ApiParam(value = "상세 조회할 챌린지 아이디", example = "1") int challengeId
+                                                                  ,Principal principal) {
+        Map<String, Object> map = new HashMap<>();
+        int userId = -1;
+
+        if(principal != null){
+            userId = Integer.valueOf(principal.getName());
+        }
+        ResponseThisWeekChallengeNativeDto detailChallenge = challengeService.getChallengeDetail(challengeId, userId);
+        List<ResponseChallengeBookInfoDto> recent = challengeService.getLatesBooks(challengeId, userId);
+        if(detailChallenge != null && recent != null){
+            map.put(MESSAGE, SUCCESS);
+            map.put("detailChallenge", detailChallenge);
+            map.put("recent", recent);
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        } else {
+            map.put(MESSAGE, FAIL);
+            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @ApiOperation(value = "챌린지 정렬 상세조회", notes = "챌린지를 정렬하여 상세 조회한다.", response = Map.class)
-    @GetMapping("/{challengeId}")
+    @GetMapping("/order/{challengeId}")
     public ResponseEntity<Map<String, Object>> getChallengeDetailByOrder(@PathVariable @ApiParam(value = "상세 조회할 챌린지 아이디", example = "1") int challengeId
             ,@RequestParam @ApiParam(value = "정렬방법(lates, like, views)", example = "1") String order
             ,Principal principal) {
