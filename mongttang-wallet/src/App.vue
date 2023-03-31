@@ -3,13 +3,18 @@
 </template>
 
 <script>
+import { createRPCInstance } from "@/api";
+
 export default {
   created() {
     const URLSearch = new URLSearchParams(location.search);
     const privateKey = URLSearch.get(`key`);
     console.log(privateKey);
     this.$store.commit("SET_PRIVATEKEY", privateKey);
-    console.log("asegaswehgashash" + this.$store.state.privateKey);
+    const rpcInstance = createRPCInstance();
+    const userAccount =
+      rpcInstance.eth.accounts.privateKeyToAccount(privateKey);
+    this.$store.commit("SET_ADDRESS", userAccount.address);
   },
 };
 </script>

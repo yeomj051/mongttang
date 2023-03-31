@@ -17,7 +17,10 @@
         <div class="money">총 수익 금액 : {{ nftTotalEarneds[idx] }}</div>
         <br />
         <img
+          class="pointer"
           src="@/assets/withdraw.png"
+          data-bs-toggle="modal"
+          data-bs-target="#withdrawModal"
           v-on:click="doWithdraw(nftId, nftBalances[idx])"
         />
         <br />
@@ -25,6 +28,39 @@
       <div class="col"></div>
     </div>
     <hr />
+  </div>
+
+  <!-- 출금 Modal -->
+  <div
+    class="modal fade"
+    id="withdrawModal"
+    tabindex="-1"
+    aria-labelledby="withdrawModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="withdrawModalLabel">
+            출금 요청이 신청되었습니다.
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          블록체인의 특성상, 출금이 반영되기까지 시간이 다소 걸릴 수 있습니다.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+            확인
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -62,7 +98,7 @@ export default {
   },
   methods: {
     doWithdraw(tokenId, amount) {
-      withdraw(tokenId, amount);
+      withdraw(this.privateKey, tokenId, amount);
     },
   },
 };
