@@ -20,6 +20,8 @@ public class ResponseChallengeBookInfoNativeDto {
 
     private int numOfLike;
 
+    private int total;
+
     private boolean isLiked;
 
     public ResponseChallengeBookInfoNativeDto(BookRepository.BookNativeDto book, String coverImgURL, boolean isLiked) {
@@ -36,6 +38,7 @@ public class ResponseChallengeBookInfoNativeDto {
         this.numOfViews = book.getBookViews();
         this.numOfComment = book.getCommentCnt();
         this.numOfLike = book.getBlikeCnt();
+        this.total = book.getTotal();
         this.isLiked = isLiked;
     }
 }
