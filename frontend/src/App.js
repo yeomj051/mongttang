@@ -34,6 +34,7 @@ import UserLogin from 'pages/Login/UserLogin';
 import Notice from 'pages/Notice/Notice';
 import BookViewer from 'components/viewer/BookViewer';
 import BookDetail from 'pages/Book/BookDetail';
+import NewBookEditor from 'pages/Edit/NewBookEditor';
 import { userStore } from 'store/userStore';
 import SocialLogin from 'pages/Login/SocialLogin';
 import ChallengeDetail from 'pages/Challenge/ChallengeDetail';
@@ -93,6 +94,7 @@ function App() {
               />
               <Route path="/books/viewer/:bookId" element={<BookViewer />} />
               <Route path="/books/:userId/:bookId" element={<BookDetail />} />
+              <Route path="/newbook/:userId" element={<NewBookEditor />} />
             </Routes>
           </BrowserRouter>
         </QueryClientProvider>
