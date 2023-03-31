@@ -49,6 +49,7 @@ public class UserService {
         User user = userRepository.findByUserId(userId);
         if(user != null){
             String profilePath = "http://dd93ub3tw0bvd.cloudfront.net/" + s3Service.uploadProfile(userImg, userId);
+            if(profilePath == null) return null;
             user.changeProfileImg(profilePath);
             return userRepository.save(user).getUserProfileImg();
         }
