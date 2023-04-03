@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import BookList from 'components/common/BookList';
 import { Link } from 'react-router-dom';
+import BookSwiper from 'components/common/BookSwiper';
 
 const CTWrapper = styled.div`
   ${tw`flex justify-center m-0 mt-[2%]`}
@@ -67,15 +68,13 @@ function NewHome() {
           />
         ) : null}
         <DiscountContainer>
-          {challenges
-            ? challenges.discountBooks.map((book, index) => {
-                return (
-                  <div key={index}>
-                    <BookList books={book} width="w-40" height="h-48" />
-                  </div>
-                );
-              })
-            : null}
+          {challenges ? (
+            <BookSwiper
+              books={challenges.discountBooks}
+              width="w-40"
+              height="h-48"
+            />
+          ) : null}
         </DiscountContainer>
         <ChallengeContainer>
           {challenges
