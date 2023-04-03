@@ -15,7 +15,7 @@ const FirstItemContainer = styled.div`
   ${tw`flex flex-row h-80 space-x-2 p-2 items-center`}
 `;
 
-function BookList({ width, height, books }) {
+function BookList({ width, height, books, fromHome }) {
   if (books.length === 0) {
     return <p>책 내역이 없습니다.</p>; // or return an empty component like <></>
   }
@@ -30,7 +30,7 @@ function BookList({ width, height, books }) {
     <BookListWrapper>
       {books
         ? books.map((book, index) => {
-            if (index === 0) {
+            if (index === 0 && fromHome) {
               return (
                 <FirstItemContainer key={book.bookId}>
                   <BookBadge book={book} index={index}>

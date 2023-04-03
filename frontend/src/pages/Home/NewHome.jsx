@@ -83,6 +83,7 @@ function NewHome() {
                       books={challenge.bookList}
                       width="w-40"
                       height="h-48"
+                      fromHome="true"
                     />
                   </div>
                 );
