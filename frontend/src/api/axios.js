@@ -17,8 +17,6 @@ const axiosApi = (url, options) => {
   return instance;
 };
 
-const { resetUser } = userStore((state) => state);
-
 //기본 요청에 사용할 인스턴스
 export const defaultApi = axiosApi(BASE_URL);
 
@@ -79,7 +77,6 @@ authApi.interceptors.response.use(
           console.log(error);
           localStorage.clear();
           removeCookie('refreshToken');
-          resetUser();
         })
         .then((response) => {
           window.location.href = '/';

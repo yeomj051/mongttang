@@ -16,6 +16,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import axios from 'axios';
 import BookList from 'components/common/BookList';
+import { Link } from 'react-router-dom';
 
 const CTWrapper = styled.div`
   ${tw`flex justify-center m-0 mt-[2%]`}
@@ -27,6 +28,10 @@ const BodyContainer = styled.div`
 
 const ChallengeContainer = styled.div`
   ${tw`pt-[10%]`}
+`;
+
+const TitleContainer = styled.div`
+  ${tw`flex items-baseline space-x-1`}
 `;
 
 const TitleWrapper = styled.p`
@@ -65,7 +70,15 @@ function NewHome() {
                 // console.log(challenge);
                 return (
                   <div key={index}>
-                    <TitleWrapper>{challenge.challengeTitle}</TitleWrapper>
+                    <TitleContainer>
+                      <TitleWrapper>{challenge.challengeTitle}</TitleWrapper>
+                      <Link
+                        to={`/challenge/${challenge.challengeId}`}
+                        style={{ fontSize: 'small' }}
+                      >
+                        더 많은 동화 보러가기 →
+                      </Link>
+                    </TitleContainer>
                     <BookList
                       books={challenge.bookList}
                       width="w-40"

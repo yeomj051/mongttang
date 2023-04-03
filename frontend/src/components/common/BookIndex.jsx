@@ -19,37 +19,38 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   },
 }));
 
-const TextWrapper = styled('div')`
-  display: flex;
-  justify-content: space-between;
-`;
+const TextWrapper = styled('div')(({ margin }) => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  marginTop: `${margin}`,
+}));
 
-function BookIndex({ book }) {
+function BookIndex({ book, margin }) {
   return (
     <div>
-      <Box width={book.total}>
-        <TextWrapper>
+      <Box width={150}>
+        <TextWrapper margin={margin}>
           <p>조회수</p>
           <p>{book.numOfViews}</p>
         </TextWrapper>
         <BorderLinearProgress variant="determinate" value={book.numOfViews} />
       </Box>
-      <Box width={100}>
-        <TextWrapper>
+      <Box width={150}>
+        <TextWrapper margin={margin}>
           <p>좋아요 수</p>
           <p>{book.numOfLike}</p>
         </TextWrapper>
         <BorderLinearProgress variant="determinate" value={book.numOfLike} />
       </Box>
-      <Box width={100}>
-        <TextWrapper>
+      <Box width={150}>
+        <TextWrapper margin={margin}>
           <p>댓글 수</p>
           <p>{book.numOfComment}</p>
         </TextWrapper>
         <BorderLinearProgress variant="determinate" value={book.numOfComment} />
       </Box>
-      <Box width={100}>
-        <TextWrapper>
+      <Box width={150}>
+        <TextWrapper margin={margin}>
           <p>총점 : </p>
           <p>{book.total}</p>
         </TextWrapper>

@@ -9,7 +9,10 @@ const BookListWrapper = styled.div`
 `;
 
 const BookItemContainer = styled.div`
-  ${tw`flex flex-row`}
+  ${tw`flex flex-col items-center mr-2`}
+`;
+const FirstItemContainer = styled.div`
+  ${tw`flex flex-row h-80 space-x-2 p-2 items-center`}
 `;
 
 function BookList({ width, height, books }) {
@@ -26,14 +29,27 @@ function BookList({ width, height, books }) {
   return (
     <BookListWrapper>
       {books
-        ? books.map((book) => (
-            <BookItemContainer key={book.bookId}>
-              <BookBadge book={book}>
-                <BookListItem book={book} width={width} height={height} />
-              </BookBadge>
-              <BookIndex book={book} />
-            </BookItemContainer>
-          ))
+        ? books.map((book, index) => {
+            if (index === 0) {
+              return (
+                <FirstItemContainer key={book.bookId}>
+                  <BookBadge book={book} index={index}>
+                    <BookListItem book={book} width="w-60" height="h-72" />
+                  </BookBadge>
+                  <BookIndex book={book} margin={'10px'} />
+                </FirstItemContainer>
+              );
+            } else {
+              return (
+                <BookItemContainer key={book.bookId}>
+                  <BookBadge book={book} index={index}>
+                    <BookListItem book={book} width={width} height={height} />
+                  </BookBadge>
+                  <BookIndex book={book} margin={0} />
+                </BookItemContainer>
+              );
+            }
+          })
         : ''}
     </BookListWrapper>
   );

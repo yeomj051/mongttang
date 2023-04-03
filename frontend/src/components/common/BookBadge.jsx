@@ -16,8 +16,8 @@ const grey = {
   900: '#24292f',
 };
 
-const StyledBadge = styled(Badge)(
-  ({ theme, rankstyle }) => `
+const FirstBadge = styled(Badge)(
+  ({ theme }) => `
   //기본 스타일
   box-sizing: border-box;
   margin: 0;
@@ -34,7 +34,49 @@ const StyledBadge = styled(Badge)(
     z-index: auto;
     position: absolute;
     top: 0;
-    right: ${rankstyle}px;
+    right: 15px;
+    min-width: 50px;
+    height: 50px;
+    line-height: 35px;
+    // font-family: 'Noto Sans KR', sans-serif;
+    color: #4A4950;
+    font-weight: 800;
+    font-size: 15px;
+    white-space: nowrap;
+    text-align: center;
+    border-radius: 40px;
+    border: 7px;
+    border-style: solid;
+    border-color: #A9DCCD;
+    background: #FAF7F5;
+    box-shadow: 0px 4px 16px ${
+      theme.palette.mode === 'dark' ? grey[900] : grey[300]
+    };
+    transform: translate(50%, -50%);
+    transform-origin: 100% 0;
+  }
+  `,
+);
+
+const StyledBadge = styled(Badge)(
+  ({ theme }) => `
+  //기본 스타일
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  font-variant: tabular-nums;
+  list-style: none;
+  position: relative;
+  display: inline-block;
+  line-height: 1;
+
+  //뱃지의 위치를 조정하는 부분
+  & .${badgeClasses.badge} {
+    z-index: auto;
+    position: absolute;
+    top: 0;
+    right: 170px;
     min-width: 50px;
     height: 50px;
     line-height: 35px;
@@ -75,19 +117,10 @@ const StyledBadge = styled(Badge)(
 //   );
 // }
 
-export default function BookBadge({ children, book }) {
-  const rankBadge = '1등';
+export default function BookBadge({ children, book, index }) {
+  const rankBadge = '2등';
 
-  if (rankBadge === '1등')
-    return (
-      <StyledBadge badgeContent={rankBadge} rankstyle={15}>
-        {children}
-      </StyledBadge>
-    );
-  else
-    return (
-      <StyledBadge badgeContent={rankBadge} rankstyle={170}>
-        {children}
-      </StyledBadge>
-    );
+  if (index === 0)
+    return <FirstBadge badgeContent={'1등'}>{children}</FirstBadge>;
+  else return <StyledBadge badgeContent={rankBadge}>{children}</StyledBadge>;
 }
