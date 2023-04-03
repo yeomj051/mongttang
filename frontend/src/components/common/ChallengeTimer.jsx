@@ -17,7 +17,7 @@ const TimerWrapper = styled.div`
 
 function ChallengeTimer({ endDate }) {
   // const date = new Date(`${endDate}`).getTime();
-  const date = new Date('2023-04-01T10:27:14.153045').getTime(); //더미 데이터
+  const date = new Date('2023-04-07').getTime(); //더미 데이터
 
   return (
     <TimerWrapper>

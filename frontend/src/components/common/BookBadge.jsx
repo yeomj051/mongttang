@@ -17,7 +17,7 @@ const grey = {
 };
 
 const StyledBadge = styled(Badge)(
-  ({ theme, rankStyle }) => `
+  ({ theme, rankstyle }) => `
   //기본 스타일
   box-sizing: border-box;
   margin: 0;
@@ -34,7 +34,7 @@ const StyledBadge = styled(Badge)(
     z-index: auto;
     position: absolute;
     top: 0;
-    right: ${rankStyle}px;
+    right: ${rankstyle}px;
     min-width: 50px;
     height: 50px;
     line-height: 35px;
@@ -75,18 +75,18 @@ const StyledBadge = styled(Badge)(
 //   );
 // }
 
-export default function BookBadge({ children, rank }) {
+export default function BookBadge({ children, book }) {
   const rankBadge = '1등';
 
   if (rankBadge === '1등')
     return (
-      <StyledBadge badgeContent={rankBadge} rankStyle={15}>
+      <StyledBadge badgeContent={rankBadge} rankstyle={15}>
         {children}
       </StyledBadge>
     );
   else
     return (
-      <StyledBadge badgeContent={rankBadge} rankStyle={170}>
+      <StyledBadge badgeContent={rankBadge} rankstyle={170}>
         {children}
       </StyledBadge>
     );

@@ -63,7 +63,7 @@ authApi.interceptors.response.use(
         })
         .then((response) => {
           const { accessToken } = response.data;
-          console.log(response);
+          // console.log(response);
           localStorage.setItem('accessToken', accessToken);
           config.headers.Authorization = `Bearer ${accessToken}`;
 
@@ -71,6 +71,7 @@ authApi.interceptors.response.use(
           // console.log(config);
           return authApi(config);
         });
+      //에러처리 추가(로그아웃)
     }
   },
 );

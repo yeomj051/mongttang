@@ -17,13 +17,18 @@ function BookList({ width, height, books }) {
     return <p>책 내역이 없습니다.</p>; // or return an empty component like <></>
   }
 
+  //내림차순 정렬(높은것부터 앞으로 오도록)
+  books.sort((a, b) => {
+    return b.total - a.total;
+  });
+
   // console.log(books);
   return (
     <BookListWrapper>
       {books
         ? books.map((book) => (
             <BookItemContainer key={book.bookId}>
-              <BookBadge rank={book.total}>
+              <BookBadge book={book}>
                 <BookListItem book={book} width={width} height={height} />
               </BookBadge>
               <BookIndex book={book} />

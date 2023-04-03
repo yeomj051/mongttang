@@ -27,7 +27,7 @@ const TextWrapper = styled('div')`
 function BookIndex({ book }) {
   return (
     <div>
-      <Box width={100}>
+      <Box width={book.total}>
         <TextWrapper>
           <p>조회수</p>
           <p>{book.numOfViews}</p>
@@ -47,6 +47,12 @@ function BookIndex({ book }) {
           <p>{book.numOfComment}</p>
         </TextWrapper>
         <BorderLinearProgress variant="determinate" value={book.numOfComment} />
+      </Box>
+      <Box width={100}>
+        <TextWrapper>
+          <p>총점 : </p>
+          <p>{book.total}</p>
+        </TextWrapper>
       </Box>
     </div>
   );
