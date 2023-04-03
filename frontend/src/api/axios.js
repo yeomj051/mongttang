@@ -2,8 +2,9 @@
    defaultApi.get(API, body);
 */
 import axios from 'axios';
-import { getCookie } from 'utils/Cookie';
+import { getCookie, removeCookie } from 'utils/Cookie';
 import requests from './config';
+import { userStore } from 'store/userStore';
 
 const BASE_URL = requests.base_url;
 
@@ -15,6 +16,8 @@ const axiosApi = (url, options) => {
 
   return instance;
 };
+
+const { resetUser } = userStore((state) => state);
 
 //기본 요청에 사용할 인스턴스
 export const defaultApi = axiosApi(BASE_URL);
@@ -70,6 +73,16 @@ authApi.interceptors.response.use(
           //새로 받은 토큰으로 로그인 재요청
           // console.log(config);
           return authApi(config);
+        })
+        .catch((error) => {
+          //리프레시 토큰 재발급마저 안된 경우
+          console.log(error);
+          localStorage.clear();
+          removeCookie('refreshToken');
+          resetUser();
+        })
+        .then((response) => {
+          window.location.href = '/';
         });
       //에러처리 추가(로그아웃)
     }
