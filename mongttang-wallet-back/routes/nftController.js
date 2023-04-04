@@ -1,5 +1,5 @@
 import express from "express";
-import { withdraw } from "../api/blockchain.js";
+import { withdraw, makeNFT } from "../api/blockchain.js";
 import { create } from "ipfs-http-client";
 import multer from "multer";
 
@@ -46,6 +46,9 @@ router.post("/ipfs", upload.array("images", 20), async (request, response) => {
     const metadataCid = await ipfs.add(jsonBuffer);
     console.log(metadata);
     console.log(metadataCid);
+    console.log(metadataCid.cid.cid);
+    console.log(metadataCid.cid.cid.toString());
+    // makeNFT(body.address, `https://ipfs.io/ipfs/${metadataCid.cid.cid.toString()}`);
 
     // Return the CIDs as a response to the client
     response.statusCode = 200;
