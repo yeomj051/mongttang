@@ -76,11 +76,15 @@ function BookDetail() {
   const userId = localStorage.getItem('userId');
 
   useEffect(() => {
-    authApi(requests.GET_BOOK_DETAIL(userId, bookId)).then((res) => {
-      setBook(res.data.bookDetail);
-      setIsLiked(res.data.bookDetail.liked);
-      setIsInterested(res.data.bookDetail.interested);
-    });
+    authApi(requests.GET_BOOK_DETAIL(userId, bookId))
+      .then((res) => {
+        setBook(res.data.bookDetail);
+        setIsLiked(res.data.bookDetail.liked);
+        setIsInterested(res.data.bookDetail.interested);
+      })
+      .catch(() => {
+        navigate('/error/400');
+      });
   }, []);
 
   const [isLiked, setIsLiked] = useState(false);
