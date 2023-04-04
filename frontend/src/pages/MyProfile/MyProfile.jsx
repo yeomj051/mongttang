@@ -129,7 +129,7 @@ function MyProfile() {
             })
           : null}
       </CompletedBookList>
-      <InCompleteBookList>
+      {/* <InCompleteBookList>
         <span className="text-[40px]">작업중인 동화</span>
         {inCompleteBooks.length !== 0
           ? inCompleteBooks.map((book) => {
@@ -139,11 +139,12 @@ function MyProfile() {
                   width="w-[180px]"
                   height="h-[250px]"
                   book={book}
+                  incomplete={true}
                 />
               );
             })
           : null}
-      </InCompleteBookList>
+      </InCompleteBookList> */}
       <LikedBookList>
         <span className="text-[40px]">관심목록</span>
         {interestBooks.length !== 0
