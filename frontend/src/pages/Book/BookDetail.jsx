@@ -145,7 +145,6 @@ function BookDetail() {
     } catch (error) {}
   };
 
-  console.log(book);
   return (
     <BodyContainer>
       {book ? (
@@ -156,7 +155,10 @@ function BookDetail() {
               <TitleWrapper>{book.bookTitle}</TitleWrapper>
               <ArtistWrapper>
                 <ArtistImgWrapper>
-                  <ProfileImg userImg={book.artistProfileImg} />
+                  <ProfileImg
+                    userId={book.artistId}
+                    userImg={book.artistProfileImg}
+                  />
                 </ArtistImgWrapper>
                 {book.artistNickname}
               </ArtistWrapper>
