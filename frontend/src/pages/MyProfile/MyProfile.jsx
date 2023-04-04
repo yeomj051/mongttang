@@ -7,7 +7,6 @@ import { defaultApi, authApi } from 'api/axios';
 
 import UserIcon from 'assets/images/UserIcon.svg';
 import ProfileImg2 from 'components/common/ProfileImg2';
-import BookList from 'components/common/BookList';
 import EditProfileIcon from 'assets/icons/pencil03.svg';
 import BookListItem from 'components/common/BookListItem';
 
@@ -122,7 +121,7 @@ function MyProfile() {
                 <BookListItem
                   key={book.bookId}
                   width="w-[180px]"
-                  height="h-[250px]"
+                  height="h-[240px]"
                   book={book}
                 />
               );
