@@ -18,6 +18,7 @@ router.post("/ipfs", upload.array("images", 20), async (request, response) => {
   try {
     // Extract the image data from the request
     const imageData = request.files.map((file) => file.buffer);
+    const body = request.body;
 
     // Add the received image data to IPFS and get their CIDs
     console.log("업로드 시도중");
@@ -26,10 +27,28 @@ router.post("/ipfs", upload.array("images", 20), async (request, response) => {
     const cidStrings = cids.map((cid) => cid.cid.toString());
     console.log(`Images added to IPFS with CIDs ${cidStrings}`);
 
+    const metadata = {
+      name: `${body.title}`,
+      image: `${cidStrings[0]}`,
+      description: "몽땅연필에서 제작된 동화입니다.",
+      attributes: [],
+    };
+
+    for (let i = 0; i < cidStrings.length; i++) {
+      metadata.attributes.push({
+        trait_type: `page : ${i + 1}`,
+        image: `https://ipfs.io/ipfs/${cidStrings[i]}`,
+      });
+    }
+
+    const metadataCid = ipfs.add(metadata);
+    console.log("metadata : " + metadata);
+    console.log("metadataCid : " + metadataCid);
+
     // Return the CIDs as a response to the client
     response.statusCode = 200;
     response.setHeader("Content-Type", "text/plain");
-    response.end(cidStrings.join(","));
+    response.end(cidStrings.join(",") + "," + metadataCid);
   } catch (error) {
     console.error("Error adding images to IPFS:", error);
     response.statusCode = 500;
