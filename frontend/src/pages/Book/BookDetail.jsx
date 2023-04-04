@@ -10,6 +10,7 @@ import CommentForm from 'components/common/CommentForm';
 import { userStore } from 'store/userStore';
 import LikeButtonFill from 'assets/icons/LikeButtonFill.svg';
 import LikeButtonEmpty from 'assets/icons/LikeButtonEmpty.svg';
+import ProfileImg from 'components/common/ProfileImg';
 
 const BodyContainer = styled.div`
   ${tw`flex flex-col items-center pt-[5%]`}
@@ -32,30 +33,36 @@ const MainInfoContainer = styled.div`
 const TitleContainer = styled.div`
   ${tw`flex justify-between text-3xl pb-[2%]`}
 `;
-const TitleWrapper = styled.div``;
+const TitleWrapper = styled.div`
+  ${tw`pr-[3%]`}
+`;
 const ArtistWrapper = styled.div`
-  ${tw`flex items-end text-xl`}
+  ${tw`flex flex-col justify-end items-center text-sm`}
 `;
 const ArtistImgWrapper = styled.div``;
 
 const ContentWrapper = styled.div`
   ${tw`pb-[2%]`}
   ${css`
-    // white-space: pre-line; //줄바꿈 옵션(들여쓰기 x)
+    white-space: pre-line;
   `}
 `;
 const SubInfoContainer = styled.div`
-  ${tw`flex justify-end space-x-2 pt-2`}
+  ${tw`flex justify-end items-center space-x-1 pt-2`}
 `;
 const PriceWrapper = styled.div`
-  ${tw`flex justify-end`}
+  ${tw`flex items-center`}
 `;
-const LikeBtnWrapper = styled.div`
+const InterestBtnWrapper = styled.div`
   ${tw`w-fit h-[24px] p-1 text-sub-bold bg-btnBlack text-white rounded-full flex justify-center items-center shadow cursor-pointer`}
 `;
 
+const LikeWrapper = styled.div`
+  ${tw`flex items-center`}
+`;
+
 const ServiceContainer = styled.div`
-  ${tw`flex justify-end space-x-2 pt-2`}
+  ${tw`flex justify-end items-center space-x-2 pt-2`}
 `;
 
 const LinkWrapper = styled.div`
@@ -137,6 +144,8 @@ function BookDetail() {
       });
     } catch (error) {}
   };
+
+  console.log(book);
   return (
     <BodyContainer>
       {book ? (
@@ -146,21 +155,21 @@ function BookDetail() {
             <TitleContainer>
               <TitleWrapper>{book.bookTitle}</TitleWrapper>
               <ArtistWrapper>
-                <ArtistImgWrapper />
+                <ArtistImgWrapper>
+                  <ProfileImg userImg={book.artistProfileImg} />
+                </ArtistImgWrapper>
                 {book.artistNickname}
               </ArtistWrapper>
             </TitleContainer>
             <ContentWrapper>{book.bookSummary}</ContentWrapper>
             <SubInfoContainer>
-              <LikeBtnWrapper>
-                {!isInterested ? (
-                  <button onClick={interestBook}>관심목록 추가</button>
-                ) : (
-                  <button onClick={uninterestBook}>관심 취소</button>
-                )}
-              </LikeBtnWrapper>
-              <LikesWrapper>{}</LikesWrapper>
-              <div>
+              <PriceWrapper>
+                <PriceImgWrapper>
+                  <img src={Coin} alt="coin" />
+                </PriceImgWrapper>
+                {book.price}
+              </PriceWrapper>
+              <LikeWrapper>
                 {!isLiked ? (
                   <button onClick={likeBook}>
                     <img src={LikeButtonEmpty} alt="" />
@@ -170,16 +179,17 @@ function BookDetail() {
                     <img src={LikeButtonFill} alt="" />
                   </button>
                 )}
-              </div>
+              </LikeWrapper>
               <LikesWrapper>{book.numOfLike}</LikesWrapper>
             </SubInfoContainer>
             <ServiceContainer>
-              <PriceWrapper>
-                <PriceImgWrapper>
-                  <img src={Coin} alt="coin" />
-                </PriceImgWrapper>
-                {book.price}
-              </PriceWrapper>
+              <InterestBtnWrapper>
+                {!isInterested ? (
+                  <button onClick={interestBook}>관심목록 추가</button>
+                ) : (
+                  <button onClick={uninterestBook}>관심 취소</button>
+                )}
+              </InterestBtnWrapper>
               <LinkWrapper>
                 <Button
                   title="동화 보러가기 →"
