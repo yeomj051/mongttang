@@ -9,16 +9,6 @@ RUN npm install --silent --production
 
 # 소스를 작업폴더로 복사하고 빌드
 COPY . /usr/src/app
-RUN npm run build
-FROM nginx:1.13.9-alpine
 
-# nginx의 기본 설정을 삭제하고 앱에서 설정한 파일을 복사
-RUN rm -rf /etc/nginx/conf.d
-COPY default.conf /etc/nginx/conf.d/default.conf
-
-# 위에서 생성한 앱의 빌드산출물을 nginx의 샘플 앱이 사용하던 폴더로 이동
-COPY --from=builder /usr/src/app/dist /usr/share/nginx/html
-
-# 80포트 오픈하고 nginx 실행
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 4000
+CMD [ "node", "app.js"]
