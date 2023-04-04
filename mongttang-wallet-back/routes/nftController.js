@@ -48,7 +48,10 @@ router.post("/ipfs", upload.array("images", 20), async (request, response) => {
     console.log(metadataCid);
     console.log(metadataCid.cid.cid);
     console.log(metadataCid.cid.cid.toString());
-    // makeNFT(body.address, `https://ipfs.io/ipfs/${metadataCid.cid.cid.toString()}`);
+    makeNFT(
+      body.address,
+      `https://ipfs.io/ipfs/${metadataCid.cid.cid.toString()}`
+    );
 
     // Return the CIDs as a response to the client
     response.statusCode = 200;
