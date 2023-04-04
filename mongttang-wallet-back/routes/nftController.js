@@ -41,7 +41,9 @@ router.post("/ipfs", upload.array("images", 20), async (request, response) => {
       });
     }
 
-    const metadataCid = await ipfs.add(metadata.buffer);
+    const jsonString = JSON.stringify(metadata);
+    const jsonBuffer = Buffer.from(jsonString);
+    const metadataCid = await ipfs.add(jsonBuffer);
     console.log(metadata);
     console.log(metadataCid);
 
