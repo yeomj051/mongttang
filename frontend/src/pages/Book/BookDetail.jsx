@@ -28,7 +28,7 @@ const BookImgWrapper = styled.div`
     `}
 `;
 const MainInfoContainer = styled.div`
-  ${tw`flex w-2/3 flex-col m-0 p-[2%]`}
+  ${tw`flex w-2/3 flex-col justify-evenly m-0 p-[2%]`}
 `;
 const TitleContainer = styled.div`
   ${tw`flex justify-between text-3xl pb-[2%]`}
@@ -42,13 +42,13 @@ const ArtistWrapper = styled.div`
 const ArtistImgWrapper = styled.div``;
 
 const ContentWrapper = styled.div`
-  ${tw`pb-[2%]`}
+  ${tw`text-xl`}
   ${css`
     white-space: pre-line;
   `}
 `;
 const SubInfoContainer = styled.div`
-  ${tw`flex justify-end items-center space-x-1 pt-2`}
+  ${tw`flex justify-end items-center space-x-1`}
 `;
 const PriceWrapper = styled.div`
   ${tw`flex items-center`}

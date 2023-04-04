@@ -6,11 +6,6 @@ import { useNavigate } from 'react-router-dom';
 const BodyContainer = styled.div`
   ${tw`flex flex-col justify-center items-center h-screen w-screen`}
 `;
-const ImgWrapper = styled.div`
-  width: 256px;
-  // height: 84.73px;
-  overflow: hidden;
-`;
 
 const BtnContainer = styled.div`
   ${tw`flex space-x-1`}
