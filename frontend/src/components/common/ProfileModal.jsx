@@ -13,18 +13,18 @@ import EditBtn from '../../assets/icons/EditBtn.svg';
 import useOutsideClick from 'hooks/useOutsideClick';
 
 const ModalOverlay = styled.div`
-  ${tw`flex items-center justify-center z-50 bg-neutral-400/80 h-full w-full fixed`}
+  ${tw`flex items-center justify-end z-50 h-2/3 w-full top-[8vh] right-[2vw] fixed`}
 `;
 
 const ModalWrapper = styled.div`
-  ${tw`bg-white flex flex-col items-center absolute border-solid rounded-xl h-auto w-auto shadow mt-[50%] mb-[50%] font-sans`}
+  ${tw`bg-white flex flex-col items-center absolute border-solid rounded-2xl h-auto w-auto shadow mt-[50%] mb-[50%] font-sans`}
 `;
 
 const ContentContainer = styled.div`
-  ${tw`flex flex-col justify-center items-center p-1 text-lg `}
+  ${tw`flex flex-col justify-center items-center p-0.5 pt-0 text-lg `}
 `;
 const ProfileContainer = styled.div`
-  ${tw`flex flex-col justify-center items-center p-1 font-edu`}
+  ${tw`flex flex-col justify-center items-center p-1 pt-0 font-edu`}
 `;
 
 const ProfileImgWrapper = styled.div``;
@@ -46,17 +46,17 @@ const BtnContainer = styled.div`
 `;
 
 const ProfileBtnContainer = styled.div`
-  ${tw`m-1 p-0`}
+  ${tw`m-1 p-0 mb-0`}
 `;
 const WalletBtnContainer = styled.div`
-  ${tw`m-1 p-0 pl-1`}
+  ${tw`m-1 p-0 pl-1 mb-0`}
 `;
 const EditBtnContainer = styled.div`
-  ${tw`m-1 p-0`}
+  ${tw`m-1 p-0 mb-0`}
 `;
 
 const BtnWrapper = styled.div`
-  ${tw`flex flex-col m-1 py-1`}
+  ${tw`flex flex-col py-2 w-full bg-[#D6D3CE] text-[#626069] rounded-b-2xl`}
 `;
 
 function ProfileModal({ onClose }) {
@@ -133,7 +133,7 @@ function ProfileModal({ onClose }) {
       <ModalWrapper ref={modalRef}>
         <ProfileContainer>
           <ProfileImgWrapper>
-            <ProfileImg2 userImg={userImg} />
+            <ProfileImg2 userImg={userImg} onClick={openEdit} />
           </ProfileImgWrapper>
           <ProfileInfoContainer>
             <UserNameWrapper>{userNickname}님</UserNameWrapper>
