@@ -1,6 +1,7 @@
 import express from "express";
 import { withdraw } from "../api/blockchain.js";
 import { create } from "ipfs-http-client";
+import multer from "multer";
 
 // Node 에서는 require 이 뒤에 .js 를 붙이지 않아도 된다.
 
@@ -11,32 +12,29 @@ const ipfs = create({
   port: 5001,
   protocol: "http",
 });
+const upload = multer();
 
-router.post("/ipfs", (request, response) => {
-  let imageData = Buffer.from([]);
-  console.log(request.data);
-  request.on("data", (chunk) => {
-    imageData = Buffer.concat([imageData, chunk]);
-  });
+router.post("/ipfs", upload.array("images", 20), async (request, response) => {
+  try {
+    // Extract the image data from the request
+    const imageData = request.files.map((file) => file.buffer);
 
-  request.on("end", async () => {
-    try {
-      // Add the received image data to IPFS and get its CID
-      console.log("업로드 시도중");
-      console.log(Buffer.from(imageData));
-      const { cid } = await ipfs.add(Buffer.from(imageData));
-      console.log(`Image added to IPFS with CID ${cid}`);
+    // Add the received image data to IPFS and get their CIDs
+    console.log("업로드 시도중");
+    const cidPromises = imageData.map((data) => ipfs.add(data));
+    const cids = await Promise.all(cidPromises);
+    const cidStrings = cids.map((cid) => cid.cid.toString());
+    console.log(`Images added to IPFS with CIDs ${cidStrings}`);
 
-      // Return the CID as a response to the client
-      response.statusCode = 200;
-      response.setHeader("Content-Type", "text/plain");
-      response.end(cid);
-    } catch (error) {
-      console.error("Error adding image to IPFS:", error);
-      response.statusCode = 500;
-      response.end("Error adding image to IPFS");
-    }
-  });
+    // Return the CIDs as a response to the client
+    response.statusCode = 200;
+    response.setHeader("Content-Type", "text/plain");
+    response.end(cidStrings.join(","));
+  } catch (error) {
+    console.error("Error adding images to IPFS:", error);
+    response.statusCode = 500;
+    response.end("Error adding images to IPFS");
+  }
 });
 
 router.post("/withdraw", (request, response) => {
