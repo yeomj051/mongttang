@@ -29,7 +29,7 @@ router.post("/ipfs", upload.array("images", 20), async (request, response) => {
 
     const metadata = {
       name: `${body.title}`,
-      image: `${cidStrings[0]}`,
+      image: `https://ipfs.io/ipfs/${cidStrings[0]}`,
       description: "몽땅연필에서 제작된 동화입니다.",
       attributes: [],
     };
