@@ -126,9 +126,11 @@ function NavBar() {
               />
             </Link>
           )}
-          <Link to="/myprofile">
-            <ProfileImg userImg={userImg} className="justify-end" />
-          </Link>
+          <ProfileImg
+            userImg={userImg}
+            userId={userId}
+            className="justify-end"
+          />
         </IconWrapper>
       </Container>
       {isModalOpen ? <LogoutModal onClose={onClose} /> : null}
