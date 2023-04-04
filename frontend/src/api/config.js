@@ -7,13 +7,13 @@ const requests = {
 
   //카카오 소셜로그인 URL
   KAKAO_LOGIN:
-    // 'https://j8a308.p.ssafy.io/api/oauth2/authorize/kakao?redirect_uri=https://j8a308.p.ssafy.io/oauth',
-    'https://j8a308.p.ssafy.io/api/oauth2/authorize/kakao?redirect_uri=http://localhost:3000/oauth',
+    'https://j8a308.p.ssafy.io/api/oauth2/authorize/kakao?redirect_uri=https://j8a308.p.ssafy.io/oauth',
+  // 'https://j8a308.p.ssafy.io/api/oauth2/authorize/kakao?redirect_uri=http://localhost:3000/oauth',
 
   //구글 소셜로그인 URL
   GOOGLE_LOGIN:
-    // 'https://j8a308.p.ssafy.io/api/oauth2/authorize/google?redirect_uri=https://j8a308.p.ssafy.io/oauth',
-    'https://j8a308.p.ssafy.io/api/oauth2/authorize/google?redirect_uri=http://localhost:3000/oauth',
+    'https://j8a308.p.ssafy.io/api/oauth2/authorize/google?redirect_uri=https://j8a308.p.ssafy.io/oauth',
+  // 'https://j8a308.p.ssafy.io/api/oauth2/authorize/google?redirect_uri=http://localhost:3000/oauth',
 
   //회원정보 수정
   PATCH_USER_NICKNAME(userId, code) {
@@ -195,6 +195,11 @@ const requests = {
   //챌린지 목록 조회(관리자용)
   GET_CHALLENGE_ADMIN() {
     return `/api/admin/challenge`;
+  },
+
+  //지갑 등록
+  POST_WALLET(userId) {
+    return `/api/user/wallet/${userId}`;
   },
 
   //챌린지 등록

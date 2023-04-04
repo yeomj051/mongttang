@@ -1,66 +1,67 @@
-import React, { useRef, useState } from 'react';
-// Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
-
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
+import { Swiper, SwiperSlide } from 'swiper/react'; // basic
+import { Autoplay, EffectCoverflow, Navigation, Pagination } from 'swiper';
+import 'swiper/css'; //basic
 import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import '../../components/common/swiperStyles.css';
+import { useState } from 'react';
 
-import './styles.css';
+import tw, { styled } from 'twin.macro';
 
-// import required modules
-import { Autoplay, Pagination, Navigation } from 'swiper';
-import { useNavigate } from 'react-router';
+const ImgWrapper = styled.div`
+  ${tw`w-fit h-fit`}
+`;
 
-export default function BookSwiper({ books, width, height }) {
-  const userId = localStorage.getItem('userId');
-  const navigate = useNavigate();
-  const progressCircle = useRef(null);
-  const progressContent = useRef(null);
-  const onAutoplayTimeLeft = (s, time, progress) => {
-    progressCircle.current.style.setProperty('--progress', 1 - progress);
-    progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
-  };
+// SwiperCore.use([Navigation, Pagination]);
 
+export default function BookSwiper({ width, height }) {
+  const [books, setBooks] = useState([]);
+
+  fetch('https://jsonplaceholder.typicode.com/photos')
+    .then((response) => response.json())
+    .then((json) => {
+      setBooks(json.slice(0, 50));
+    });
   return (
-    <div>
-      <Swiper
-        spaceBetween={30}
-        centeredSlides={true}
-        autoplay={{
-          delay: 2500,
-          disableOnInteraction: false,
-        }}
-        pagination={{
-          clickable: true,
-        }}
-        navigation={true}
-        modules={[Autoplay, Pagination, Navigation]}
-        onAutoplayTimeLeft={onAutoplayTimeLeft}
-        className="mySwiper"
-      >
-        {books
-          ? books.map((book, index) => {
-              return (
-                <SwiperSlide key={index}>
-                  <img
-                    src={book.coverImg}
-                    onClick={() => navigate(`/books/${userId}/${book.bookId}`)}
-                    className={`${width} ${height}`}
-                    alt=""
-                  />
-                </SwiperSlide>
-              );
-            })
-          : null}
-        <div className="autoplay-progress" slot="container-end">
-          <svg viewBox="0 0 48 48" ref={progressCircle}>
-            <circle cx="24" cy="24" r="40"></circle>
-          </svg>
-          <span ref={progressContent}></span>
-        </div>
-      </Swiper>
-    </div>
+    <Swiper
+      effect={'coverflow'}
+      centeredSlides={true}
+      grabCursor={true}
+      slidesPerView={3}
+      scrollbar={{ draggable: true }}
+      modules={[Autoplay, EffectCoverflow, Navigation]}
+      navigation={true}
+      pagination={{ clickable: true }}
+      autoplay={{
+        delay: 2500,
+        disableOnInteraction: false,
+      }}
+      coverflowEffect={{
+        rotate: 10, // 회전각도
+        stretch: 0,
+        depth: 100, // 깊이감도
+        modifier: 2, //
+        slideShadows: true, //선택한 부분 밝게 나머지는 그늘지게 해준다.
+      }}
+      style={{
+        width: '80%',
+      }}
+    >
+      <div>
+        {books.map((book, index) => (
+          <SwiperSlide key={index}>
+            <ImgWrapper>
+              <img
+                src={book.url}
+                alt=""
+                style={{
+                  borderRadius: 10,
+                }}
+              />
+            </ImgWrapper>
+          </SwiperSlide>
+        ))}
+      </div>
+    </Swiper>
   );
 }
