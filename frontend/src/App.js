@@ -41,6 +41,7 @@ import ChallengeDetail from 'pages/Challenge/ChallengeDetail';
 import FlipViewer from 'pages/Book/FlipViewer';
 import NewHome from 'pages/Home/NewHome';
 import NewPrevChallenge from 'pages/Challenge/NewPrevChallenge';
+import ErrorPage from 'pages/Error/ErrorPage';
 const queryClient = new QueryClient();
 function App() {
   const [userId, setUserId] = useState();
@@ -105,6 +106,7 @@ function App() {
                 path="/incompletebook/:userId/:bookId"
                 element={<BookEditor />}
               />
+              <Route path="/*" element={<ErrorPage />} />
             </Routes>
           </BrowserRouter>
         </QueryClientProvider>
