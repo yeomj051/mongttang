@@ -42,13 +42,13 @@ router.post("/ipfs", upload.array("images", 20), async (request, response) => {
     }
 
     const metadataCid = ipfs.add(metadata);
-    console.log("metadata : " + metadata.toString());
-    console.log("metadataCid : " + metadataCid.toString());
+    console.log(metadata);
+    console.log(metadataCid);
 
     // Return the CIDs as a response to the client
     response.statusCode = 200;
     response.setHeader("Content-Type", "text/plain");
-    response.end(cidStrings.join(",") + "," + metadataCid.toString());
+    response.end(cidStrings.join(","));
   } catch (error) {
     console.error("Error adding images to IPFS:", error);
     response.statusCode = 500;
