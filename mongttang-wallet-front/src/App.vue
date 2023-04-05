@@ -12,7 +12,7 @@ export default {
     console.log(privateKey);
     this.$store.commit("SET_PRIVATEKEY", privateKey);
 
-    getAddress(encodeURIComponent(privateKey))
+    getAddress(privateKey)
       .then((req) => {
         console.log(req.data);
         this.$store.commit("SET_ADDRESS", req.data);
