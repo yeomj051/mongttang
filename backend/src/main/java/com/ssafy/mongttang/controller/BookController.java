@@ -466,4 +466,32 @@ public class BookController {
         return new ResponseEntity<>(resultMap, status);
     }
 
+    @ApiOperation(value = "nft토큰 저장", notes = "생성된 nft토큰 번호를 저장한다.", response = Map.class)
+    @PostMapping("/token/{userId}")
+    public ResponseEntity<Map<String,Object>> saveToken(@ApiParam(value = "회원 아이디", required = true, example = "0") @PathVariable int userId,
+                                                        @ApiParam(value = "동화 아이디", required = true, example = "0") @RequestParam int bookId,
+                                                        @ApiParam(value = "NFT 토큰", required = true, example = "0") @RequestParam int token, Principal principal){
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(resultMap, status);
+        }
+
+        Book book = bookService.saveToken(bookId,token);
+
+        if(book == null){
+            resultMap.put(MESSAGE, FAIL);
+            status = HttpStatus.BAD_REQUEST;
+
+        }else{
+            resultMap.put(MESSAGE,SUCCESS);
+            resultMap.put("bookId",book.getBookId());
+            status = HttpStatus.OK;
+        }
+
+        return new ResponseEntity<>(resultMap, status);
+    }
+
 }

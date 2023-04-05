@@ -424,4 +424,13 @@ public class BookService {
 
         return new ResponseBookEditDto(userId,challenge);
     }
+
+    public Book saveToken(int bookId, int token) {
+        Book book = bookRepository.findByBookId(bookId);
+        if(book == null) return null;
+
+        book.addToken(token);
+
+        return bookRepository.save(book);
+    }
 }
