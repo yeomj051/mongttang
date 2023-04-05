@@ -75,9 +75,15 @@ export default {
       nftIds: [],
       nftBalances: [],
       nftTotalEarneds: [],
-      address: this.$store.state.address,
-      privateKey: this.$store.state.privateKey,
     };
+  },
+  computed: {
+    privateKey() {
+      return this.$store.getters.getPrivateKey;
+    },
+    address() {
+      return this.$store.getters.getAddress;
+    },
   },
   created() {
     getNFTList(this.address).then((res) => {

@@ -155,12 +155,18 @@ import { transferSSF } from "@/api/blockchain";
 export default {
   data() {
     return {
-      privateKey: this.$store.state.privateKey,
       route: "/trade?key=" + this.$store.state.privateKey,
-      address: this.$store.state.address,
       toAddress: "",
       amount: "",
     };
+  },
+  computed: {
+    privateKey() {
+      return this.$store.getters.getPrivateKey;
+    },
+    address() {
+      return this.$store.getters.getAddress;
+    },
   },
   components: {
     TokenBalance,

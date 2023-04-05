@@ -6,6 +6,10 @@ function getNFTList(address) {
   return apiInstance.get(`/nft?address=${address}`);
 }
 
+function getAddress(privateKey) {
+  return apiInstance.get(`/user?key=${privateKey}`);
+}
+
 function withdraw(privateKey, tokenId, amount) {
   apiInstance.post("/nft/withdraw", {
     privateKey: privateKey,
@@ -27,4 +31,4 @@ function sellMTT(privateKey, amount) {
     amount: amount,
   });
 }
-export { getNFTList, withdraw, buyMTT, sellMTT };
+export { getNFTList, withdraw, buyMTT, sellMTT, getAddress };

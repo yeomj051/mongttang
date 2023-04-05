@@ -60,9 +60,14 @@
 import { sell } from "@/api/backend";
 
 export default {
+  computed: {
+    privateKey() {
+      return this.$store.getters.getPrivateKey;
+    },
+  },
   methods: {
     sell(amount) {
-      sell(this.$store.state.privateKey, amount);
+      sell(this.privateKey, amount);
     },
   },
 };

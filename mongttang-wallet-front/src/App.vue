@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { createRPCInstance } from "@/api";
+import { getAddress } from "@/api/backend";
 
 export default {
   created() {
@@ -12,10 +12,8 @@ export default {
     console.log(privateKey);
     this.$store.commit("SET_PRIVATEKEY", privateKey);
 
-    const rpcInstance = createRPCInstance();
-    const userAccount =
-      rpcInstance.eth.accounts.privateKeyToAccount(privateKey);
-    this.$store.commit("SET_ADDRESS", userAccount.address);
+    const userAddress = getAddress(privateKey);
+    this.$store.commit("SET_ADDRESS", userAddress);
   },
 };
 </script>

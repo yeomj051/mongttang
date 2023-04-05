@@ -1,13 +1,18 @@
 import { createStore } from "vuex";
-import tradeModule from "./tradeModule";
-import walletModule from "./walletModule";
 
 export default createStore({
   state: {
     privateKey: "",
     address: "",
   },
-  getters: {},
+  getters: {
+    getPrivateKey(state) {
+      return state.privateKey;
+    },
+    getAddress(state) {
+      return state.address;
+    },
+  },
   mutations: {
     SET_PRIVATEKEY(state, privateKey) {
       state.privateKey = privateKey;
@@ -17,8 +22,4 @@ export default createStore({
     },
   },
   actions: {},
-  modules: {
-    tradeModule,
-    walletModule,
-  },
 });

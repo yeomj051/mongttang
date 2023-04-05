@@ -22,9 +22,15 @@ export default {
     return {
       ssf: 0,
       mtt: 0,
-      privateKey: this.$store.state.privateKey,
-      address: this.$store.state.address,
     };
+  },
+  computed: {
+    privateKey() {
+      return this.$store.getters.getPrivateKey;
+    },
+    address() {
+      return this.$store.getters.getAddress;
+    },
   },
   created() {
     this.doGetMTTBalance();

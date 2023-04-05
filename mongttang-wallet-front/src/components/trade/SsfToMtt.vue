@@ -60,9 +60,14 @@
 import { buyMTT } from "@/api/backend";
 
 export default {
+  computed: {
+    privateKey() {
+      return this.$store.getters.getPrivateKey;
+    },
+  },
   methods: {
     buy(amount) {
-      buyMTT(this.$store.state.privateKey, amount);
+      buyMTT(this.privateKey, amount);
     },
   },
 };
