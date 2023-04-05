@@ -17,7 +17,7 @@ function getAddress(privateKey) {
 
 function withdraw(privateKey, tokenId, amount) {
   apiInstance.post("/nft/withdraw", {
-    privateKeyEnc: privateKey,
+    privateKey: privateKey,
     tokenId: tokenId,
     amount: amount,
   });
@@ -49,7 +49,7 @@ function getSSFBalance(privateKey) {
 
 function transferSSF(privateKey, toAddress, amount) {
   apiInstance.post("/token/ssf", {
-    privateKeyEnc: privateKey,
+    privateKey: privateKey,
     toAddress: toAddress,
     amount: amount,
   });

@@ -57,7 +57,7 @@
   </div>
 </template>
 <script>
-import { sell } from "@/api/backend";
+import { sellMTT } from "@/api/backend";
 
 export default {
   computed: {
@@ -67,7 +67,7 @@ export default {
   },
   methods: {
     sell(amount) {
-      sell(encodeURIComponent(this.privateKey), amount);
+      sellMTT(this.privateKey, amount);
     },
   },
 };
