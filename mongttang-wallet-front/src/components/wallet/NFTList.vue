@@ -6,7 +6,7 @@
       <div class="col"></div>
       <div class="col">
         <img
-          :src="nftImages[idx]"
+          :src="nftImages[nftId]"
           width="200"
         />
       </div>
@@ -76,7 +76,7 @@ export default {
       nftIds: [],
       nftBalances: [],
       nftTotalEarneds: [],
-      nftImages: [],
+      nftImages: {},
     };
   },
   computed: {
@@ -114,7 +114,8 @@ export default {
           return axios.get(res.data);
         }).then((res)=>{   
           const metadata = res.data;
-          this.nftImages.push(metadata.image);
+          this.nftImages[nftId] = metadata.image;
+          console.log(this.nftImages);
         }).catch((err)=>{
           console.log(err);
         })
