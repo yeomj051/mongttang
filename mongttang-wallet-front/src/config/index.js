@@ -1,7 +1,7 @@
 /**
  * TODO: 개발 및 배포 환경 에 맞추어 아래의 상수들을 지정합니다.
  */
-const API_BASE_URL = "http://localhost:4000";
+const API_BASE_URL = "http://j8a308.p.ssafy.io:4000";
 const BLOCKCHAIN_URL = "https://rpc.ssafy-blockchain.com";
 const BLOCKCHAIN_WEBSOCKET_URL = "wss://ws.ssafy-blockchain.com";
 const NFT_CONTRACT_ADDRESS = "0x9910144178a0405dc581720B2ebbA4a4F67f3d16";

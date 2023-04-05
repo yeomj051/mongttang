@@ -12,12 +12,9 @@ export default {
     console.log(privateKey);
     this.$store.commit("SET_PRIVATEKEY", privateKey);
 
-    const userAddress = getAddress(encodeURIComponent(privateKey))
+    getAddress(encodeURIComponent(privateKey))
       .then((req) => {
-        console.log("여깁니다");
-        console.log(req.data);
-        console.log(userAddress);
-        this.$store.commit("SET_ADDRESS", userAddress);
+        this.$store.commit("SET_ADDRESS", req.data);
       })
       .catch((err) => {
         console.log("저깁니다");

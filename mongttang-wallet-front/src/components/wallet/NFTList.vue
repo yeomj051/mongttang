@@ -93,6 +93,15 @@ export default {
       this.nftTotalEarneds = res[2];
     });
   },
+  watch: {
+    address() {
+      getNFTList(this.address).then((res) => {
+        this.nftIds = res[0];
+        this.nftBalances = res[1];
+        this.nftTotalEarneds = res[2];
+      });
+    },
+  },
   methods: {
     doWithdraw(tokenId, amount) {
       const encoded = encodeURIComponent(this.privateKey);

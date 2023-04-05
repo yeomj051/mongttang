@@ -48,6 +48,12 @@ export default {
       });
     },
   },
+  watch: {
+    address() {
+      this.doGetMTTBalance();
+      this.doGetSSFBalance();
+    },
+  },
 };
 </script>
 
