@@ -99,9 +99,11 @@ export default {
   watch: {
     address() {
       getNFTList(this.address).then((res) => {
-        this.nftIds = res[0];
-        this.nftBalances = res[1];
-        this.nftTotalEarneds = res[2];
+        console.log(res);
+        const data = res.data;
+        this.nftIds = data.nftIds;
+        this.nftBalances = data.nftBalances;
+        this.nftTotalEarneds = data.nftTotalEarneds;
       });
     },
   },
