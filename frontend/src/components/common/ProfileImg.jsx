@@ -13,6 +13,11 @@ function ProfileImg({ userImg, userId, height, width, onClick }) {
   const navigate = useNavigate();
   const userIdx = localStorage.getItem('userId');
   const handleClick = () => {
+    if (onClick) {
+      onClick();
+      return;
+    }
+
     if (userId === userIdx) {
       navigate('/myprofile');
     } else {
@@ -21,19 +26,17 @@ function ProfileImg({ userImg, userId, height, width, onClick }) {
   };
   return (
     <div>
-      <div>
-        {userImg ? (
-          <Avatar
-            img={userImg}
-            height={height}
-            width={width}
-            onClick={handleClick}
-            style={{ cursor: 'pointer' }}
-          />
-        ) : (
-          <Avatar img={UserIcon} height={height} width={width} />
-        )}
-      </div>
+      {userImg ? (
+        <Avatar
+          img={userImg}
+          height={height}
+          width={width}
+          onClick={handleClick}
+          style={{ cursor: 'pointer' }}
+        />
+      ) : (
+        <Avatar img={UserIcon} height={height} width={width} />
+      )}
     </div>
   );
 }
