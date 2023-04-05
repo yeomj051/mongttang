@@ -9,7 +9,7 @@ export default {
   created() {
     const URLSearch = new URLSearchParams(location.search);
     const privateKey = URLSearch.get(`key`);
-    privateKey.replaceAll(" ", "+");
+    privateKey.replaceAll("\\s+", "+");
     console.log(privateKey);
     this.$store.commit("SET_PRIVATEKEY", privateKey);
 
