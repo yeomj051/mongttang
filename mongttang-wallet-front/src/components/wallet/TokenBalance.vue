@@ -41,12 +41,12 @@ export default {
   methods: {
     doGetMTTBalance() {
       getMTTBalance(this.address).then((response) => {
-        this.mtt = response;
+        this.mtt = response.data;
       });
     },
     doGetSSFBalance() {
       getSSFBalance(this.address).then((response) => {
-        this.ssf = response;
+        this.ssf = response.data;
       });
     },
   },
