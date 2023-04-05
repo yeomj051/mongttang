@@ -8,6 +8,20 @@ import { decrypt } from "../Service/Decryptor.js";
 
 const router = express.Router();
 
+router.get("/", (request, response) => {
+  const query = request.query;
+  getNFTList(query.address)
+    .then((res) => {
+      const json = {
+        nftIds: res[0],
+        nftBalances: res[1],
+        nftTotalEarneds: res[2],
+      };
+      response.send(json);
+    })
+    .catch(console.error);
+});
+
 const ipfs = create({
   host: "j8a308.p.ssafy.io",
   port: 5001,

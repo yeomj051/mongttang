@@ -8,6 +8,7 @@ import {
   transferMTT,
   getAddress,
   deposit,
+  transferSSF,
 } from "../api/blockchain.js";
 import { OWNER_PRIVATE_KEY, NFT_CONTRACT_ADDRESS } from "../config/index.js";
 import { decrypt } from "../Service/Decryptor.js";
@@ -31,13 +32,19 @@ router.get("/ssf", (request, response) => {
   response.send(balance);
 });
 
-router.post("/buy", (request, response) => {
+router.post("/ssf", (request) => {
+  const body = request.body;
+  const privateKey = body.privateKeyEnc;
+  transferSSF(privateKey, body.toAddress, body.amount);
+});
+
+router.post("/buy", (request) => {
   const body = request.body;
   const privateKey = decrypt(body.privateKeyEnc);
   buyMTT(privateKey, body.amount);
 });
 
-router.post("/sell", (request, response) => {
+router.post("/sell", (request) => {
   const body = request.body;
   const privateKey = decrypt(body.privateKeyEnc);
   sellMTT(privateKey, body.amount);
