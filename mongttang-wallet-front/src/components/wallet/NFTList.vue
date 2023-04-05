@@ -109,8 +109,7 @@ export default {
   },
   methods: {
     doWithdraw(tokenId, amount) {
-      const encoded = encodeURIComponent(this.privateKey);
-      withdraw(encoded, tokenId, amount);
+      withdraw(this.privateKey, tokenId, amount);
     },
   },
 };

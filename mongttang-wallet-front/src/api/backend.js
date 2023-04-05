@@ -7,12 +7,13 @@ function getNFTList(address) {
 }
 
 function getAddress(privateKey) {
-  return apiInstance.get(`/user?key=${privateKey}`);
+  const uriEncoded = encodeURIComponent(privateKey);
+  return apiInstance.get(`/user?key=${uriEncoded}`);
 }
 
 function withdraw(privateKey, tokenId, amount) {
   apiInstance.post("/nft/withdraw", {
-    privateKey: privateKey,
+    privateKeyEnc: privateKey,
     tokenId: tokenId,
     amount: amount,
   });
@@ -33,11 +34,13 @@ function sellMTT(privateKey, amount) {
 }
 
 function getMTTBalance(privateKey) {
-  return apiInstance.get(`/token/mtt?key=${privateKey}`);
+  const uriEncoded = encodeURIComponent(privateKey);
+  return apiInstance.get(`/token/mtt?key=${uriEncoded}`);
 }
 
 function getSSFBalance(privateKey) {
-  return apiInstance.get(`/token/ssf?key=${privateKey}`);
+  const uriEncoded = encodeURIComponent(privateKey);
+  return apiInstance.get(`/token/ssf?key=${uriEncoded}`);
 }
 
 function transferSSF(privateKey, toAddress, amount) {
