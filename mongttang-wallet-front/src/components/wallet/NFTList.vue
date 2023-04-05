@@ -109,7 +109,7 @@ export default {
     nftIds(){
       this.nftIds.forEach( (nftId) => {
         getNFTURI(nftId).then((res) => {
-          nftURIs.push(res.data);
+          this.nftURIs.push(res.data);
         })
       });
     }
