@@ -9,12 +9,20 @@ export default {
   created() {
     const URLSearch = new URLSearchParams(location.search);
     const privateKey = URLSearch.get(`key`);
-    privateKey.replaceAll("\\s+", "+");
     console.log(privateKey);
     this.$store.commit("SET_PRIVATEKEY", privateKey);
 
-    const userAddress = getAddress(privateKey);
-    this.$store.commit("SET_ADDRESS", userAddress);
+    const userAddress = getAddress(encodeURIComponent(privateKey))
+      .then((req) => {
+        console.log("여깁니다");
+        console.log(req.data);
+        console.log(userAddress);
+        this.$store.commit("SET_ADDRESS", userAddress);
+      })
+      .catch((err) => {
+        console.log("저깁니다");
+        console.log(err);
+      });
   },
 };
 </script>
