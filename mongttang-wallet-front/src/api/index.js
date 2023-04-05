@@ -8,25 +8,21 @@ function createAPIInstance() {
     baseURL: API_BASE_URL,
     headers: {
       "Content-Type": "application/json",
-      "Authorization": ""
-    }
+      Authorization: "",
+    },
   });
   return instance;
 }
 
 function createRPCInstance() {
-    const web3 = new Web3(new Web3.providers.HttpProvider(`${BLOCKCHAIN_URL}`));
-    return web3;
+  const web3 = new Web3(new Web3.providers.HttpProvider(`${BLOCKCHAIN_URL}`));
+  return web3;
 }
 
-function createAccount(){
+function createAccount() {
   const web3 = new Web3(new Web3.providers.HttpProvider(`${BLOCKCHAIN_URL}`));
   const account = web3.eth.accounts.create();
-  console.log(account);   
+  console.log(account);
 }
 
-export { 
-    createAPIInstance,
-    createRPCInstance,
-    createAccount
- };
+export { createAPIInstance, createRPCInstance, createAccount };

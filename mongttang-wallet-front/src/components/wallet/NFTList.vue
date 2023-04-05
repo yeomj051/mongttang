@@ -65,7 +65,8 @@
 </template>
 
 <script>
-import { getNFTList, withdraw } from "@/api/backend";
+import { withdraw } from "@/api/backend";
+import { getNFTList } from "@/api/blockchain";
 
 export default {
   name: "NFTList",
@@ -80,9 +81,9 @@ export default {
   },
   created() {
     getNFTList(this.address).then((res) => {
-      this.nftIds = res.data.nftIds;
-      this.nftBalances = res.data.nftBalances;
-      this.nftTotalEarneds = res.data.nftTotalEarneds;
+      this.nftIds = res[0];
+      this.nftBalances = res[1];
+      this.nftTotalEarneds = res[2];
     });
   },
   methods: {

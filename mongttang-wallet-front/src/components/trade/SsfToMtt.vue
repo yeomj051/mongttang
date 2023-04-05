@@ -57,7 +57,7 @@
   </div>
 </template>
 <script>
-import { buyMTT } from "@/api/blockchain";
+import { buyMTT } from "@/api/backend";
 
 export default {
   methods: {

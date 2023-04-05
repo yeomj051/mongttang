@@ -57,12 +57,12 @@
   </div>
 </template>
 <script>
-import { sellMTT } from "@/api/blockchain";
+import { sell } from "@/api/backend";
 
 export default {
   methods: {
     sell(amount) {
-      sellMTT(this.$store.state.privateKey, amount);
+      sell(this.$store.state.privateKey, amount);
     },
   },
 };

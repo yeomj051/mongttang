@@ -14,4 +14,17 @@ function withdraw(privateKey, tokenId, amount) {
   });
 }
 
-export { getNFTList, withdraw };
+function buyMTT(privateKey, amount) {
+  apiInstance.post("/token/buy", {
+    privateKey: privateKey,
+    amount: amount,
+  });
+}
+
+function sellMTT(privateKey, amount) {
+  apiInstance.post("/token/sell", {
+    privateKey: privateKey,
+    amount: amount,
+  });
+}
+export { getNFTList, withdraw, buyMTT, sellMTT };
