@@ -10,6 +10,7 @@ const SSF_CONTRACT_ADDRESS = "0x37792f697877e9BcFB978C0c81F0889c2dA66399";
 const OWNER_PRIVATE_KEY =
   "0x55cddb2940646bb95c68c492220375cc1be306eafe111936eaa0d5ceb4b3c03d";
 const DECRYPTION_KEY = "imaasecretkeyval";
+const DECRYPTION_IV = "hihiiamaivkeyval";
 
 export {
   API_BASE_URL,
@@ -20,4 +21,5 @@ export {
   SSF_CONTRACT_ADDRESS,
   OWNER_PRIVATE_KEY,
   DECRYPTION_KEY,
+  DECRYPTION_IV,
 };
