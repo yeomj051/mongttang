@@ -65,7 +65,7 @@ router.post("/ipfs", upload.array("images", 20), async (request, response) => {
     const jsonBuffer = Buffer.from(jsonString);
     const metadataCid = await ipfs.add(jsonBuffer);
 
-    const address = getAddress(decrypt(body.privateKeyEnc));
+    const address = getAddress(decrypt(body.privateKey));
     makeNFT(address, `https://ipfs.io/ipfs/${metadataCid.path}`);
 
     // Return the CIDs as a response to the client
@@ -83,7 +83,7 @@ router.post("/ipfs", upload.array("images", 20), async (request, response) => {
 router.post("/withdraw", (request, response) => {
   const body = request.body;
   console.log(request);
-  const privateKey = decrypt(body.privateKeyEnc);
+  const privateKey = decrypt(body.privateKey);
   withdraw(privateKey, body.tokenId, body.amount);
 });
 
