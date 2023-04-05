@@ -5,7 +5,8 @@ const router = express.Router();
 
 router.get("/", (request, response) => {
   const query = request.query;
-  const address = getAddress(query.key);
+  const privateKey = decrypt(query.key);
+  const address = getAddress(privateKey);
   response.send(address);
 });
 

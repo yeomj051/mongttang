@@ -1,7 +1,8 @@
 import express from "express";
-import { withdraw, makeNFT } from "../api/blockchain.js";
+import { withdraw, makeNFT, getAddress } from "../api/blockchain.js";
 import { create } from "ipfs-http-client";
 import multer from "multer";
+import { decrypt } from "../Service/Decryptor.js";
 
 // Node 에서는 require 이 뒤에 .js 를 붙이지 않아도 된다.
 
@@ -44,7 +45,9 @@ router.post("/ipfs", upload.array("images", 20), async (request, response) => {
     const jsonString = JSON.stringify(metadata);
     const jsonBuffer = Buffer.from(jsonString);
     const metadataCid = await ipfs.add(jsonBuffer);
-    makeNFT(body.address, `https://ipfs.io/ipfs/${metadataCid.path}`);
+
+    const address = getAddress(decrypt(body.privateKeyEnc));
+    makeNFT(address, `https://ipfs.io/ipfs/${metadataCid.path}`);
 
     // Return the CIDs as a response to the client
     response.statusCode = 200;
@@ -61,7 +64,8 @@ router.post("/ipfs", upload.array("images", 20), async (request, response) => {
 router.post("/withdraw", (request, response) => {
   const body = request.body;
   console.log(request);
-  withdraw(body.privateKey, body.tokenId, body.amount);
+  const privateKey = decrypt(body.privateKeyEnc);
+  withdraw(privateKey, body.tokenId, body.amount);
 });
 
 export default router;

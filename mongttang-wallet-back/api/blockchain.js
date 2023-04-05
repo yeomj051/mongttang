@@ -12,14 +12,17 @@ import {
 } from "../config/ABIs.js";
 
 const rpcInstance = createRPCInstance();
+
 const mttContract = new rpcInstance.eth.Contract(
   MTT_CONTRACT_ABI,
   MTT_CONTRACT_ADDRESS
 );
+
 const ssfContract = new rpcInstance.eth.Contract(
   ERC20_CONTRACT_ABI,
   SSF_CONTRACT_ADDRESS
 );
+
 const nftContract = new rpcInstance.eth.Contract(
   NFT_CONTRACT_ABI,
   NFT_CONTRACT_ADDRESS
@@ -266,6 +269,79 @@ async function withdraw(userPrivateKey, tokenId, amount) {
   }
 }
 
+async function approve(fromPrivateKey, toAddress, amount) {
+  try {
+    const fromAccount =
+      rpcInstance.eth.accounts.privateKeyToAccount(fromPrivateKey);
+    const nonce = await rpcInstance.eth.getTransactionCount(
+      fromAccount.address
+    );
+    const functionAbi = mttContract.methods
+      .approve(toAddress, amount)
+      .encodeABI();
+    const gasPrice = 0;
+    const gasLimit = 210000;
+    const transactionObject = {
+      nonce: rpcInstance.utils.toHex(nonce),
+      gasPrice: rpcInstance.utils.toHex(gasPrice),
+      gas: rpcInstance.utils.toHex(gasLimit),
+      to: MTT_CONTRACT_ADDRESS,
+      from: fromAccount.address,
+      data: functionAbi,
+    };
+
+    const signedTx = await rpcInstance.eth.accounts.signTransaction(
+      transactionObject,
+      fromPrivateKey
+    );
+    const receipt = rpcInstance.eth.sendSignedTransaction(
+      signedTx.rawTransaction
+    );
+    console.log(`Transaction confirmed: ${receipt.transactionHash}`);
+    console.log(`Gas used: ${receipt.gasUsed}`);
+    return true;
+  } catch (error) {
+    console.error(`Transaction error: ${error}`);
+    return false;
+  }
+}
+
+async function deposit(fromPrivateKey, tokenId, amount) {
+  try {
+    const userAccount =
+      rpcInstance.eth.accounts.privateKeyToAccount(fromPrivateKey);
+    const nonce = await rpcInstance.eth.getTransactionCount(
+      userAccount.address
+    );
+    const functionAbi = nftContract.methods
+      .deposit(tokenId, amount)
+      .encodeABI();
+    const gasPrice = 0;
+    const gasLimit = 210000;
+    const transactionObject = {
+      nonce: rpcInstance.utils.toHex(nonce),
+      gasPrice: rpcInstance.utils.toHex(gasPrice),
+      gas: rpcInstance.utils.toHex(gasLimit),
+      to: NFT_CONTRACT_ADDRESS,
+      from: userAccount.address,
+      data: functionAbi,
+    };
+    const signedTx = await rpcInstance.eth.accounts.signTransaction(
+      transactionObject,
+      fromPrivateKey
+    );
+    const receipt = await rpcInstance.eth.sendSignedTransaction(
+      signedTx.rawTransaction
+    );
+    console.log(`Transaction confirmed: ${receipt.transactionHash}`);
+    console.log(`Gas used: ${receipt.gasUsed}`);
+    return true;
+  } catch (error) {
+    console.error(`Transaction error: ${error}`);
+    return false;
+  }
+}
+
 function getAddress(privateKey) {
   const userAccount = rpcInstance.eth.accounts.privateKeyToAccount(privateKey);
   return userAccount.address;
@@ -279,6 +355,9 @@ export {
   buyMTT,
   sellMTT,
   withdraw,
+  transferMTT,
   transferSSF,
   getAddress,
+  deposit,
+  approve,
 };
