@@ -6,6 +6,10 @@ function getNFTList(address) {
   return apiInstance.get(`/nft?address=${address}`);
 }
 
+function getNFTURI(tokenId){
+  return apiInstance.get(`/nft/uri?tokenId=${tokenId}`);
+}
+
 function getAddress(privateKey) {
   const uriEncoded = encodeURIComponent(privateKey);
   return apiInstance.get(`/user?key=${uriEncoded}`);
@@ -52,6 +56,7 @@ function transferSSF(privateKey, toAddress, amount) {
 }
 export {
   getNFTList,
+  getNFTURI,
   withdraw,
   buyMTT,
   sellMTT,

@@ -6,7 +6,7 @@
       <div class="col"></div>
       <div class="col">
         <img
-          src="https://mblogthumb-phinf.pstatic.net/MjAyMTAxMDVfMjE5/MDAxNjA5ODA0NDYxODAx.ieWcq6luZGB9apxLjS_uh-ROYCQS61ubqCW_pA2fTrMg.Zx56vtprvTOoc0sn9oy7eyWGj8TXXlpClSEoWFehQnMg.PNG.bluelaz1103/SE-c3e732d3-5ceb-423f-bbb7-26cf288fe3e0.png?type=w800"
+          :src="nftURIs[idx]"
           width="200"
         />
       </div>
@@ -66,7 +66,7 @@
 
 <script>
 import { withdraw } from "@/api/backend";
-import { getNFTList } from "@/api/backend";
+import { getNFTList, getNFTURI } from "@/api/backend";
 
 export default {
   name: "NFTList",
@@ -75,7 +75,7 @@ export default {
       nftIds: [],
       nftBalances: [],
       nftTotalEarneds: [],
-      cat: "",
+      nftURIs: [],
     };
   },
   computed: {
@@ -106,6 +106,13 @@ export default {
         this.nftTotalEarneds = data.nftTotalEarneds;
       });
     },
+    nftIds(){
+      this.nftIds.forEach( (nftId) => {
+        getNFTURI(nftId).then((res) => {
+          nftURIs.push(res.data);
+        })
+      });
+    }
   },
   methods: {
     doWithdraw(tokenId, amount) {
