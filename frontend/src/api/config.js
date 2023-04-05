@@ -66,6 +66,9 @@ const requests = {
     return `/api/book/search?bookTitle=${bookTitle}`;
   },
 
+  GET_BOOK_ORDER(challengeId, order) {
+    return `/api/challenge/order/${challengeId}?order=${order}`;
+  },
   //동화 접근권한 체크
   GET_BOOK_AUTH(userId, bookId) {
     return `/api/book/check/${userId}?bookId=${bookId}`;
