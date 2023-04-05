@@ -4,7 +4,7 @@ import tw, { styled, css } from 'twin.macro';
 
 import requests from 'api/config';
 import { defaultApi, authApi } from 'api/axios';
-
+import FollowList from './FollowList';
 import UserIcon from 'assets/images/UserIcon.svg';
 import ProfileImg2 from 'components/common/ProfileImg2';
 import EditProfileIcon from 'assets/icons/pencil03.svg';
@@ -22,13 +22,13 @@ const NickName = styled.span`
   ${tw`text-[40px]`}
 `;
 const InfoWrapper = styled.div`
-  ${tw`flex items-center justify-between`}
+  ${tw`flex items-center justify-between cursor-pointer rounded-full shadow`}
 `;
 const Following = styled.span`
-  ${tw`text-[30px] pt-2 px-2`}
+  ${tw`text-[30px] px-2`}
 `;
 const Follower = styled.span`
-  ${tw`text-[30px] pt-2 px-2`}
+  ${tw`text-[30px] px-2`}
 `;
 const UserInfo = styled.span`
   ${tw`text-[35px] pt-2`}
@@ -36,9 +36,7 @@ const UserInfo = styled.span`
 const CompletedBookList = styled.div`
   ${tw`px-10`}
 `;
-const InCompleteBookList = styled.div`
-  ${tw`px-10`}
-`;
+
 const LikedBookList = styled.div`
   ${tw`px-10`}
 `;
@@ -58,8 +56,13 @@ function MyProfile() {
   const [inCompleteBooks, setInCompleteBooks] = useState('');
   const [interestBooks, setInterestBooks] = useState('');
   const [paidBooks, setPaidBooks] = useState('');
+  const [showFollow, setShowFollow] = useState(false);
+  const [followings, setFollowings] = useState([]);
+  const [followers, setFollowers] = useState([]);
   const wallet = userStore((state) => state.userWallet);
-
+  const showFollowHandler = () => {
+    setShowFollow(!showFollow);
+  };
   const openWallet = () => {
     window.open(
       `http://j8a308.p.ssafy.io:3333/?key=${wallet}`,
@@ -86,7 +89,27 @@ function MyProfile() {
         throw error;
       }
     };
+    const get_following = async () => {
+      try {
+        const { data } = await authApi.get(requests.GET_FOLLOWING(userId));
+        setFollowings(data.followings);
+        console.log(data);
+      } catch (error) {
+        throw error;
+      }
+    };
+    const get_follower = async () => {
+      try {
+        const { data } = await authApi.get(requests.GET_FOLLOWER(userId));
+        setFollowers(data.followers);
+        console.log(data);
+      } catch (error) {
+        throw error;
+      }
+    };
 
+    get_following();
+    get_follower();
     get_user();
   }, [userImg]);
 
@@ -104,10 +127,15 @@ function MyProfile() {
             />
           </Link>
         </NickNameWrapper>
-        <InfoWrapper>
+        <InfoWrapper onClick={showFollowHandler}>
           <Following>팔로잉 {userFollowing}</Following>
           <Follower>팔로워 {userFollower}</Follower>
         </InfoWrapper>
+        {showFollow ? (
+          <FollowList followers={followers} followings={followings} />
+        ) : (
+          ''
+        )}
         {userInfo ? (
           <UserInfo>{userInfo}</UserInfo>
         ) : (
