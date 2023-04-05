@@ -4,6 +4,7 @@ import {
   makeNFT,
   getAddress,
   getNFTList,
+  getNFTURI
 } from "../api/blockchain.js";
 import { create } from "ipfs-http-client";
 import multer from "multer";
@@ -26,6 +27,15 @@ router.get("/", (request, response) => {
     })
     .catch(console.error);
 });
+
+router.get("/uri",(request, response)=>{
+  const query = request.query;
+  getNFTURI(query.tokenId)
+    .then((res)=>{
+      response.send(res);
+    })
+    .catch(console.error);
+})
 
 const ipfs = create({
   host: "j8a308.p.ssafy.io",
