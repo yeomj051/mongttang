@@ -20,8 +20,8 @@ router.get("/mtt", (request, response) => {
   const query = request.query;
   const privateKey = decrypt(query.key);
   const address = getAddress(privateKey);
-  getMTTBalance(address).then((res) => {
-    response.send(res.data);
+  const balance = getMTTBalance(address).then((res) => {
+    response.send(res);
   });
 });
 
@@ -29,8 +29,8 @@ router.get("/ssf", (request, response) => {
   const query = request.query;
   const privateKey = decrypt(query.key);
   const address = getAddress(privateKey);
-  getSSFBalance(address).then((res) => {
-    response.send(res.data);
+  const balance = getSSFBalance(address).then((res) => {
+    response.send(res);
   });
 });
 
