@@ -32,6 +32,7 @@ router.get("/uri",(request, response)=>{
   const query = request.query;
   getNFTURI(query.tokenId)
     .then((res)=>{
+      console.log(res);
       response.send(res);
     })
     .catch(console.error);
