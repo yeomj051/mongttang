@@ -1,5 +1,10 @@
 import express from "express";
-import { withdraw, makeNFT, getAddress } from "../api/blockchain.js";
+import {
+  withdraw,
+  makeNFT,
+  getAddress,
+  getNFTList,
+} from "../api/blockchain.js";
 import { create } from "ipfs-http-client";
 import multer from "multer";
 import { decrypt } from "../Service/Decryptor.js";
