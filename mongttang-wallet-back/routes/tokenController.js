@@ -36,7 +36,7 @@ router.get("/ssf", (request, response) => {
 
 router.post("/ssf", (request) => {
   const body = request.body;
-  const privateKey = body.privateKey;
+  const privateKey = decrypt(body.privateKey);
   transferSSF(privateKey, body.toAddress, body.amount);
 });
 
