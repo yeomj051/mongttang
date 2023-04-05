@@ -31,4 +31,29 @@ function sellMTT(privateKey, amount) {
     amount: amount,
   });
 }
-export { getNFTList, withdraw, buyMTT, sellMTT, getAddress };
+
+function getMTTBalance(privateKey) {
+  return apiInstance.get(`/token/mtt?key=${privateKey}`);
+}
+
+function getSSFBalance(privateKey) {
+  return apiInstance.get(`/token/ssf?key=${privateKey}`);
+}
+
+function transferSSF(privateKey, toAddress, amount) {
+  apiInstance.post("/token/ssf", {
+    privateKeyEnc: privateKey,
+    toAddress: toAddress,
+    amount: amount,
+  });
+}
+export {
+  getNFTList,
+  withdraw,
+  buyMTT,
+  sellMTT,
+  getAddress,
+  getMTTBalance,
+  getSSFBalance,
+  transferSSF,
+};

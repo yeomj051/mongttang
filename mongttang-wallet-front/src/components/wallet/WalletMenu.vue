@@ -130,7 +130,7 @@
               블록체인의 특성상, 입금이 반영되기까지 시간이 다소 걸릴 수
               있습니다.
               <br />
-              주소 :{{ address }}
+              주소 : {{ address }}
             </div>
             <div class="modal-footer">
               <button
@@ -150,7 +150,7 @@
 
 <script>
 import TokenBalance from "./TokenBalance.vue";
-import { transferSSF } from "@/api/blockchain";
+import { transferSSF } from "@/api/backend";
 
 export default {
   data() {
@@ -173,7 +173,11 @@ export default {
   },
   methods: {
     doTransferSSf() {
-      transferSSF(this.$store.state.privateKey, this.toAddress, this.amount);
+      transferSSF(
+        encodeURIComponent(this.privateKey),
+        this.toAddress,
+        this.amount
+      );
     },
   },
 };

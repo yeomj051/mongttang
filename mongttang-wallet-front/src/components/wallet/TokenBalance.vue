@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { getMTTBalance, getSSFBalance } from "@/api/blockchain";
+import { getMTTBalance, getSSFBalance } from "@/api/backend";
 
 export default {
   name: "TokenBalance",
@@ -33,8 +33,10 @@ export default {
     },
   },
   created() {
-    this.doGetMTTBalance();
-    this.doGetSSFBalance();
+    if (this.address) {
+      this.doGetMTTBalance();
+      this.doGetSSFBalance();
+    }
   },
   methods: {
     doGetMTTBalance() {

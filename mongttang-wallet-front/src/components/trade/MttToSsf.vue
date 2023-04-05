@@ -67,7 +67,7 @@ export default {
   },
   methods: {
     sell(amount) {
-      sell(this.privateKey, amount);
+      sell(encodeURIComponent(this.privateKey), amount);
     },
   },
 };

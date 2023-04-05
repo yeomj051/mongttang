@@ -23,7 +23,7 @@
     <div class="row trade-choice">
       <div class="col-5">
         <img src="../../assets/MonttangCoin.png" class="token-icon" />몽땅토큰
-        500개r
+        500개
       </div>
       <div class="col-3"></div>
       <div class="col-4">
@@ -67,7 +67,7 @@ export default {
   },
   methods: {
     buy(amount) {
-      buyMTT(this.privateKey, amount);
+      buyMTT(encodeURIComponent(this.privateKey), amount);
     },
   },
 };
