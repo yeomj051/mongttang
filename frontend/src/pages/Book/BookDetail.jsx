@@ -81,6 +81,8 @@ function BookDetail() {
   const navigate = useNavigate();
   const [book, setBook] = useState();
   const userId = localStorage.getItem('userId');
+  const [isLiked, setIsLiked] = useState(false);
+  const [isInterested, setIsInterested] = useState(false);
 
   useEffect(() => {
     authApi(requests.GET_BOOK_DETAIL(userId, bookId))
@@ -93,9 +95,6 @@ function BookDetail() {
         navigate('/error/400');
       });
   }, []);
-
-  const [isLiked, setIsLiked] = useState(false);
-  const [isInterested, setIsInterested] = useState(false);
 
   const interestBook = () => {
     setIsInterested(true);
@@ -143,6 +142,9 @@ function BookDetail() {
         // console.log(res);
       });
     } catch (error) {}
+  };
+  const gotoChallenge = () => {
+    navigate(`/challenge/${book.challengeId}`);
   };
 
   return (
@@ -192,6 +194,13 @@ function BookDetail() {
                   <button onClick={uninterestBook}>관심 취소</button>
                 )}
               </InterestBtnWrapper>
+              <LinkWrapper>
+                <Button
+                  title="이번 시즌 챌린지로 →"
+                  buttonType="mint"
+                  onClick={gotoChallenge}
+                />
+              </LinkWrapper>
               <LinkWrapper>
                 <Button
                   title="동화 보러가기 →"
