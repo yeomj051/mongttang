@@ -66,6 +66,7 @@ const requests = {
     return `/api/book/search?bookTitle=${bookTitle}`;
   },
 
+  //정렬기준으로 동화 조회
   GET_BOOK_ORDER(challengeId, order) {
     return `/api/challenge/order/${challengeId}?order=${order}`;
   },
