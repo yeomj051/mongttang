@@ -8,7 +8,7 @@ import { getAddress } from "@/api/backend";
 export default {
   created() {
     const URLSearch = new URLSearchParams(location.search);
-    const privateKey = URLSearch.get(`key`);
+    const privateKey = encodeURIComponent(URLSearch.get(`key`));
     console.log(privateKey);
     this.$store.commit("SET_PRIVATEKEY", privateKey);
 
