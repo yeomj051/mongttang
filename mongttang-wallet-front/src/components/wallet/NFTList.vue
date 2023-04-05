@@ -6,7 +6,7 @@
       <div class="col"></div>
       <div class="col">
         <img
-          :src="nftURIs[idx]"
+          :src="nftImages[idx]"
           width="200"
         />
       </div>
@@ -67,6 +67,7 @@
 <script>
 import { withdraw } from "@/api/backend";
 import { getNFTList, getNFTURI } from "@/api/backend";
+import axios from 'axios';
 
 export default {
   name: "NFTList",
@@ -75,7 +76,7 @@ export default {
       nftIds: [],
       nftBalances: [],
       nftTotalEarneds: [],
-      nftURIs: [],
+      nftImages: [],
     };
   },
   computed: {
@@ -109,7 +110,13 @@ export default {
     nftIds(){
       this.nftIds.forEach( (nftId) => {
         getNFTURI(nftId).then((res) => {
-          this.nftURIs.push(res.data);
+          console.log(res.data);
+          return axios.get(res.data);
+        }).then((res)=>{   
+          const metadata = res.data;
+          this.nftImages.push(metadata.image);
+        }).catch((err)=>{
+          console.log(err);
         })
       });
     }
