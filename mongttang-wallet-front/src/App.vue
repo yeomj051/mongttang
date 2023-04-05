@@ -14,10 +14,10 @@ export default {
 
     getAddress(encodeURIComponent(privateKey))
       .then((req) => {
+        console.log(req.data);
         this.$store.commit("SET_ADDRESS", req.data);
       })
       .catch((err) => {
-        console.log("저깁니다");
         console.log(err);
       });
   },

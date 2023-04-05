@@ -40,13 +40,13 @@ export default {
   },
   methods: {
     doGetMTTBalance() {
-      getMTTBalance(this.address).then((response) => {
+      getMTTBalance(this.privateKey).then((response) => {
         console.log(response);
         this.mtt = response.data;
       });
     },
     doGetSSFBalance() {
-      getSSFBalance(this.address).then((response) => {
+      getSSFBalance(this.privateKey).then((response) => {
         console.log(response);
         this.ssf = response.data;
       });
