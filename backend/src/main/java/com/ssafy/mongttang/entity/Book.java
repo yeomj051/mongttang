@@ -50,7 +50,7 @@ public class Book extends BaseEntity {
     @ColumnDefault("0")
     private double bookViews;
 
-    private int nftToken;
+    private int nftId;
 
     @Builder
     public Book(Challenge challenge, User user, ReqCreateBookDto dto){
@@ -84,7 +84,7 @@ public class Book extends BaseEntity {
         this.bookViews += 0.5;
     }
 
-    public void addToken(int token){
-        this.nftToken = token;
+    public void addToken(int nftId){
+        this.nftId = nftId;
     }
 }

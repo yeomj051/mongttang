@@ -425,11 +425,11 @@ public class BookService {
         return new ResponseBookEditDto(userId,challenge);
     }
 
-    public Book saveToken(int bookId, int token) {
+    public Book saveToken(int bookId, int nftId) {
         Book book = bookRepository.findByBookId(bookId);
         if(book == null) return null;
 
-        book.addToken(token);
+        book.addToken(nftId);
 
         return bookRepository.save(book);
     }
