@@ -129,7 +129,7 @@ async function buyMTT(userPrivateKey, amount) {
         amount
       );
       if (!res2) {
-        transferSSF(
+        await transferSSF(
           OWNER_PRIVATE_KEY,
           userAccount.address,
           amount / 100
@@ -152,13 +152,13 @@ async function sellMTT(userPrivateKey, amount) {
       rpcInstance.eth.accounts.privateKeyToAccount(userPrivateKey);
     const res1 = transferMTT(userPrivateKey, ownerAccount.address, amount);
     if (res1) {
-      const res2 = transferSSF(
+      const res2 = await transferSSF(
         OWNER_PRIVATE_KEY,
         userAccount.address,
         amount / 100
       );
       if (!res2) {
-        transferMTT(
+        await transferMTT(
           OWNER_PRIVATE_KEY,
           userAccount.address,
           amount
