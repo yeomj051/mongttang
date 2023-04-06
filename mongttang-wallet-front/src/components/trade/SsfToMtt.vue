@@ -69,7 +69,8 @@ export default {
     buy(amount) {
       console.log(amount);
       buyMTT(this.privateKey, amount)
-      .then(()=>{
+      .then((res)=>{
+        window.alert(res);
         getMTTBalance(this.privateKey).then((response) => {
         console.log(response);
         this.$store.commit("SET_MTT", response.data);

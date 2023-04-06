@@ -27,6 +27,9 @@ async function buyMTT(privateKey, amount) {
   apiInstance.post("/token/buy", {
     privateKey: privateKey,
     amount: amount,
+  }).then(res=>{
+    console.log(res);
+    return "success";
   });
 }
 
