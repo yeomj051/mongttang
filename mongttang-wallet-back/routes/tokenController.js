@@ -40,7 +40,7 @@ router.post("/ssf", (request) => {
   transferSSF(privateKey, body.toAddress, body.amount);
 });
 
-router.post("/buy", (request) => {
+router.post("/buy", (request, response) => {
   const body = request.body;
   const privateKey = decrypt(body.privateKey);
   buyMTT(privateKey, body.amount).then((res)=>{
@@ -48,7 +48,7 @@ router.post("/buy", (request) => {
   });
 });
 
-router.post("/sell", (request) => {
+router.post("/sell", (request, response) => {
   const body = request.body;
   const privateKey = decrypt(body.privateKey);
   sellMTT(privateKey, body.amount).then((res)=>{
