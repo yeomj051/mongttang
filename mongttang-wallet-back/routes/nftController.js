@@ -5,6 +5,7 @@ import {
   getAddress,
   getNFTList,
 } from "../api/blockchain.js";
+import { postNFTID } from "../api/spring.js";
 import { create } from "ipfs-http-client";
 import multer from "multer";
 import { decrypt } from "../Service/Decryptor.js";
@@ -50,7 +51,7 @@ router.post("/ipfs", upload.array("images", 20), async (request, response) => {
     const metadata = {
       name: `${body.title}`,
       image: `https://ipfs.io/ipfs/${cidStrings[0]}`,
-      description: "몽땅연필에서 제작된 동화입니다.",
+      description: `${body.summary}`,
       attributes: [],
     };
 
@@ -66,7 +67,13 @@ router.post("/ipfs", upload.array("images", 20), async (request, response) => {
     const metadataCid = await ipfs.add(jsonBuffer);
 
     const address = getAddress(decrypt(body.privateKeyEnc));
-    makeNFT(address, `https://ipfs.io/ipfs/${metadataCid.path}`);
+    const nftId = await makeNFT(
+      address,
+      `https://ipfs.io/ipfs/${metadataCid.path}`
+    );
+
+    console.log(nftId);
+    postNFTID(body.bookId, nftId);
 
     // Return the CIDs as a response to the client
     response.statusCode = 200;
