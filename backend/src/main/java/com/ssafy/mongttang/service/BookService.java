@@ -425,7 +425,7 @@ public class BookService {
         return new ResponseBookEditDto(userId,challenge);
     }
 
-    public Book saveToken(int bookId, int nftId) {
+    public Book saveNftId(int bookId, int nftId) {
         Book book = bookRepository.findByBookId(bookId);
         if(book == null) return null;
 
