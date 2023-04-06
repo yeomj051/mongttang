@@ -6,7 +6,12 @@
       </div>
       <div class="col-3"></div>
       <div class="col-4">
-        <img class="pointer clickable" v-on:click="sell(100)" src="@/assets/100MTT.png" />
+        <img 
+          class="pointer clickable" 
+          v-on:click="sell(100)"
+          data-bs-toggle="modal"
+          data-bs-target="#cautionModal"
+          src="@/assets/100MTT.png" />
       </div>
     </div>
     <div class="row trade-choice">
@@ -15,7 +20,12 @@
       </div>
       <div class="col-3"></div>
       <div class="col-4">
-        <img class="pointer clickable" v-on:click="sell(200)" src="@/assets/200MTT.png" />
+        <img 
+          class="pointer clickable" 
+          v-on:click="sell(200)" 
+          data-bs-toggle="modal"
+          data-bs-target="#cautionModal"
+          src="@/assets/200MTT.png" />
       </div>
     </div>
     <div class="row trade-choice">
@@ -24,7 +34,12 @@
       </div>
       <div class="col-3"></div>
       <div class="col-4">
-        <img class="pointer clickable" v-on:click="sell(500)" src="@/assets/500MTT.png" />
+        <img 
+          class="pointer clickable" 
+          v-on:click="sell(500)" 
+          data-bs-toggle="modal"
+          data-bs-target="#cautionModal"
+          src="@/assets/500MTT.png" />
       </div>
     </div>
     <div class="row trade-choice">
@@ -36,6 +51,8 @@
         <img
           class="pointer clickable"
           v-on:click="sell(1000)"
+          data-bs-toggle="modal"
+          data-bs-target="#cautionModal"
           src="@/assets/1000MTT.png"
         />
       </div>
@@ -50,11 +67,50 @@
         <img
           class="pointer clickable"
           v-on:click="sell(10000)"
+          data-bs-toggle="modal"
+          data-bs-target="#cautionModal"
           src="@/assets/10000MTT.png"
         />
       </div>
     </div>
   </div>
+  <!-- Modal -->
+  <div
+        class="modal fade"
+        id="cautionModal"
+        tabindex="-1"
+        aria-labelledby="cautionModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="cautionModalLabel">
+                요청 완료
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              블록체인의 특성상, 거래가 반영되기까지 시간이 다소 걸릴 수
+              있습니다.              
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-dismiss="modal"
+              >
+                확인
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 </template>
 <script>
 import { sellMTT, getMTTBalance, getSSFBalance } from "@/api/backend";
