@@ -82,7 +82,7 @@ router.post("/ipfs", upload.array("images", 20), async (request, response) => {
       address,
       `https://ipfs.io/ipfs/${metadataCid.path}`
     );
-
+      console.log("bookId : "+body.bookId+" nftId : "+nftId)
     await postNFTID(body.bookId, nftId);
 
     // Return the CIDs as a response to the client
