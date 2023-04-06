@@ -1,4 +1,4 @@
-import { BLOCKCHAIN_URL, API_BASE_URL } from "../config/index.env";
+import { BLOCKCHAIN_URL, API_BASE_URL } from "../config/index.js";
 import Web3 from "web3";
 import axios from "axios";
 
