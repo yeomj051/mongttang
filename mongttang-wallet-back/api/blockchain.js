@@ -63,6 +63,16 @@ async function getNFTList(accountAddress) {
   }
 }
 
+async function getNFTURI(tokenId){
+ let URI;
+ try{
+    URI = await nftContract.methods.tokenURI(tokenId).call();
+    return URI;
+ } catch(error){
+  console.error(error);
+ }
+}
+
 async function makeNFT(toAddress, tokenURI) {
   const ownerAccount =
     rpcInstance.eth.accounts.privateKeyToAccount(OWNER_PRIVATE_KEY);
@@ -351,6 +361,7 @@ export {
   getMTTBalance,
   getNFTList,
   getSSFBalance,
+  getNFTURI,
   makeNFT,
   buyMTT,
   sellMTT,

@@ -36,19 +36,19 @@ router.get("/ssf", (request, response) => {
 
 router.post("/ssf", (request) => {
   const body = request.body;
-  const privateKey = body.privateKeyEnc;
+  const privateKey = decrypt(body.privateKey);
   transferSSF(privateKey, body.toAddress, body.amount);
 });
 
 router.post("/buy", (request) => {
   const body = request.body;
-  const privateKey = decrypt(body.privateKeyEnc);
+  const privateKey = decrypt(body.privateKey);
   buyMTT(privateKey, body.amount);
 });
 
 router.post("/sell", (request) => {
   const body = request.body;
-  const privateKey = decrypt(body.privateKeyEnc);
+  const privateKey = decrypt(body.privateKey);
   sellMTT(privateKey, body.amount);
 });
 
@@ -57,7 +57,7 @@ router.post("/read", (request, response) => {
   const tokenId = body.tokenId;
   const amountToAuthor = body.amountToAuthor;
   const amountToManager = body.amountToManager;
-  const privateKey = decrypt(body.privateKeyEnc);
+  const privateKey = decrypt(body.privateKey);
   const managerAddress = getAddress(OWNER_PRIVATE_KEY);
   transferMTT(privateKey, managerAddress, amountToAuthor + amountToManager)
     .then(() => {
