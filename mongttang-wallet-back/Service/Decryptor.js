@@ -1,5 +1,5 @@
 import CryptoJS from "crypto-js";
-import { DECRYPTION_KEY, DECRYPTION_IV } from "../config/index.js";
+import { DECRYPTION_KEY, DECRYPTION_IV } from "../config/index.env";
 
 function decrypt(privateKey) {
   const key = CryptoJS.enc.Utf8.parse(DECRYPTION_KEY);

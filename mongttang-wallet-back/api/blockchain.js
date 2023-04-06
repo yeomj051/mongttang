@@ -4,7 +4,7 @@ import {
   MTT_CONTRACT_ADDRESS,
   SSF_CONTRACT_ADDRESS,
   OWNER_PRIVATE_KEY,
-} from "../config/index.js";
+} from "../config/index.env";
 import {
   ERC20_CONTRACT_ABI,
   NFT_CONTRACT_ABI,
