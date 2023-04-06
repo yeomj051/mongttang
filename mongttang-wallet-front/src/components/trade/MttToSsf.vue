@@ -70,7 +70,7 @@ export default {
       sellMTT(this.privateKey, amount)
       .then((res)=>{
         if(res){
-          indow.alert("거래가 완료되었습니다.");
+          window.alert("거래가 완료되었습니다.");
           getMTTBalance(this.privateKey).then((response) => {
             console.log(response);
             this.$store.commit("SET_MTT", response.data);
