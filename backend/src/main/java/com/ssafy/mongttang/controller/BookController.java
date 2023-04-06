@@ -44,6 +44,7 @@ public class BookController {
                                                            @PathVariable int userId, Principal principal){
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = null;
+        log.info("[createBook] 동화 저장 호출 Controller");
 
         if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
             status = HttpStatus.BAD_REQUEST;
