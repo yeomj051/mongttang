@@ -4,7 +4,7 @@ import {
   makeNFT,
   getAddress,
   getNFTList,
-  getNFTURI
+  getNFTURI,
 } from "../api/blockchain.js";
 import { postNFTID } from "../api/spring.js";
 import { create } from "ipfs-http-client";
@@ -29,15 +29,15 @@ router.get("/", (request, response) => {
     .catch(console.error);
 });
 
-router.get("/uri",(request, response)=>{
+router.get("/uri", (request, response) => {
   const query = request.query;
   getNFTURI(query.tokenId)
-    .then((res)=>{
+    .then((res) => {
       console.log(res);
       response.send(res);
     })
     .catch(console.error);
-})
+});
 
 const ipfs = create({
   host: "j8a308.p.ssafy.io",
@@ -77,7 +77,6 @@ router.post("/ipfs", upload.array("images", 20), async (request, response) => {
     const jsonBuffer = Buffer.from(jsonString);
     const metadataCid = await ipfs.add(jsonBuffer);
 
-<<<<<<< HEAD
     const address = getAddress(decrypt(body.privateKeyEnc));
     const nftId = await makeNFT(
       address,
@@ -86,10 +85,6 @@ router.post("/ipfs", upload.array("images", 20), async (request, response) => {
 
     console.log(nftId);
     postNFTID(body.bookId, nftId);
-=======
-    const address = getAddress(decrypt(body.privateKey));
-    makeNFT(address, `https://ipfs.io/ipfs/${metadataCid.path}`);
->>>>>>> e2c288026e5cfdc0c59489a7f2c14301f7b9fa92
 
     // Return the CIDs as a response to the client
     response.statusCode = 200;
