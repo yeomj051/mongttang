@@ -98,19 +98,17 @@ async function makeNFT(toAddress, tokenURI) {
         OWNER_PRIVATE_KEY
       );
       console.log(signedTx);
-      const nftId = await rpcInstance.eth
+      await rpcInstance.eth
         .sendSignedTransaction(signedTx.rawTransaction)
         .on("receipt", (receipt) => {
           console.log(`Transaction confirmed: ${receipt.transactionHash}`);
           console.log(`Gas used: ${receipt.gasUsed}`);
+          console.log('receipt')
         })
         .on("error", (error) => {
           console.error(`Transaction error: ${error}`);
         });
     });
-
-    console.log(nftId);
-    return nftId;
 }
 
 async function buyMTT(userPrivateKey, amount) {
