@@ -24,13 +24,13 @@ async function withdraw(privateKey, tokenId, amount) {
 }
 
 async function buyMTT(privateKey, amount) {
-  apiInstance.post("/token/buy", {
+  const result = await apiInstance.post("/token/buy", {
     privateKey: privateKey,
     amount: amount,
-  }).then(res=>{
-    console.log(res);
-    return "success";
   });
+
+  console.log(result);
+  return result;
 }
 
 async function sellMTT(privateKey, amount) {
