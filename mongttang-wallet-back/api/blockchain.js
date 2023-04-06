@@ -129,16 +129,17 @@ async function buyMTT(userPrivateKey, amount) {
         amount
       );
       if (!res2) {
-        const res3 = transferSSF(
+        transferSSF(
           OWNER_PRIVATE_KEY,
           userAccount.address,
           amount / 100
         );
-        if (!res3) window.alert("구매 중 오류. 관리자에게 문의해주세요.");
       }
     }
+    return true;
   } catch (err) {
     console.log;
+    return false;
   }
 }
 
@@ -157,16 +158,17 @@ function sellMTT(userPrivateKey, amount) {
         amount / 100
       );
       if (!res2) {
-        const res3 = transferMTT(
+        transferMTT(
           OWNER_PRIVATE_KEY,
           userAccount.address,
           amount
         );
-        if (!res3) window.alert("판매 중 오류. 관리자에게 문의해주세요.");
       }
     }
+    return true;
   } catch (err) {
     console.log;
+    return false;
   }
 }
 

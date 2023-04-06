@@ -1,4 +1,4 @@
-import express from "express";
+import express, { response } from "express";
 import {
   buyMTT,
   sellMTT,
@@ -43,13 +43,17 @@ router.post("/ssf", (request) => {
 router.post("/buy", (request) => {
   const body = request.body;
   const privateKey = decrypt(body.privateKey);
-  buyMTT(privateKey, body.amount);
+  buyMTT(privateKey, body.amount).then((res)=>{
+    response.send(res);
+  });
 });
 
 router.post("/sell", (request) => {
   const body = request.body;
   const privateKey = decrypt(body.privateKey);
-  sellMTT(privateKey, body.amount);
+  sellMTT(privateKey, body.amount).then((res)=>{
+    response.send(res);
+  });
 });
 
 router.post("/read", (request, response) => {
