@@ -10,7 +10,7 @@ import {
   deposit,
   transferSSF,
 } from "../api/blockchain.js";
-import { OWNER_PRIVATE_KEY, NFT_CONTRACT_ADDRESS } from "../config/index.env";
+import { OWNER_PRIVATE_KEY, NFT_CONTRACT_ADDRESS } from "../config/index.js";
 import { decrypt } from "../Service/Decryptor.js";
 OWNER_PRIVATE_KEY;
 
