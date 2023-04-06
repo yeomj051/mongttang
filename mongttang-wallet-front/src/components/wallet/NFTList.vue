@@ -6,7 +6,7 @@
       <div class="col"></div>
       <div class="col">
         <img
-          src="https://mblogthumb-phinf.pstatic.net/MjAyMTAxMDVfMjE5/MDAxNjA5ODA0NDYxODAx.ieWcq6luZGB9apxLjS_uh-ROYCQS61ubqCW_pA2fTrMg.Zx56vtprvTOoc0sn9oy7eyWGj8TXXlpClSEoWFehQnMg.PNG.bluelaz1103/SE-c3e732d3-5ceb-423f-bbb7-26cf288fe3e0.png?type=w800"
+          :src="nftImages[nftId]"
           width="200"
         />
       </div>
@@ -66,7 +66,8 @@
 
 <script>
 import { withdraw } from "@/api/backend";
-import { getNFTList } from "@/api/backend";
+import { getNFTList, getNFTURI } from "@/api/backend";
+import axios from 'axios';
 
 export default {
   name: "NFTList",
@@ -75,7 +76,7 @@ export default {
       nftIds: [],
       nftBalances: [],
       nftTotalEarneds: [],
-      cat: "",
+      nftImages: {},
     };
   },
   computed: {
@@ -106,11 +107,24 @@ export default {
         this.nftTotalEarneds = data.nftTotalEarneds;
       });
     },
+    nftIds(){
+      this.nftIds.forEach( (nftId) => {
+        getNFTURI(nftId).then((res) => {
+          console.log(res.data);
+          return axios.get(res.data);
+        }).then((res)=>{   
+          const metadata = res.data;
+          this.nftImages[nftId] = metadata.image;
+          console.log(this.nftImages);
+        }).catch((err)=>{
+          console.log(err);
+        })
+      });
+    }
   },
   methods: {
     doWithdraw(tokenId, amount) {
-      const encoded = encodeURIComponent(this.privateKey);
-      withdraw(encoded, tokenId, amount);
+      withdraw(this.privateKey, tokenId, amount);
     },
   },
 };

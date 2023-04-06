@@ -67,7 +67,8 @@ export default {
   },
   methods: {
     buy(amount) {
-      buyMTT(encodeURIComponent(this.privateKey), amount);
+      console.log(amount);
+      buyMTT(this.privateKey, amount);
     },
   },
 };

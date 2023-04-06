@@ -188,6 +188,7 @@
 import SsfToMtt from "@/components/trade/SsfToMtt.vue";
 import MttToSsf from "@/components/trade/MttToSsf.vue";
 import TokenBalance from "../wallet/TokenBalance.vue";
+import { transferSSF } from "@/api/backend";
 
 export default {
   name: "TradeArea",
@@ -204,6 +205,13 @@ export default {
     showMttToSsf: function () {
       this.ssfToMttStatus = false;
       this.mttToSsfStatus = true;
+    },
+    doTransferSSf() {
+      transferSSF(
+        this.privateKey,
+        this.toAddress,
+        this.amount
+      );
     },
   },
   data() {

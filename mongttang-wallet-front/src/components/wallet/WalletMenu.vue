@@ -174,7 +174,7 @@ export default {
   methods: {
     doTransferSSf() {
       transferSSF(
-        encodeURIComponent(this.privateKey),
+        this.privateKey,
         this.toAddress,
         this.amount
       );
