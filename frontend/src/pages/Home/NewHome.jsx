@@ -19,7 +19,7 @@ const CTWrapper = styled.div`
 `;
 
 const BodyContainer = styled.div`
-  ${tw`flex flex-col justify-center pt-[5%] p-48`}
+  ${tw`flex flex-col justify-center pt-[5%] p-[13%]`}
 `;
 
 const DiscountContainer = styled.div`
