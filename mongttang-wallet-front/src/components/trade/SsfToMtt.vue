@@ -7,7 +7,7 @@
       </div>
       <div class="col-3"></div>
       <div class="col-4">
-        <img class="pointer" v-on:click="buy(100)" src="@/assets/1SSF.png" />
+        <img class="pointer clickable" v-on:click="buy(100)" src="@/assets/1SSF.png" />
       </div>
     </div>
     <div class="row trade-choice">
@@ -17,7 +17,7 @@
       </div>
       <div class="col-3"></div>
       <div class="col-4">
-        <img class="pointer" v-on:click="buy(200)" src="@/assets/2SSF.png" />
+        <img class="pointer clickable" v-on:click="buy(200)" src="@/assets/2SSF.png" />
       </div>
     </div>
     <div class="row trade-choice">
@@ -27,7 +27,7 @@
       </div>
       <div class="col-3"></div>
       <div class="col-4">
-        <img class="pointer" v-on:click="buy(500)" src="@/assets/5SSF.png" />
+        <img class="pointer clickable" v-on:click="buy(500)" src="@/assets/5SSF.png" />
       </div>
     </div>
     <div class="row trade-choice">
@@ -37,7 +37,7 @@
       </div>
       <div class="col-3"></div>
       <div class="col-4">
-        <img class="pointer" v-on:click="buy(1000)" src="@/assets/10SSF.png" />
+        <img class="pointer clickable" v-on:click="buy(1000)" src="@/assets/10SSF.png" />
       </div>
     </div>
     <div class="row trade-choice">
@@ -48,7 +48,7 @@
       <div class="col-3"></div>
       <div class="col-4">
         <img
-          class="pointer"
+          class="pointer clickable"
           v-on:click="buy(10000)"
           src="@/assets/100SSF.png"
         />
@@ -82,5 +82,8 @@ export default {
   color: #ffffff;
   border-style: none;
   background-color: #00d8ff;
+}
+.clickable:active{
+  filter: opacity(0.5) drop-shadow(0 0 0 #ff0000);
 }
 </style>
