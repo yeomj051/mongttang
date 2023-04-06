@@ -77,9 +77,9 @@ const ButtonContainer = styled.div`
 `;
 
 const DrawingForm = styled.div`
-  ${tw`w-[50vw] flex-col justify-center overflow-auto`}
+  ${tw`w-[50vw] flex-col justify-center overflow-auto overflow-x-hidden`}
   ${css`
-    height: calc(100vh - 120px);
+    height: calc(90vh);
   `}
 `;
 function NewBookEditor() {
