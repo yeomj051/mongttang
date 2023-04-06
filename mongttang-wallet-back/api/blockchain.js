@@ -143,7 +143,7 @@ async function buyMTT(userPrivateKey, amount) {
   }
 }
 
-function sellMTT(userPrivateKey, amount) {
+async function sellMTT(userPrivateKey, amount) {
   console.log("sellMTT amount : " + amount);
   try {
     const ownerAccount =
