@@ -6,8 +6,8 @@ const requests = {
   base_url: 'https://j8a308.p.ssafy.io',
   //카카오 소셜로그인 URL
   KAKAO_LOGIN:
-    'https://j8a308.p.ssafy.io/api/oauth2/authorize/kakao?redirect_uri=https://j8a308.p.ssafy.io/oauth',
-  // 'https://j8a308.p.ssafy.io/api/oauth2/authorize/kakao?redirect_uri=http://localhost:3000/oauth',
+    // 'https://j8a308.p.ssafy.io/api/oauth2/authorize/kakao?redirect_uri=https://j8a308.p.ssafy.io/oauth',
+    'https://j8a308.p.ssafy.io/api/oauth2/authorize/kakao?redirect_uri=http://localhost:3000/oauth',
 
   //구글 소셜로그인 URL
   GOOGLE_LOGIN:
@@ -110,6 +110,11 @@ const requests = {
   //동화 임시저장
   POST_BOOK_TEMP(userId) {
     return `/api/book/draw/${userId}`;
+  },
+
+  //동화 구매내역 저장
+  POST_BOOK_PAYLIST(userId, bookId) {
+    return `/api/book/pay/${userId}?bookId=${bookId}`;
   },
 
   //작가 동화 임시저장본 삭제
