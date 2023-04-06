@@ -29,15 +29,16 @@ async function buyMTT(privateKey, amount) {
     amount: amount,
   });
 
-  console.log(result);
-  return result;
+  return result.data;
 }
 
 async function sellMTT(privateKey, amount) {
-  apiInstance.post("/token/sell", {
+  const result = await apiInstance.post("/token/sell", {
     privateKey: privateKey,
     amount: amount,
   });
+
+  return result.data;
 }
 
 function getMTTBalance(privateKey) {

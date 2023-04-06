@@ -70,15 +70,19 @@ export default {
       console.log(amount);
       buyMTT(this.privateKey, amount)
       .then((res)=>{
-        window.alert(res);
-        getMTTBalance(this.privateKey).then((response) => {
-        console.log(response);
-        this.$store.commit("SET_MTT", response.data);
-        });
-        getSSFBalance(this.privateKey).then((response) => {
-        console.log(response);
-        this.$store.commit("SET_SSF", response.data);
-        });
+        if(res){
+          window.alert("거래가 완료되었습니다.");
+          getMTTBalance(this.privateKey).then((response) => {
+            console.log(response);
+            this.$store.commit("SET_MTT", response.data);
+          });
+          getSSFBalance(this.privateKey).then((response) => {
+            console.log(response);
+            this.$store.commit("SET_SSF", response.data);
+          });
+      }else{
+        window.alert("거래가 실패하였습니다.");
+      }
       });
     },
   },
