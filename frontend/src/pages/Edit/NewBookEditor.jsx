@@ -14,6 +14,19 @@ const BarWrapper = styled.div`
 
 const BookContentWrapper = styled.div`
   ${tw`flex justify-center w-full mt-[80px]`}
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #b79f93;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: #ebded3;
+    border-radius: 0 10px 10px 0;
+  }
 `;
 
 const PageTitle = styled.div`
