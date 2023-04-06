@@ -101,7 +101,9 @@ router.post("/withdraw", (request, response) => {
   const body = request.body;
   console.log(request);
   const privateKey = decrypt(body.privateKey);
-  withdraw(privateKey, body.tokenId, body.amount);
+  withdraw(privateKey, body.tokenId, body.amount).then((res)=>{
+    response.send(res);
+  });
 });
 
 export default router;
