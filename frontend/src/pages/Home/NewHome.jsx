@@ -35,7 +35,7 @@ const TitleContainer = styled.div`
 `;
 
 const TitleWrapper = styled.p`
-  ${tw`text-3xl font-bold py-2`}
+  ${tw`text-3xl font-extrabold py-2`}
 `;
 
 const LinkWrapper = styled.div`
