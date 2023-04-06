@@ -103,3 +103,29 @@ Temporary Items
 application-dev.yml
 application-deploy.yml
 
+mongttang-wallet-front/src/config/index.js
+mongttang-wallet-back/config/index.js
+
+# Created by https://www.toptal.com/developers/gitignore/api/react
+# Edit at https://www.toptal.com/developers/gitignore?templates=react
+
+# API KEYS
+.env
+
+### react ###
+.DS_*
+*.log
+logs
+**/*.backup.*
+**/*.back.*
+
+node_modules
+bower_components
+
+*.sublime*
+
+psd
+thumb
+sketch
+
+# End of https://www.toptal.com/developers/gitignore/api/react
