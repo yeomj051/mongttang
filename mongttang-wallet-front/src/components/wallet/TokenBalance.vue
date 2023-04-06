@@ -20,8 +20,6 @@ export default {
   name: "TokenBalance",
   data() {
     return {
-      ssf: 0,
-      mtt: 0,
     };
   },
   computed: {
@@ -31,6 +29,12 @@ export default {
     address() {
       return this.$store.getters.getAddress;
     },
+    ssf() {
+      return this.$store.getters.getSsf;
+    },
+    mtt(){
+      return this.$store.getters.getMtt;
+    }
   },
   created() {
     if (this.address) {
@@ -42,13 +46,13 @@ export default {
     doGetMTTBalance() {
       getMTTBalance(this.privateKey).then((response) => {
         console.log(response);
-        this.mtt = response.data;
+        this.$store.commit("SET_MTT", response.data);
       });
     },
     doGetSSFBalance() {
       getSSFBalance(this.privateKey).then((response) => {
         console.log(response);
-        this.ssf = response.data;
+        this.$store.commit("SET_SSF", response.data);
       });
     },
   },

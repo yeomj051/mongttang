@@ -15,7 +15,7 @@ function getAddress(privateKey) {
   return apiInstance.get(`/user?key=${uriEncoded}`);
 }
 
-function withdraw(privateKey, tokenId, amount) {
+async function withdraw(privateKey, tokenId, amount) {
   apiInstance.post("/nft/withdraw", {
     privateKey: privateKey,
     tokenId: tokenId,
@@ -23,14 +23,14 @@ function withdraw(privateKey, tokenId, amount) {
   });
 }
 
-function buyMTT(privateKey, amount) {
+async function buyMTT(privateKey, amount) {
   apiInstance.post("/token/buy", {
     privateKey: privateKey,
     amount: amount,
   });
 }
 
-function sellMTT(privateKey, amount) {
+async function sellMTT(privateKey, amount) {
   apiInstance.post("/token/sell", {
     privateKey: privateKey,
     amount: amount,

@@ -57,7 +57,7 @@
   </div>
 </template>
 <script>
-import { sellMTT } from "@/api/backend";
+import { sellMTT, getMTTBalance, getSSFBalance } from "@/api/backend";
 
 export default {
   computed: {
@@ -67,7 +67,17 @@ export default {
   },
   methods: {
     sell(amount) {
-      sellMTT(this.privateKey, amount);
+      sellMTT(this.privateKey, amount)
+      .then(()=>{
+        getMTTBalance(this.privateKey).then((response) => {
+        console.log(response);
+        this.$store.commit("SET_MTT", response.data);
+        });
+        getSSFBalance(this.privateKey).then((response) => {
+        console.log(response);
+        this.$store.commit("SET_SSF", response.data);
+        });
+      });
     },
   },
 };
