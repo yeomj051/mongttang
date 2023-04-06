@@ -91,7 +91,7 @@ router.post("/ipfs", upload.array("images", 20), async (request, response) => {
     response.write(JSON.stringify(metadataCid) + ",");
     response.end(cidStrings.join(","));
   } catch (error) {
-    console.error("Error adding images to IPFS:", error);
+    // console.error("Error adding images to IPFS:", error);
     response.statusCode = 500;
     response.end("Error adding images to IPFS");
   }
