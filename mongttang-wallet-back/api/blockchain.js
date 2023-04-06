@@ -103,7 +103,13 @@ async function makeNFT(toAddress, tokenURI) {
         .on("receipt", (receipt) => {
           console.log(`Transaction confirmed: ${receipt.transactionHash}`);
           console.log(`Gas used: ${receipt.gasUsed}`);
-          console.log(receipt);
+          const events = receipt.events;
+          console.log(events);
+          const transferEvent = events.Transfer;
+          console.log(transferEvent);
+          const newItemId = transferEvent.returnValues[2];
+          console.log(newItemId);
+          
         })
         .on("error", (error) => {
           console.error(`Transaction error: ${error}`);
