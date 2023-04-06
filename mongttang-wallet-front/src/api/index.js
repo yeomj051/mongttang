@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_BASE_URL } from "../config/index.env";
+import { API_BASE_URL } from "../config/index.js";
 
 function createAPIInstance() {
   const instance = axios.create({
