@@ -65,8 +65,7 @@
 </template>
 
 <script>
-import { withdraw } from "@/api/backend";
-import { getNFTList, getNFTURI } from "@/api/backend";
+import { withdraw, getMTTBalance, getSSFBalance, getNFTList, getNFTURI } from "@/api/backend";
 import axios from 'axios';
 
 export default {
@@ -107,7 +106,7 @@ export default {
         this.nftTotalEarneds = data.nftTotalEarneds;
       });
     },
-    nftIds(){
+    nftBalances(){
       this.nftIds.forEach( (nftId) => {
         getNFTURI(nftId).then((res) => {
           console.log(res.data);
@@ -124,7 +123,29 @@ export default {
   },
   methods: {
     doWithdraw(tokenId, amount) {
-      withdraw(this.privateKey, tokenId, amount);
+      withdraw(this.privateKey, tokenId, amount)
+      .then((res)=>{
+        if(res){
+          window.alert("출금이 완료되었습니다.");
+          getMTTBalance(this.privateKey).then((response) => {
+            console.log(response);
+            this.$store.commit("SET_MTT", response.data);
+          });
+          getSSFBalance(this.privateKey).then((response) => {
+            console.log(response);
+            this.$store.commit("SET_SSF", response.data);
+          });
+          getNFTList(this.address).then((res) => {
+            console.log(res);
+            const data = res.data;
+            this.nftIds = data.nftIds;
+            this.nftBalances = data.nftBalances;
+            this.nftTotalEarneds = data.nftTotalEarneds;
+          });          
+      }else{
+        window.alert("출금이 실패하였습니다.");
+      }
+      });
     },
   },
 };

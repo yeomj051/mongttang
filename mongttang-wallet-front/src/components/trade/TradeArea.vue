@@ -171,7 +171,7 @@
           ></button>
         </div>
         <div class="modal-body">
-          블록체인의 특성상, 입금이 반영되기까지 시간이 다소 걸릴 수 있습니다.
+          블록체인의 특성상, 입금이 반영되기까지 시간이 다소 걸릴 수 있습니다. 10 ~ 20초 후 새로고침을 눌러주세요.
           <br />
           주소 :{{ address }}
         </div>
@@ -188,7 +188,7 @@
 import SsfToMtt from "@/components/trade/SsfToMtt.vue";
 import MttToSsf from "@/components/trade/MttToSsf.vue";
 import TokenBalance from "../wallet/TokenBalance.vue";
-import { transferSSF } from "@/api/backend";
+import { transferSSF, getMTTBalance, getSSFBalance } from "@/api/backend";
 
 export default {
   name: "TradeArea",
@@ -196,6 +196,20 @@ export default {
     SsfToMtt,
     MttToSsf,
     TokenBalance,
+  },
+  computed: {
+    privateKey() {
+      return this.$store.getters.getPrivateKey;
+    },
+    address() {
+      return this.$store.getters.getAddress;
+    },
+    ssf() {
+      return this.$store.getters.getSsf;
+    },
+    mtt(){
+      return this.$store.getters.getMtt;
+    }
   },
   methods: {
     showSsfToMtt: function () {
@@ -207,22 +221,36 @@ export default {
       this.mttToSsfStatus = true;
     },
     doTransferSSf() {
-      transferSSF(
-        this.privateKey,
-        this.toAddress,
-        this.amount
-      );
+      if(this.ssf >= this.amount){      
+          transferSSF(
+            this.privateKey,
+            this.toAddress,
+            this.amount
+            ).then((res)=>{
+              if(res){
+                window.alert("전송이 완료되었습니다.");
+                getMTTBalance(this.privateKey).then((response) => {
+                  console.log(response);
+                  this.$store.commit("SET_MTT", response.data);
+                });
+                getSSFBalance(this.privateKey).then((response) => {
+                  console.log(response);
+                  this.$store.commit("SET_SSF", response.data);
+                });
+              }else{
+                window.alert("전송이 실패하였습니다.");
+              }
+            });
+          }else{
+            window.alert("SSF 잔액이 부족합니다.");
+          }
     },
   },
   data() {
     return {
-      ssf: 0,
-      mtt: 0,
       ssfToMttStatus: true,
       mttToSsfStatus: false,
-      privateKey: this.$store.state.privateKey,
       route: "/?key=" + this.$store.state.privateKey,
-      address: this.$store.state.address,
     };
   },
 };

@@ -64,25 +64,35 @@ export default {
     privateKey() {
       return this.$store.getters.getPrivateKey;
     },
+    ssf() {
+      return this.$store.getters.getSsf;
+    },
+    mtt(){
+      return this.$store.getters.getMtt;
+    }
   },
   methods: {
     sell(amount) {
-      sellMTT(this.privateKey, amount)
-      .then((res)=>{
-        if(res){
-          window.alert("거래가 완료되었습니다.");
-          getMTTBalance(this.privateKey).then((response) => {
-            console.log(response);
-            this.$store.commit("SET_MTT", response.data);
-          });
-          getSSFBalance(this.privateKey).then((response) => {
-            console.log(response);
-            this.$store.commit("SET_SSF", response.data);
-          });
-        }else{
-        window.alert("거래가 실패하였습니다.");
+      if(this.mtt >= amount){        
+        sellMTT(this.privateKey, amount)
+        .then((res)=>{
+          if(res){
+            window.alert("거래가 완료되었습니다.");
+            getMTTBalance(this.privateKey).then((response) => {
+              console.log(response);
+              this.$store.commit("SET_MTT", response.data);
+            });
+            getSSFBalance(this.privateKey).then((response) => {
+              console.log(response);
+              this.$store.commit("SET_SSF", response.data);
+            });
+          }else{
+            window.alert("거래가 실패하였습니다.");
+          }
+        });
+      }else{
+        window.alert("MTT 잔액이 부족합니다.");
       }
-      });
     },
   },
 };

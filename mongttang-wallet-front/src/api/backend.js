@@ -16,11 +16,13 @@ function getAddress(privateKey) {
 }
 
 async function withdraw(privateKey, tokenId, amount) {
-  apiInstance.post("/nft/withdraw", {
+  const result = await apiInstance.post("/nft/withdraw", {
     privateKey: privateKey,
     tokenId: tokenId,
     amount: amount,
   });
+
+  return result.data
 }
 
 async function buyMTT(privateKey, amount) {
@@ -51,12 +53,14 @@ function getSSFBalance(privateKey) {
   return apiInstance.get(`/token/ssf?key=${uriEncoded}`);
 }
 
-function transferSSF(privateKey, toAddress, amount) {
-  apiInstance.post("/token/ssf", {
+async function transferSSF(privateKey, toAddress, amount) {
+  const result = await apiInstance.post("/token/ssf", {
     privateKey: privateKey,
     toAddress: toAddress,
     amount: amount,
   });
+
+  return result.data;
 }
 export {
   getNFTList,
