@@ -77,7 +77,7 @@ const requests = {
 
   //동화 뷰어(동화 그림 조회)
   GET_BOOK_IMAGES(bookId) {
-    return `/api/book/${bookId}`;
+    return `/api/book/viewer/${bookId}`;
   },
 
   //동화 상세정보 조회
