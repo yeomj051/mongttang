@@ -77,7 +77,7 @@ router.post("/ipfs", upload.array("images", 20), async (request, response) => {
     const jsonBuffer = Buffer.from(jsonString);
     const metadataCid = await ipfs.add(jsonBuffer);
 
-    const address = getAddress(decrypt(body.privateKeyEnc));
+    const address = getAddress(decrypt(body.privateKey));
     const nftId = await makeNFT(
       address,
       `https://ipfs.io/ipfs/${metadataCid.path}`
