@@ -77,7 +77,7 @@ async function makeNFT(toAddress, tokenURI) {
   const ownerAccount =
     rpcInstance.eth.accounts.privateKeyToAccount(OWNER_PRIVATE_KEY);
   let nftIdHex;
-  rpcInstance.eth
+  await rpcInstance.eth
     .getTransactionCount(ownerAccount.address)
     .then(async (nonce) => {
       const functionAbi = nftContract.methods
