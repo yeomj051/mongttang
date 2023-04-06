@@ -73,7 +73,7 @@ export default {
   },
   methods: {
     buy(amount) {
-      if(this.ssf >= amount){
+      if(this.ssf >= amount/100){
         buyMTT(this.privateKey, amount)
         .then((res)=>{
           if(res){
