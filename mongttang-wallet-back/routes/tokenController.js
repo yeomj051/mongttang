@@ -71,13 +71,13 @@ router.post("/read", (request, response) => {
   console.log("amountToManager : " + amountToManager);
   console.log(" privateKey : " + privateKey);
   transferMTT(privateKey, managerAddress, amountToAuthor + amountToManager)
-    .then(() => {
+    .then(async () => {
       console.log("엠티티 전송중");
-      approve(OWNER_PRIVATE_KEY, NFT_CONTRACT_ADDRESS, amountToAuthor);
+      await approve(OWNER_PRIVATE_KEY, NFT_CONTRACT_ADDRESS, amountToAuthor);
     })
-    .then(() => {
+    .then(async () => {
       console.log("디포짓 중");
-      deposit(OWNER_PRIVATE_KEY, tokenId, amountToAuthor);
+      await deposit(OWNER_PRIVATE_KEY, tokenId, amountToAuthor);
     })
     .catch((error) => {
       console.log(error);
