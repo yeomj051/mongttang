@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
@@ -195,11 +196,13 @@ public class UserController {
         }
         try {
             User user = userService.storeWalletAddress(userId, reqWalletInfoDto);
+            String userWallet = URLEncoder.encode(user.getUserPrivateKey(), "UTF-8").replaceAll("\\+", "%20");
             if(user == null){
                 resultMap.put(MESSAGE, FAIL);
                 status = HttpStatus.BAD_REQUEST;
             } else {
                 resultMap.put(MESSAGE, SUCCESS);
+                resultMap.put("userWallet", userWallet);
                 status = HttpStatus.OK;
             }
         } catch (Exception e) {
