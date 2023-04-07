@@ -196,11 +196,12 @@ public class UserController {
         }
         try {
             User user = userService.storeWalletAddress(userId, reqWalletInfoDto);
-            String userWallet = URLEncoder.encode(user.getUserPrivateKey(), "UTF-8").replaceAll("\\+", "%20");
+
             if(user == null){
                 resultMap.put(MESSAGE, FAIL);
                 status = HttpStatus.BAD_REQUEST;
             } else {
+                String userWallet = URLEncoder.encode(user.getUserPrivateKey(), "UTF-8").replaceAll("\\+", "%20");
                 resultMap.put(MESSAGE, SUCCESS);
                 resultMap.put("userWallet", userWallet);
                 status = HttpStatus.OK;
